@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+
+<html
+  lang="en"
+  class="light-style layout-navbar-fixed layout-menu-fixed"
+  dir="ltr"
+  data-theme="theme-default"
+  data-assets-path="../../assets/"
+  data-template="vertical-menu-template"
+>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="../../assets/img/favicon/favicon.ico" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+    rel="stylesheet"
+  />
+  <!-- Vendors CSS -->
+  <link rel="stylesheet" href="../../assets/vendor/libs/flatpickr/flatpickr.css" />
+  <link rel="stylesheet" href="../../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+  <link rel="stylesheet" href="../../assets/vendor/libs/node-waves/node-waves.css" />
+  <link rel="stylesheet" href="../../assets/vendor/libs/typeahead-js/typeahead.css" />
+  <link rel="stylesheet" href="../../assets/vendor/libs/bs-stepper/bs-stepper.css" />
+  <link rel="stylesheet" href="../../assets/vendor/libs/flatpickr/flatpickr.css" />
+  <link rel="stylesheet" href="../../assets/vendor/libs/select2/select2.css" />
+  <link rel="stylesheet" href="../../assets/vendor/libs/bootstrap-select/bootstrap-select.css" />
+  <link rel="stylesheet" href="../../assets/vendor/libs/formvalidation/dist/css/formValidation.min.css" />
+
+  <!-- Page CSS -->
+
+  <!-- Helpers -->
+  <script src="../../assets/vendor/js/helpers.js"></script>
+
+  <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+  <!--? Template customizer: To hide customizer set displayCustomizer value false in config.js.  -->
+  <script src="../../assets/vendor/js/template-customizer.js"></script>
+  <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+  <script src="../../assets/js/config.js"></script>
+
+<head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+    />
+    <title> Formulario de Registro | DLS Money Plataforma de cambio de dólares a soles online</title>
+
+    <meta name="description" content="" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../../assets/img/favicon/favicon.ico" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="../../assets/vendor/fonts/fontawesome.css" />
+    <link rel="stylesheet" href="../../assets/vendor/fonts/tabler-icons.css" />
+    <link rel="stylesheet" href="../../assets/vendor/fonts/flag-icons.css" />
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="../../assets/vendor/css/rtl/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="../../assets/vendor/css/rtl/theme-default.css" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="../../assets/css/demo.css" />
+
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" href="../../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="../../assets/vendor/libs/node-waves/node-waves.css" />
+    <link rel="stylesheet" href="../../assets/vendor/libs/typeahead-js/typeahead.css" />
+    <!-- Vendor -->
+    <link rel="stylesheet" href="../../assets/vendor/libs/bs-stepper/bs-stepper.css" />
+    <link rel="stylesheet" href="../../assets/vendor/libs/bootstrap-select/bootstrap-select.css" />
+    <link rel="stylesheet" href="../../assets/vendor/libs/select2/select2.css" />
+    <link rel="stylesheet" href="../../assets/vendor/libs/formvalidation/dist/css/formValidation.min.css" />
+
+    <!-- Page CSS -->
+
+    <!-- Page -->
+    <link rel="stylesheet" href="../../assets/vendor/css/pages/page-auth.css" />
+    <!-- Helpers -->
+    <script src="../../assets/vendor/js/helpers.js"></script>
+
+    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+    <!--? Template customizer: To hide customizer set displayCustomizer value false in config.js.  -->
+    <script src="../../assets/vendor/js/template-customizer.js"></script>
+    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+    <script src="../../assets/js/config.js"></script>
+  </head>
+
+  <body>
+<!-- Content -->
+
+<!-- Content -->
+
+<div class="container-xxl flex-grow-1 container-p-y">
+  
+
+
+  <!-- Create Deal Wizard -->
+  <div id="wizard-create-deal" class="bs-stepper vertical mt-2">
+
+    
+    <div class="bs-stepper-header">
+      <div class="step" data-target="#deal-type">
+        <!-- Logo -->
+        <div class="app-brand mb-4">
+          <a href="index.html" class="app-brand-link gap-2">
+         <img src="../../assets/img/branding/logo-dls.png"> </a>
+        </div>
+        <!-- /Logo -->
+        <button type="button" class="step-trigger">
+          <span class="bs-stepper-circle"><i class="ti ti-users ti-sm"></i></span>
+          <span class="bs-stepper-label">
+            <span class="bs-stepper-title">Tipo de cuenta</span>
+            <span class="bs-stepper-subtitle">Elije que tipo de cuenta eres</span>
+          </span>
+        </button>
+      </div>
+      <div class="line"></div>
+      <div class="step" data-target="#deal-details">
+        <button type="button" class="step-trigger">
+          <span class="bs-stepper-circle"><i class="ti ti-id ti-sm"></i></span>
+          <span class="bs-stepper-label">
+            <span class="bs-stepper-title">Datos</span>
+            <span class="bs-stepper-subtitle">Personales</span>
+          </span>
+        </button>
+      </div>
+      <div class="line"></div>
+      <div class="step" data-target="#deal-usage">
+        <button type="button" class="step-trigger">
+          <span class="bs-stepper-circle"><i class="ti ti-credit-card ti-sm"></i></span>
+          <span class="bs-stepper-label">
+            <span class="bs-stepper-title">Domilio</span>
+            <span class="bs-stepper-subtitle">Dirección</span>
+          </span>
+        </button>
+      </div>
+      <div class="line"></div>
+      <div class="step" data-target="#review-complete">
+        <button type="button" class="step-trigger">
+          <span class="bs-stepper-circle"><i class="ti ti-checkbox ti-sm"></i></span>
+          <span class="bs-stepper-label">
+            <span class="bs-stepper-title">Ocupación</span>
+            <span class="bs-stepper-subtitle">A que se dedica</span>
+          </span>
+        </button>
+      </div>
+    </div>
+    <div class="bs-stepper-content">
+      <form id="wizard-create-deal-form" onSubmit="return false">
+        <!-- Deal Type -->
+        <div id="deal-type" class="content">
+          <div class="row g-3">
+            <div class="col-12 d-flex justify-content-center border rounded pt-4">
+              
+
+              <img
+                src="../../assets/img/illustrations/wizard-create-deal-girl-with-laptop-light.png"
+                alt="wizard-create-deal"
+                data-app-light-img="illustrations/wizard-create-deal-girl-with-laptop-light.png"
+                data-app-dark-img="illustrations/wizard-create-deal-girl-with-laptop-dark.png"
+                width="650"
+                class="img-fluid"
+              />
+            </div>
+            <div class="col-12 pb-2">
+              <div class="row">
+                <div class="col-md mb-md-0 mb-2">
+                  <div class="form-check custom-option custom-option-icon">
+                    <label class="form-check-label custom-option-content" for="customRadioPercentage">
+                      <span class="custom-option-body">
+
+      <i class="fa-regular fa-user"></i>
+                        <span class="custom-option-title">Registrarme como persona natural</span>
+                        <small>Para uso personal</small>
+                      </span>
+                      <input
+                        name="customRadioIcon"
+                        class="form-check-input"
+                        type="radio"
+                        value=""
+                        id="customRadioPercentage"
+                        checked
+                      />
+                    </label>
+                  </div>
+                </div>
+                <div class="col-md mb-md-0 mb-2">
+                  <div class="form-check custom-option custom-option-icon">
+                    <label class="form-check-label custom-option-content" for="customRadioFlat">
+                      <span class="custom-option-body">
+   
+                       <i class="fa-solid fa-building-user"></i>
+
+                        <span class="custom-option-title"> Registrarme como Empresa </span>
+                        <small>Soy representante de una empresa</small>
+                      </span>
+                      <input
+                        name="customRadioIcon"
+                        class="form-check-input"
+                        type="radio"
+                        value=""
+                        id="customRadioFlat"
+                      />
+                    </label>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+           
+           
+            <div class="col-12 d-flex justify-content-between mt-4">
+              <button class="btn btn-label-secondary btn-prev" disabled>
+                <i class="ti ti-arrow-left ti-xs me-sm-1 me-0"></i>
+                <span class="align-middle d-sm-inline-block d-none">Anterior</span>
+              </button>
+              <button class="btn btn-primary btn-next">
+                <span class="align-middle d-sm-inline-block d-none me-sm-1">Siguiente</span>
+                <i class="ti ti-arrow-right ti-xs"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Deal Details -->
+        <div id="deal-details" class="content">
+          <div class="row g-3">
+            <div class="col-sm-6">
+              <label class="form-label" for="dealTitle">Tipo de Documento</label>
+              <select id="selectpickerBasic" class="selectpicker w-100" data-style="btn-default">
+                <option>DNI</option>
+                <option>Pasaporte</option>
+                <option>Carnet de extranjería</option>
+                <option>RUC 10</option>
+                <option>RUC 20</option>
+              </select>
+            </div>
+            <div class="col-sm-6">
+              <label class="form-label" for="dealCode">Número de documento</label>
+              <input
+              type="text"
+              id="numeral-mask"
+              class="form-control numeral-mask"
+              placeholder="Ingrese su número de documento"
+            />
+            </div>
+            <div class="col-sm-6">
+              <label class="form-label" for="dealDescription">Adjunte una foto frontal de su documento</label>
+              <input type="file" class="form-control" id="basic-default-upload-file" required />
+            </div>
+            <div class="col-sm-6">
+              <div class="row">
+                <div class="col-12 mb-3">
+                  <label class="form-label" for="dealDescription">Adjunte una foto dorsal de su documento</label>
+                  <input type="file" class="form-control" id="basic-default-upload-file" required />
+                </div>
+                
+              </div>
+            </div>
+            <div class="col-sm-6">
+              
+              <label class="form-label" for="basic-icon-default-fullname" >Primer nombre</label>
+              <input
+                            type="text"
+                            class="form-control"
+                            id="basic-default-name"
+                            placeholder="Pablo"
+                            required
+                          />
+            </div>
+            <div class="col-sm-6">
+              <label class="form-label">Segundo nombre</label>
+              <div class="row">
+                <input
+                type="text"
+                class="form-control"
+                id="basic-default-name"
+                placeholder="Daniel"
+                required
+              />
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              
+              <label class="form-label" for="basic-icon-default-fullname" >Primer Apellido</label>
+              <input
+                            type="text"
+                            class="form-control"
+                            id="basic-default-name"
+                            placeholder="Perez"
+                            required
+                          />
+            </div>
+
+            <div class="col-sm-6">
+              
+              <label class="form-label" for="basic-icon-default-fullname" >Segundo Apellido</label>
+              <input
+                            type="text"
+                            class="form-control"
+                            id="basic-default-name"
+                            placeholder="Flores"
+                            required
+                          />
+            </div>
+
+            <div class="col-sm-6">
+              <label for="dealDuration" class="form-label">Fecha de nacimiento</label>
+              <input type="text" class="form-control" placeholder="YYYY-MM-DD" id="flatpickr-date" />
+            </div>
+
+            <div class="col-sm-6">
+              <label class="form-label" for="multicol-phone">Teléfono</label>
+              <input
+              type="text"
+              id="multicol-phone"
+              class="form-control phone-mask"
+              placeholder="658 799 8941"
+              aria-label="658 799 8941"
+            />
+            </div>
+
+
+            <div class="col-sm-6">
+              <label class="form-label" for="basic-default-phone">Número de celular</label>
+              <input
+                        type="text"
+                        id="multicol-phone"
+                        class="form-control phone-mask"
+                        placeholder="658 799 8941"
+                        aria-label="658 799 8941"
+                      />
+            </div>
+
+            <div class="col-sm-6">
+              <label class="form-label" for="basic-default-phone">Otro número de celular</label>
+              <input
+                        type="text"
+                        id="multicol-phone"
+                        class="form-control phone-mask"
+                        placeholder="658 799 8941"
+                        aria-label="658 799 8941"
+                      />
+            </div>
+           
+
+
+
+
+            <div class="col-12 d-flex justify-content-between mt-4">
+              <button class="btn btn-label-secondary btn-prev">
+                <i class="ti ti-arrow-left ti-xs me-sm-1 me-0"></i>
+                <span class="align-middle d-sm-inline-block d-none">Anterior</span>
+              </button>
+              <button class="btn btn-primary btn-next">
+                <span class="align-middle d-sm-inline-block d-none me-sm-1">Siguiente</span>
+                <i class="ti ti-arrow-right ti-xs"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Deal Usage -->
+        <div id="deal-usage" class="content">
+          <div class="row g-3">
+            <div class="col-sm-6">
+              <label class="form-label" for="multicol-country">Pais</label>
+                      <select id="multicol-country" class="select2 form-select" data-allow-clear="true">
+                        <option value="">Seleccionar</option>
+                        <option value="Australia">Australia</option>
+                        <option value="Bangladesh">Bangladesh</option>
+                        <option value="Belarus">Belarus</option>
+                        <option value="Brazil">Brazil</option>
+                        <option value="Canada">Canada</option>
+                        <option value="China">China</option>
+                        <option value="France">France</option>
+                        <option value="Germany">Germany</option>
+                        <option value="India">India</option>
+                        <option value="Indonesia">Indonesia</option>
+                        <option value="Israel">Israel</option>
+                        <option value="Italy">Italy</option>
+                        <option value="Japan">Japan</option>
+                        <option value="Korea">Korea, Republic of</option>
+                        <option value="Mexico">Mexico</option>
+                        <option value="Philippines">Philippines</option>
+                        <option value="Russia">Russian Federation</option>
+                        <option value="South Africa">South Africa</option>
+                        <option value="Thailand">Thailand</option>
+                        <option value="Turkey">Turkey</option>
+                        <option value="Ukraine">Ukraine</option>
+                        <option value="United Arab Emirates">United Arab Emirates</option>
+                        <option value="United Kingdom">United Kingdom</option>
+                        <option value="United States">United States</option>
+                      </select>
+            </div>
+            <div class="col-sm-6">
+              <label class="form-label" for="multicol-country">Departamento</label>
+                      <select id="multicol-country" class="select2 form-select" data-allow-clear="true">
+                        <option value="">Seleccionar</option>
+                        <option value="Australia">Australia</option>
+                        <option value="Bangladesh">Bangladesh</option>
+                        <option value="Belarus">Belarus</option>
+                        <option value="Brazil">Brazil</option>
+                        <option value="Canada">Canada</option>
+                        <option value="China">China</option>
+                        <option value="France">France</option>
+                        <option value="Germany">Germany</option>
+                        <option value="India">India</option>
+                        <option value="Indonesia">Indonesia</option>
+                        <option value="Israel">Israel</option>
+                        <option value="Italy">Italy</option>
+                        <option value="Japan">Japan</option>
+                        <option value="Korea">Korea, Republic of</option>
+                        <option value="Mexico">Mexico</option>
+                        <option value="Philippines">Philippines</option>
+                        <option value="Russia">Russian Federation</option>
+                        <option value="South Africa">South Africa</option>
+                        <option value="Thailand">Thailand</option>
+                        <option value="Turkey">Turkey</option>
+                        <option value="Ukraine">Ukraine</option>
+                        <option value="United Arab Emirates">United Arab Emirates</option>
+                        <option value="United Kingdom">United Kingdom</option>
+                        <option value="United States">United States</option>
+                      </select>
+            </div>
+            <div class="col-sm-6">
+              <label class="form-label" for="multicol-country">Ciudad</label>
+                      <select id="multicol-country" class="select2 form-select" data-allow-clear="true">
+                        <option value="">Seleccionar</option>
+                        <option value="Australia">Australia</option>
+                        <option value="Bangladesh">Bangladesh</option>
+                        <option value="Belarus">Belarus</option>
+                        <option value="Brazil">Brazil</option>
+                        <option value="Canada">Canada</option>
+                        <option value="China">China</option>
+                        <option value="France">France</option>
+                        <option value="Germany">Germany</option>
+                        <option value="India">India</option>
+                        <option value="Indonesia">Indonesia</option>
+                        <option value="Israel">Israel</option>
+                        <option value="Italy">Italy</option>
+                        <option value="Japan">Japan</option>
+                        <option value="Korea">Korea, Republic of</option>
+                        <option value="Mexico">Mexico</option>
+                        <option value="Philippines">Philippines</option>
+                        <option value="Russia">Russian Federation</option>
+                        <option value="South Africa">South Africa</option>
+                        <option value="Thailand">Thailand</option>
+                        <option value="Turkey">Turkey</option>
+                        <option value="Ukraine">Ukraine</option>
+                        <option value="United Arab Emirates">United Arab Emirates</option>
+                        <option value="United Kingdom">United Kingdom</option>
+                        <option value="United States">United States</option>
+                      </select>
+            </div>
+            <div class="col-sm-6">
+              <label class="form-label" for="multicol-country">Distrito</label>
+              <select id="multicol-country" class="select2 form-select" data-allow-clear="true">
+                <option value="">Seleccionar</option>
+                <option value="Australia">Australia</option>
+                <option value="Bangladesh">Bangladesh</option>
+                <option value="Belarus">Belarus</option>
+                <option value="Brazil">Brazil</option>
+                <option value="Canada">Canada</option>
+                <option value="China">China</option>
+                <option value="France">France</option>
+                <option value="Germany">Germany</option>
+                <option value="India">India</option>
+                <option value="Indonesia">Indonesia</option>
+                <option value="Israel">Israel</option>
+                <option value="Italy">Italy</option>
+                <option value="Japan">Japan</option>
+                <option value="Korea">Korea, Republic of</option>
+                <option value="Mexico">Mexico</option>
+                <option value="Philippines">Philippines</option>
+                <option value="Russia">Russian Federation</option>
+                <option value="South Africa">South Africa</option>
+                <option value="Thailand">Thailand</option>
+                <option value="Turkey">Turkey</option>
+                <option value="Ukraine">Ukraine</option>
+                <option value="United Arab Emirates">United Arab Emirates</option>
+                <option value="United Kingdom">United Kingdom</option>
+                <option value="United States">United States</option>
+              </select>
+            </div>
+            <div class="col-sm-12">
+              <label class="form-label" for="address-input">Dirección</label>
+              <input
+                type="text"
+                class="form-control"
+                id="address-input"
+                placeholder="Ingrese su dirección"
+              />
+            </div>
+            
+           
+            <div class="col-12 d-flex justify-content-between mt-4">
+              <button class="btn btn-label-secondary btn-prev">
+                <i class="ti ti-arrow-left ti-xs me-sm-1 me-0"></i>
+                <span class="align-middle d-sm-inline-block d-none">Anterior</span>
+              </button>
+              <button class="btn btn-primary btn-next">
+                <span class="align-middle d-sm-inline-block d-none me-sm-1">Siguiente</span>
+                <i class="ti ti-arrow-right ti-xs"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Review & Complete -->
+        <div id="review-complete" class="content">
+          <div class="row g-3">
+            <div class="col-lg-6">
+              <div class="row">
+                <div class="col-12 mb-0">
+                  <h3>!Ya casi terminamos! 🚀</h3>
+                  <p>Confirm your deal details information and submit to create it.</p>
+                </div>
+                <div class="col-12 mb-0">
+                  <table class="table table-borderless">
+                    <tbody>
+                      <tr>
+                        <label class="form-label" for="multicol-country">Ocupación</label>
+              <select id="multicol-country" class="select2 form-select" data-allow-clear="true">
+                <option value="">Seleccionar</option>
+                
+<option value="trabajador independiente">Trabajador(a) Independiente</option>	
+<option value="estudiante">Estudiante</option>				
+<option value="jubilado">Jubilado(a)</option>				
+<option value="obreo">Obrero(a)</option>				
+<option value="fuerzas armadas">Miembro de las fuerzas armadas/ miembro del clero</option>
+<option value="dependiente">Dependiente</option>				
+<option value="ama de casa">Ama de Casa</option>				
+option value="empleador">Empleador(a)</option>					
+<option value="desempleado">Desempleado</option>					
+<option value="trabajadora del hogar">Trabajador(a) del hogar</option>			
+<option value="no declara">No Declara</option>
+              </select>
+                      </tr>
+                      <tr><br>
+                        <label class="form-label">Confirme si es usted una persona politicamente expuesta</label>
+                        <div class="col mt-2">
+                          <div class="form-check form-check-inline">
+                            <input
+                              name="collapsible-address-type"
+                              class="form-check-input"
+                              type="radio"
+                              value="SI SOY"
+                              id="collapsible-address-type-home"
+                              checked=""
+                            />
+                            <label class="form-check-label" for="collapsible-address-type-home"
+                              >SI SOY</label
+                            >
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input
+                              name="collapsible-address-type"
+                              class="form-check-input"
+                              type="radio"
+                              value=""
+                              id="collapsible-address-type-office"
+                            />
+                            <label class="form-check-label" for="collapsible-address-type-office">
+                              NO SOY
+                            </label>
+                          </div>
+                        </div>
+                      </tr>
+                      <tr><br>
+                        <label class="form-label" for="basic-icon-default-fullname" >Cargo</label>
+              <input
+                            type="text"
+                            class="form-control"
+                            id="basic-default-name"
+                            placeholder="Ingrese su cargo"
+                            required
+                          />
+            </div>
+                        </td>
+                      </tr>
+                      <tr><br>
+                        <label class="form-label" for="basic-icon-default-fullname" >Lugar de trabajo</label>
+                        <input
+                                      type="text"
+                                      class="form-control"
+                                      id="basic-default-name"
+                                      placeholder="Ingrese su lugar de trabajo"
+                                      required
+                                    />
+                      </tr>
+                      
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-6 col-lg-5 d-flex justify-content-center border rounded pt-3">
+              <img
+                class="img-fluid"
+                src="../../assets/img/illustrations/wizard-create-deal-confirm.png"
+                alt="deal image cap"
+              />
+            </div>
+            <div class="col-md-12">
+              <label class="switch">
+                <input type="checkbox" class="switch-input" id="dealConfirmed" name="dealConfirmed" />
+                <span class="switch-toggle-slider">
+                  <span class="switch-on"></span>
+                  <span class="switch-off"></span>
+                </span>
+                <span class="switch-label"> Acepto los términos y condiciones.</span>
+              </label>
+            </div>
+            <div class="col-12 d-flex justify-content-between mt-4">
+              <button class="btn btn-label-secondary btn-prev">
+                <i class="ti ti-arrow-left ti-xs me-sm-1 me-0"></i>
+                <span class="align-middle d-sm-inline-block d-none">Anterior</span>
+              </button>
+              <button class="btn btn-success btn-submit btn-next">
+                <span class="align-middle d-sm-inline-block d-none me-sm-1">Registrar</span
+                ><i class="ti ti-check ti-xs"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- /Create Deal Wizard -->
+</div>
+<!-- / Content -->
+
+
+ 
+<!-- Core JS -->
+    <!-- build:js assets/vendor/js/core.js -->
+    <script src="../../assets/vendor/libs/jquery/jquery.js"></script>
+    <script src="../../assets/vendor/libs/popper/popper.js"></script>
+    <script src="../../assets/vendor/js/bootstrap.js"></script>
+    <script src="../../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="../../assets/vendor/libs/node-waves/node-waves.js"></script>
+
+    <script src="../../assets/vendor/libs/hammer/hammer.js"></script>
+    <script src="../../assets/vendor/libs/i18n/i18n.js"></script>
+    <script src="../../assets/vendor/libs/typeahead-js/typeahead.js"></script>
+
+    <script src="../../assets/vendor/js/menu.js"></script>
+    <!-- endbuild -->
+
+    <!-- Vendors JS -->
+    <script src="../../assets/vendor/libs/bs-stepper/bs-stepper.js"></script>
+    <script src="../../assets/vendor/libs/flatpickr/flatpickr.js"></script>
+    <script src="../../assets/vendor/libs/select2/select2.js"></script>
+    <script src="../../assets/vendor/libs/formvalidation/dist/js/FormValidation.min.js"></script>
+    <script src="../../assets/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js"></script>
+    <script src="../../assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js"></script>
+    <script src="../../assets/vendor/libs/bootstrap-select/bootstrap-select.js"></script>
+    <script src="../../assets/vendor/libs/select2/select2.js"></script>
+    <script src="../../assets/vendor/libs/moment/moment.js"></script>
+    <script src="../../assets/vendor/libs/flatpickr/flatpickr.js"></script>
+    <script src="../../assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+    <script src="../../assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js"></script>
+    <script src="../../assets/vendor/libs/jquery-timepicker/jquery-timepicker.js"></script>
+    <script src="../../assets/vendor/libs/pickr/pickr.js"></script>
+    <script src="../../assets/vendor/libs/cleavejs/cleave.js"></script>
+    <script src="../../assets/vendor/libs/cleavejs/cleave-phone.js"></script>
+    <!-- Main JS -->
+    <script src="../../assets/js/main.js"></script>
+
+    <!-- Page JS -->
+
+    <script src="../../assets/js/wizard-ex-create-deal.js"></script>
+    <script src="../../assets/js/forms-pickers.js"></script>
+    <script src="../../assets/js/form-layouts.js"></script>
+  </body>
+</html>

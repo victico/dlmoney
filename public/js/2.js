@@ -77,7 +77,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         name: "login"
       });
     }
-
+    console.log(this.isAuthenticated);
     // Simulate the delay page loading
     setTimeout(function () {
       // Remove page loader after some time
@@ -1818,11 +1818,11 @@ if(false) {}
 var map = {
 	"./dark.scss": [
 		"./resources/js/src/assets/sass/themes/layout/aside/dark.scss",
-		21
+		22
 	],
 	"./light.scss": [
 		"./resources/js/src/assets/sass/themes/layout/aside/light.scss",
-		22
+		23
 	]
 };
 function webpackAsyncContext(req) {
@@ -1857,11 +1857,11 @@ module.exports = webpackAsyncContext;
 var map = {
 	"./dark.scss": [
 		"./resources/js/src/assets/sass/themes/layout/brand/dark.scss",
-		23
+		24
 	],
 	"./light.scss": [
 		"./resources/js/src/assets/sass/themes/layout/brand/light.scss",
-		24
+		25
 	]
 };
 function webpackAsyncContext(req) {
@@ -1896,11 +1896,11 @@ module.exports = webpackAsyncContext;
 var map = {
 	"./dark.scss": [
 		"./resources/js/src/assets/sass/themes/layout/header/base/dark.scss",
-		25
+		26
 	],
 	"./light.scss": [
 		"./resources/js/src/assets/sass/themes/layout/header/base/light.scss",
-		26
+		27
 	]
 };
 function webpackAsyncContext(req) {
@@ -1935,11 +1935,11 @@ module.exports = webpackAsyncContext;
 var map = {
 	"./dark.scss": [
 		"./resources/js/src/assets/sass/themes/layout/header/menu/dark.scss",
-		27
+		28
 	],
 	"./light.scss": [
 		"./resources/js/src/assets/sass/themes/layout/header/menu/light.scss",
-		28
+		29
 	]
 };
 function webpackAsyncContext(req) {

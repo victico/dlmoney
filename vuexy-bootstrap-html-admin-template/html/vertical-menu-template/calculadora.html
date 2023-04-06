@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+
+<html
+  lang="en"
+  class="light-style layout-navbar-fixed layout-menu-fixed"
+  dir="ltr" data-theme="theme-default" data-assets-path="../../assets/" data-template="vertical-menu-template">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
+    <link rel="stylesheet" href="../../assets/vendor/css/calculadora.css" />
+
+    <title>Cuentas Bancarias | DLS Money - Casa de cambio online</title>
+
+<div class="cotizadorWrapper">
+  <div class="doubleColumns">
+      <div class="doubleColumn">
+          <div class="desc compra">
+              <center>&nbsp; Compramos USD &nbsp;</center> 
+          </div>	
+          <div class="title">
+              <center><span class="tipoCompra"><?php echo $tipoDeCambioApp['compra']; ?> </span></center>
+              <!-- <center><span class="tipoCompra"><?php //echo $applications->c_compra; ?> </span></center> -->
+          </div>
+      </div>
+      <div class="doubleColumn">
+          <div class="desc venta">
+              <center>&nbsp; Vendemos USD &nbsp;</center>
+          </div>   
+          <div class="title">
+              <span class="tipoVenta"><?php echo $tipoDeCambioApp['venta']; ?></span>
+              <!-- <span class="tipoVenta"><?php //echo $applications->c_venta; ?></span> -->
+          </div>
+      </div>
+  </div>	
+
+  <img class="btnConvertidor" src="<?php echo plugin_dir_url( __FILE__ ) . 'btnconvertir.png'; ?>" />
+
+  <div class="envias">
+      <span class="txt">TENGO</span>
+      <span class="moneda">PEN S/</span>
+      <!-- ------------------CAMBIO DE MATIAS (1000 -> 1,000)------------------ -->
+      <input type="text" class="money soles" value="1,000">
+      <!-- ------------------CAMBIO DE MATIAS------------------ -->
+      <span class="linea"></span>
+  </div>
+
+  <div class="recibes">
+      <span class="txt">QUIERO</span>
+      <input type="text" class="money usd" value="">
+      <span class="moneda">USD $</span>
+      <span class="linea"></span>
+  </div>
+
+<div class="btnoperacion">
+  <a href="https://dlsmoney.com/app/"> <button type="submit" class="centrartxt">¡INICIA TU OPERACIÓN! </button></a>	
+</div>
+
+
+</div>
+
+<br>
+
+
+
+<div class="centrartxt">
+  
+  <br><br><br>
+  <div class="terminos">¿Tienes más de U$10,000? <br> </div>
+  <div class="subterminos">Solicita tu cambio súper vip <a href="https://wa.me/51938123380" target="_new"><strong> AQUÍ</strong></a>  </div>
+</div>
+
+
+
+

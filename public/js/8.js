@@ -672,8 +672,8 @@ var render = function render() {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: _vm.selectedFundOrigin.operation_number,
-      expression: "selectedFundOrigin.operation_number"
+      value: _vm.newOperation.operation_number,
+      expression: "newOperation.operation_number"
     }],
     staticClass: "form-control",
     attrs: {
@@ -681,12 +681,12 @@ var render = function render() {
       placeholder: "Ingrese el número de operación"
     },
     domProps: {
-      value: _vm.selectedFundOrigin.operation_number
+      value: _vm.newOperation.operation_number
     },
     on: {
       input: function input($event) {
         if ($event.target.composing) return;
-        _vm.$set(_vm.selectedFundOrigin, "operation_number", $event.target.value);
+        _vm.$set(_vm.newOperation, "operation_number", $event.target.value);
       }
     }
   })])])]), _vm._v(" "), _c("div", {

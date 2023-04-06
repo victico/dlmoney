@@ -1,21 +1,39 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[10],{
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/view/pages/accounts/Personal.vue?vue&type=script&lang=js&":
-/*!********************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/view/pages/accounts/Personal.vue?vue&type=script&lang=js& ***!
-  \********************************************************************************************************************************************************************************/
+/***/ "./node_modules/@linways/table-to-excel/dist sync recursive":
+/*!********************************************************!*\
+  !*** ./node_modules/@linways/table-to-excel/dist sync ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function webpackEmptyContext(req) {
+	var e = new Error("Cannot find module '" + req + "'");
+	e.code = 'MODULE_NOT_FOUND';
+	throw e;
+}
+webpackEmptyContext.keys = function() { return []; };
+webpackEmptyContext.resolve = webpackEmptyContext;
+module.exports = webpackEmptyContext;
+webpackEmptyContext.id = "./node_modules/@linways/table-to-excel/dist sync recursive";
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/view/pages/reports/sbs-report.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/view/pages/reports/sbs-report.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _core_services_store_account_module__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/core/services/store/account.module */ "./resources/js/src/core/services/store/account.module.js");
-function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
-function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+/* harmony import */ var _core_services_store_report_module__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/core/services/store/report.module */ "./resources/js/src/core/services/store/report.module.js");
+/* harmony import */ var export_from_json__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! export-from-json */ "./node_modules/export-from-json/dist/esm/index.js");
+/* harmony import */ var _linways_table_to_excel__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @linways/table-to-excel */ "./node_modules/@linways/table-to-excel/dist/tableToExcel.js");
+/* harmony import */ var _linways_table_to_excel__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_linways_table_to_excel__WEBPACK_IMPORTED_MODULE_2__);
+
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -23,303 +41,378 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       mainAlert: false,
       mainAlertVariant: "",
       mainAlertMessage: "",
-      updateAlert: false,
-      updateAlertVariant: '',
-      updateAlertMessage: '',
-      preferentialAlert: false,
-      preferentialAlertVariant: '',
-      preferentialAlertMessage: '',
-      perPage: 10,
+      operationDataAlert: false,
+      operationDataAlertVariant: "",
+      operationDataAlertMessage: "",
+      allOperations: [],
+      operations: [],
+      dateFrom: this.getToday(new Date(), 'yyyy-MM-dd'),
+      //'2022-02-01'
+      dateTo: this.getToday(new Date(), 'yyyy-MM-dd'),
+      selectedOperation: {},
+      modalChangeStatusText: "",
+      searchId: "",
+      // Table variables
       currentPage: 1,
-      allPersonalAccounts: [],
-      personalAccounts: [],
-      selectedAccount: {},
+      totalItems: 0,
+      perPage: 15,
       fields: [{
-        key: 'id',
-        label: 'ID'
+        key: 'id_operation',
+        label: 'Codigo de la operación',
+        thStyle: {
+          textAlign: 'center',
+          width: 'max-content',
+          backgroundColor: '#1F4E78',
+          color: '#ffffff'
+        },
+        thAttr: this.getThAtt(),
+        tdAttr: this.getTdAtt(),
+        headerTitle: 'prueba'
+      }, {
+        key: 'created_at',
+        label: 'Fecha de la operación',
+        thStyle: {
+          textAlign: 'center',
+          width: 'max-content',
+          backgroundColor: '#1F4E78',
+          color: '#ffffff'
+        },
+        thAttr: this.getThAtt(),
+        tdAttr: this.getTdAtt()
       }, {
         key: 'name',
-        label: 'Nombre'
+        label: 'Nombre completo o Razón Social Cuenta de origen.',
+        thStyle: {
+          textAlign: 'center',
+          width: 'max-content',
+          backgroundColor: '#1F4E78',
+          color: '#ffffff'
+        },
+        thAttr: this.getThAtt(),
+        tdAttr: this.getTdAtt()
       }, {
-        key: 'surname',
-        label: 'Apellido'
+        key: 'type_doc',
+        label: 'Tipo de Doc',
+        thStyle: {
+          textAlign: 'center',
+          width: 'max-content',
+          backgroundColor: '#1F4E78',
+          color: '#ffffff'
+        },
+        thAttr: this.getThAtt(),
+        tdAttr: this.getTdAtt()
       }, {
-        key: 'document_type',
-        label: 'Tipo de documento'
+        key: 'number_doc',
+        label: 'N° Doc',
+        thStyle: {
+          textAlign: 'center',
+          width: 'max-content',
+          backgroundColor: '#1F4E78',
+          color: '#ffffff'
+        },
+        thAttr: this.getThAtt(),
+        tdAttr: this.getTdAtt()
       }, {
-        key: 'document_number',
-        label: 'Número de documento'
+        key: 'country',
+        label: 'Pais',
+        thStyle: {
+          textAlign: 'center',
+          width: 'max-content',
+          backgroundColor: '#1F4E78',
+          color: '#ffffff',
+          borderRight: '2px solid #000000'
+        },
+        thAttr: this.getThAtt(),
+        tdAttr: this.getTdAtt()
       }, {
-        key: 'phone',
-        label: 'Teléfono'
+        key: 'executer_name',
+        label: 'Nombre de la persona que realiza la operación',
+        thStyle: {
+          textAlign: 'center',
+          width: 'max-content',
+          backgroundColor: '#1F4E78',
+          color: '#ffffff'
+        },
+        thAttr: this.getThAtt(),
+        tdAttr: this.getTdAtt()
       }, {
-        key: 'address',
-        label: 'Domicilio'
+        key: 'executer_document_type',
+        label: 'Tipo de documento',
+        thStyle: {
+          textAlign: 'center',
+          width: 'max-content',
+          backgroundColor: '#1F4E78',
+          color: '#ffffff'
+        },
+        thAttr: this.getThAtt(),
+        tdAttr: this.getTdAtt()
       }, {
-        key: 'preferential',
-        label: 'Preferencial'
+        key: 'executer_document_number',
+        label: 'Número de documento',
+        thStyle: {
+          textAlign: 'center',
+          width: 'max-content',
+          backgroundColor: '#1F4E78',
+          color: '#ffffff'
+        },
+        thAttr: this.getThAtt(),
+        tdAttr: this.getTdAtt()
       }, {
-        key: 'deleted_at',
-        label: 'Estado'
+        key: 'executer_country',
+        label: 'País',
+        thStyle: {
+          textAlign: 'center',
+          width: 'max-content',
+          backgroundColor: '#1F4E78',
+          color: '#ffffff',
+          borderRight: '2px solid #000000'
+        },
+        thAttr: this.getThAtt(),
+        tdAttr: this.getTdAtt()
       }, {
-        key: 'actions',
-        label: 'Acciones'
-      }],
-      personalAccountSearchText: '',
-      personalAccountStatus: 'all'
+        key: 'benefic_name',
+        label: 'Nombre o razón social del titular de la cuenta de destino',
+        thStyle: {
+          textAlign: 'center',
+          width: 'max-content',
+          backgroundColor: '#1F4E78',
+          color: '#ffffff'
+        },
+        thAttr: this.getThAtt(),
+        tdAttr: this.getTdAtt()
+      }, {
+        key: 'benefic_document_type',
+        label: 'Tipo de documento',
+        thStyle: {
+          textAlign: 'center',
+          width: 'max-content',
+          backgroundColor: '#1F4E78',
+          color: '#ffffff'
+        },
+        thAttr: this.getThAtt(),
+        tdAttr: this.getTdAtt()
+      }, {
+        key: 'benefic_document_number',
+        label: 'Número de documento',
+        thStyle: {
+          textAlign: 'center',
+          width: 'max-content',
+          backgroundColor: '#1F4E78',
+          color: '#ffffff'
+        },
+        thAttr: this.getThAtt(),
+        tdAttr: this.getTdAtt()
+      }, {
+        key: 'benefic_country',
+        label: 'País ',
+        thStyle: {
+          textAlign: 'center',
+          width: 'max-content',
+          backgroundColor: '#1F4E78',
+          color: '#ffffff'
+        },
+        thAttr: this.getThAtt(),
+        tdAttr: this.getTdAtt()
+      }, {
+        key: 'operation_type',
+        label: 'Tipo de operación ',
+        thStyle: {
+          textAlign: 'center',
+          width: 'max-content',
+          backgroundColor: '#1F4E78',
+          color: '#ffffff',
+          borderRight: '2px solid #000000'
+        },
+        thAttr: this.getThAtt(),
+        tdAttr: this.getTdAtt()
+      }, {
+        key: 'to_currency',
+        label: 'A: Moneda',
+        thStyle: {
+          textAlign: 'center',
+          width: 'max-content',
+          backgroundColor: '#1F4E78',
+          color: '#ffffff'
+        },
+        thAttr: this.getThAtt(),
+        tdAttr: this.getTdAtt()
+      }, {
+        key: 'amount',
+        label: 'De: Monto',
+        thStyle: {
+          textAlign: 'center',
+          width: 'max-content',
+          backgroundColor: '#1F4E78',
+          color: '#ffffff'
+        },
+        thAttr: this.getThAtt(),
+        tdAttr: this.getTdAtt()
+      }, {
+        key: 'from_currency',
+        label: 'De: Moneda',
+        thStyle: {
+          textAlign: 'center',
+          width: 'max-content',
+          backgroundColor: '#1F4E78',
+          color: '#ffffff'
+        },
+        thAttr: this.getThAtt(),
+        tdAttr: this.getTdAtt()
+      }, {
+        key: 'change_amount',
+        label: 'A: Monto',
+        thStyle: {
+          textAlign: 'center',
+          width: 'max-content',
+          backgroundColor: '#1F4E78',
+          color: '#ffffff'
+        },
+        thAttr: this.getThAtt(),
+        tdAttr: this.getTdAtt()
+      }, {
+        key: 'exchange_rate',
+        label: 'Tipo de cambio',
+        thStyle: {
+          textAlign: 'center',
+          width: 'max-content',
+          backgroundColor: '#1F4E78',
+          color: '#ffffff'
+        },
+        thAttr: this.getThAtt(),
+        tdAttr: this.getTdAtt()
+      }, {
+        key: 'found_id',
+        label: 'Oringenes de fondo',
+        thStyle: {
+          textAlign: 'center',
+          width: 'max-content',
+          backgroundColor: '#1F4E78',
+          color: '#ffffff'
+        },
+        thAttr: this.getThAtt(),
+        tdAttr: this.getTdAtt()
+      }] //campos de la tabla sbs
     };
   },
   mounted: function mounted() {},
   methods: {
-    getPersonalAccounts: function getPersonalAccounts() {
+    getToday: function getToday(fecha, formato) {
+      //formato del filtro de fechas.
+      var map = {
+        dd: fecha.getDate() < 10 ? '0' + fecha.getDate() : fecha.getDate(),
+        MM: fecha.getMonth() + 1 < 10 ? '0' + (fecha.getMonth() + 1) : fecha.getMonth() + 1,
+        yyyy: fecha.getFullYear()
+      };
+      return formato.replace(/yyyy|MM|dd/gi, function (matched) {
+        return map[matched];
+      });
+    },
+    lastMonth: function lastMonth() {
+      var fecha = new Date();
+      var formato = 'yyyy-MM-dd';
+      var elx = document.getElementById('lastMonth').checked;
+      if (elx == true) {
+        var map = {
+          dd: '01',
+          MM: fecha.getMonth() < 10 ? '0' + fecha.getMonth() : fecha.getMonth(),
+          yyyy: fecha.getFullYear()
+        };
+        this.dateFrom = formato.replace(/yyyy|MM|dd/gi, function (matched) {
+          return map[matched];
+        });
+        var lastday = new Date(fecha.getFullYear(), fecha.getMonth(), 0);
+        map = {
+          dd: lastday.getDate(),
+          MM: fecha.getMonth() < 10 ? '0' + fecha.getMonth() : fecha.getMonth(),
+          yyyy: fecha.getFullYear()
+        };
+        this.dateTo = formato.replace(/yyyy|MM|dd/gi, function (matched) {
+          return map[matched];
+        });
+        this.getOperations();
+      }
+    },
+    lastSevenDays: function lastSevenDays() {
+      //formato del filtro de fechas.
+      var elx = document.getElementById('sevenDays').checked;
+      if (elx == true) {
+        var neW = Date.now() - 86400000 * 7;
+        neW = new Date(neW);
+        this.dateTo = this.getToday(new Date(), 'yyyy-MM-dd'), this.dateFrom = this.getToday(neW, 'yyyy-MM-dd');
+        this.getOperations();
+      }
+    },
+    lastFifteenDays: function lastFifteenDays() {
+      //formato del filtro de fechas.
+      var elx = document.getElementById('fifteenDays').checked;
+      if (elx == true) {
+        var neW = Date.now() - 86400000 * 15;
+        neW = new Date(neW);
+        this.dateTo = this.getToday(new Date(), 'yyyy-MM-dd'), this.dateFrom = this.getToday(neW, 'yyyy-MM-dd');
+        this.getOperations();
+      }
+    },
+    getOperations: function getOperations() {
       var _this = this;
-      this.$store.dispatch(_core_services_store_account_module__WEBPACK_IMPORTED_MODULE_0__["ACCOUNTS_PERSONAL_GET_ALL"], '?with_deleted=true').then(function (data) {
+      var query = '?';
+      var queryParams = ['page=' + this.currentPage];
+      queryParams.push('dateFrom=' + this.dateFrom);
+      queryParams.push('dateTo=' + this.dateTo);
+      for (var i = 0; i < queryParams.length; i++) {
+        if (i != 0) {
+          query += '&';
+        }
+        query += queryParams[i];
+      }
+      this.$store.dispatch(_core_services_store_report_module__WEBPACK_IMPORTED_MODULE_0__["REPORT_SBS_COMPLETE_GET_PAGINATED"], query).then(function (data) {
         if (data.code != 200) {
-          _this.showMainAlert('danger', 'Error desconocido al obtener todas las cuentas peronales.');
+          _this.showMainAlert('danger', 'Error desconocido al obtener las operaciones.');
           return;
         }
-        _this.allPersonalAccounts = data.data;
-        _this.personalAccounts = _this.allPersonalAccounts.map(function (personalAccount) {
-          return _objectSpread(_objectSpread({}, personalAccount), {}, {
-            document_type: personalAccount.document_type.name
-          });
-        });
+        _this.allOperations = data.data.data;
+        _this.operations = _this.allOperations;
+        // Table data
+        _this.totalItems = data.data.data.total;
+        _this.perPage = data.data.data.per_page;
       })["catch"](function (err) {
         _this.showMainAlert('danger', err);
       });
     },
-    updateAccount: function updateAccount(e) {
-      var _this2 = this;
-      // Prevent modal hide
-      e.preventDefault();
-      var id = this.$refs.id.value;
-      var name = this.$refs.name.value;
-      var surname = this.$refs.surname.value;
-      var document_type_id = this.$refs.document_type_id.value;
-      var document_number = this.$refs.document_number.value;
-      var birthdate = this.$refs.birthdate.value;
-      var phone = this.$refs.phone.value;
-      var cellphone1 = this.$refs.cellphone1.value;
-      var cellphone2 = this.$refs.cellphone2.value;
-      var country_id = this.$refs.country_id.value;
-      var department_id = this.$refs.department_id.value;
-      var province_id = this.$refs.province_id.value;
-      var district_id = this.$refs.district_id.value;
-      var address = this.$refs.address.value;
-      var ocupation_id = this.$refs.ocupation_id.value;
-      var exposed_person = this.selectedAccount.exposed_person;
-      var data;
-      if (exposed_person == 1) {
-        var position = this.$refs.position.value;
-        var workplace = this.$refs.workplace.value;
-        data = {
-          id: id,
-          name: name,
-          surname: surname,
-          document_type_id: document_type_id,
-          document_number: document_number,
-          birthdate: birthdate,
-          phone: phone,
-          cellphone1: cellphone1,
-          cellphone2: cellphone2,
-          country_id: country_id,
-          department_id: department_id,
-          province_id: province_id,
-          district_id: district_id,
-          address: address,
-          ocupation_id: ocupation_id,
-          exposed_person: exposed_person,
-          position: position,
-          workplace: workplace
-        };
-      } else {
-        data = {
-          id: id,
-          name: name,
-          surname: surname,
-          document_type_id: document_type_id,
-          document_number: document_number,
-          birthdate: birthdate,
-          phone: phone,
-          cellphone1: cellphone1,
-          cellphone2: cellphone2,
-          country_id: country_id,
-          department_id: department_id,
-          province_id: province_id,
-          district_id: district_id,
-          address: address,
-          ocupation_id: ocupation_id,
-          exposed_person: exposed_person
-        };
-      }
-      this.$store.dispatch(_core_services_store_account_module__WEBPACK_IMPORTED_MODULE_0__["ACCOUNTS_PERSONAL_UPDATE"], data).then(function (data) {
-        if (data.code != 200) {
-          _this2.showUpdateAlert('danger', data.error);
-          return;
-        }
-        var allPersonalAccountIndex = _this2.allPersonalAccounts.findIndex(function (personalAccount) {
-          return personalAccount.id == data.data.id;
-        });
-        if (allPersonalAccountIndex > -1) {
-          _this2.allPersonalAccounts[allPersonalAccountIndex] = data.data;
-        }
-        var personalAccountIndex = _this2.personalAccounts.findIndex(function (personalAccount) {
-          return personalAccount.id == data.data.id;
-        });
-        if (personalAccountIndex > -1) {
-          _this2.personalAccounts[personalAccountIndex] = _objectSpread(_objectSpread({}, _this2.allPersonalAccounts[allPersonalAccountIndex]), {}, {
-            document_type: data.data.document_type.name
-          });
-        }
+    exportReportToExcel: function exportReportToExcel() {
+      var table = document.getElementById('sbs-table'); //selecionamos la tabla
 
-        // Slice method is used to 'refresh' the personalAccounts variable to vuejs detect a change.
-        _this2.personalAccounts = _this2.personalAccounts.slice();
+      var row = ''; // cantidad de columnas, estos nos ayudara a determinar cuantas columnas hay y asi asignarle atributos o estilos
+      for (var index = 1; index < this.fields.length; index++) {
+        row += '30,'; //
+      }
 
-        // close modal
-        _this2.closeModal('modal-edit-info');
-        _this2.showMainAlert('success', 'Cuenta personal actualizada correctamente!');
-        return;
-      })["catch"](function (err) {
-        _this2.showUpdateAlert('danger', err);
-        return;
-      });
+      table.setAttribute('data-cols-width', row); // a cada columna le damos anchura de 30 points 
+
+      _linways_table_to_excel__WEBPACK_IMPORTED_MODULE_2___default.a.convert(table, {
+        name: "SBS-REPORT.xlsx",
+        sheet: {
+          name: 'Reporte SBS'
+        }
+      }); //exportamos el xlsx
     },
-    deleteAccount: function deleteAccount(personalAccountId) {
-      var _this3 = this;
-      this.$store.dispatch(_core_services_store_account_module__WEBPACK_IMPORTED_MODULE_0__["ACCOUNTS_PERSONAL_DELETE"], personalAccountId).then(function (data) {
-        if (data.code != 200) {
-          _this3.showMainAlert('danger', data.error);
-          return;
-        }
-        var allPersonalAccountIndex = _this3.allPersonalAccounts.findIndex(function (personalAccount) {
-          return personalAccount.id == data.data.id;
-        });
-        if (allPersonalAccountIndex > -1) {
-          _this3.allPersonalAccounts[allPersonalAccountIndex].deleted_at = data.data.deleted_at;
-        }
-        var personalAccountIndex = _this3.personalAccounts.findIndex(function (personalAccount) {
-          return personalAccount.id == data.data.id;
-        });
-        if (personalAccountIndex > -1) {
-          _this3.personalAccounts[personalAccountIndex].deleted_at = data.data.deleted_at;
-        }
-        _this3.showMainAlert('success', 'Cuenta personal eliminada correctamente!');
-      })["catch"](function (err) {
-        _this3.showMainAlert('danger', err);
-        return;
-      });
-    },
-    restoreAccount: function restoreAccount(personalAccountId) {
-      var _this4 = this;
-      this.$store.dispatch(_core_services_store_account_module__WEBPACK_IMPORTED_MODULE_0__["ACCOUNTS_PERSONAL_RESTORE"], personalAccountId).then(function (data) {
-        if (data.code != 200) {
-          _this4.showMainAlert('danger', data.error);
-          return;
-        }
-        var allPersonalAccountIndex = _this4.allPersonalAccounts.findIndex(function (personalAccount) {
-          return personalAccount.id == data.data.id;
-        });
-        if (allPersonalAccountIndex > -1) {
-          _this4.allPersonalAccounts[allPersonalAccountIndex].deleted_at = null;
-        }
-        var personalAccountIndex = _this4.personalAccounts.findIndex(function (personalAccount) {
-          return personalAccount.id == data.data.id;
-        });
-        if (personalAccountIndex > -1) {
-          _this4.personalAccounts[personalAccountIndex].deleted_at = null;
-        }
-        _this4.showMainAlert('success', 'Cuenta personal restaurada correctamente!');
-      })["catch"](function (err) {
-        _this4.showMainAlert('danger', err);
-        return;
-      });
-    },
-    setPreferential: function setPreferential(e) {
-      var _this5 = this;
-      e.preventDefault();
-      var id = this.selectedAccount.id;
-      var preferential_purchase = this.$refs.preferential_purchase.value;
-      var preferential_sale = this.$refs.preferential_sale.value;
-      if (!preferential_purchase) {
-        this.showPreferentialAlert('danger', 'Debe completar el valor de compra.');
-        return;
-      }
-      if (!preferential_sale) {
-        this.showPreferentialAlert('danger', 'Debe completar el valor de venta.');
-        return;
-      }
-      var data;
-      data = {
-        id: id,
-        preferential_purchase: preferential_purchase,
-        preferential_sale: preferential_sale
+    getThAtt: function getThAtt() {
+      var attr = {
+        'data-f-sz': '12',
+        'data-f-bold': true,
+        'data-f-color': 'FFFFFF',
+        'data-a-h': 'center',
+        'data-fill-color': '1F4E78',
+        'data-b-a-s': 'solid',
+        'data-b-a-c': '000000'
       };
-      this.$store.dispatch(_core_services_store_account_module__WEBPACK_IMPORTED_MODULE_0__["ACCOUNTS_PERSONAL_SET_PREFERENTIAL"], data).then(function (data) {
-        if (data.code != 200) {
-          _this5.showPreferentialAlert('danger', data.error);
-          return;
-        }
-        var allPersonalAccountIndex = _this5.allPersonalAccounts.findIndex(function (personalAccount) {
-          return personalAccount.id == data.data.id;
-        });
-        _this5.allPersonalAccounts[allPersonalAccountIndex].preferential = 1;
-        _this5.allPersonalAccounts[allPersonalAccountIndex].preferential_purchase = data.data.preferential_purchase;
-        _this5.allPersonalAccounts[allPersonalAccountIndex].preferential_sale = data.data.preferential_sale;
-        var personalAccountIndex = _this5.personalAccounts.findIndex(function (personalAccount) {
-          return personalAccount.id == data.data.id;
-        });
-        _this5.personalAccounts[personalAccountIndex].preferential = 1;
-        _this5.personalAccounts[personalAccountIndex].preferential_purchase = data.data.preferential_purchase;
-        _this5.personalAccounts[personalAccountIndex].preferential_sale = data.data.preferential_sale;
-
-        // close modal
-        _this5.closeModal('modal-set-preferential');
-        _this5.showMainAlert('success', 'Preferencial seteado correctamente!');
-        return;
-      })["catch"](function (err) {
-        _this5.showPreferentialAlert('danger', err);
-        return;
-      });
+      return attr; // Formato de estilos de las celdas Header 
     },
-    deletePreferential: function deletePreferential() {
-      var _this6 = this;
-      this.$store.dispatch(_core_services_store_account_module__WEBPACK_IMPORTED_MODULE_0__["ACCOUNTS_PERSONAL_DELETE_PREFERENTIAL"], this.selectedAccount.id).then(function (data) {
-        if (data.code != 200) {
-          _this6.showPreferentialAlert('danger', data.error);
-          return;
-        }
-        var allPersonalAccountIndex = _this6.allPersonalAccounts.findIndex(function (personalAccount) {
-          return personalAccount.id == data.data.id;
-        });
-        _this6.allPersonalAccounts[allPersonalAccountIndex].preferential = 0;
-        _this6.allPersonalAccounts[allPersonalAccountIndex].preferential_purchase = null;
-        _this6.allPersonalAccounts[allPersonalAccountIndex].preferential_sale = null;
-        var personalAccountIndex = _this6.personalAccounts.findIndex(function (personalAccount) {
-          return personalAccount.id == data.data.id;
-        });
-        _this6.personalAccounts[personalAccountIndex].preferential = 0;
-        _this6.personalAccounts[personalAccountIndex].preferential_purchase = null;
-        _this6.personalAccounts[personalAccountIndex].preferential_sale = null;
-
-        // close modal
-        _this6.closeModal('modal-set-preferential');
-        _this6.showMainAlert('success', 'Preferencial eliminado correctamente!');
-        return;
-      })["catch"](function (err) {
-        _this6.showPreferentialAlert('danger', err);
-        return;
-      });
-    },
-    updateSelectedAccount: function updateSelectedAccount(id) {
-      this.updateAlert = false;
-      this.updateAlertMessage = '';
-      this.updateAlertVariant = '';
-      this.preferentialAlert = false;
-      this.preferentialAlertVariant = '';
-      this.preferentialAlertMessage = '';
-      this.selectedAccount = Object.assign({}, this.allPersonalAccounts.find(function (account) {
-        return account.id === id;
-      }));
+    getTdAtt: function getTdAtt() {
+      var attr = {
+        'data-a-h': 'center',
+        'data-b-a-c': 'FF0000'
+      };
+      return attr; // Formato de estilos de las celdas Body
     },
     showMainAlert: function showMainAlert(variant, message) {
       this.mainAlertVariant = variant;
@@ -327,88 +420,30 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       this.mainAlert = true;
       window.scrollTo(0, 0);
     },
-    showUpdateAlert: function showUpdateAlert(variant, message) {
-      this.updateAlertVariant = variant;
-      this.updateAlertMessage = message;
-      this.updateAlert = true;
-    },
-    showPreferentialAlert: function showPreferentialAlert(variant, message) {
-      this.preferentialAlertVariant = variant;
-      this.preferentialAlertMessage = message;
-      this.preferentialAlert = true;
-    },
-    closeModal: function closeModal(modalId) {
-      this.$root.$emit('bv::hide::modal', modalId);
-    },
-    filterPersonalAccounts: function filterPersonalAccounts() {
-      if (this.personalAccountSearchText == '' && this.personalAccountStatus == 'all') {
-        this.resetFilters();
-        return;
-      }
-      this.personalAccounts = [];
-      for (var i = 0; i < this.allPersonalAccounts.length; i++) {
-        var includeFilters = false;
-        if (this.personalAccountSearchText != '') {
-          if (this.allPersonalAccounts[i].name.toLowerCase().includes(this.personalAccountSearchText.toLowerCase())) {
-            includeFilters = true;
-          }
-          if (this.allPersonalAccounts[i].surname.toLowerCase().includes(this.personalAccountSearchText.toLowerCase())) {
-            includeFilters = true;
-          }
-          if (this.allPersonalAccounts[i].document_number.includes(this.personalAccountSearchText.toLowerCase())) {
-            includeFilters = true;
-          }
-          if (this.allPersonalAccounts[i].phone.includes(this.personalAccountSearchText.toLowerCase())) {
-            includeFilters = true;
-          }
-          if (this.allPersonalAccounts[i].address.toLowerCase().includes(this.personalAccountSearchText.toLowerCase())) {
-            includeFilters = true;
-          }
-        }
-        if (this.personalAccountStatus != 'all') {
-          if (this.personalAccountStatus == 'deleted') {
-            if (this.allPersonalAccounts[i].deleted_at != null) {
-              includeFilters = true;
-            }
-          } else if (this.personalAccountStatus == 'not_deleted') {
-            if (this.allPersonalAccounts[i].deleted_at == null) {
-              includeFilters = true;
-            }
-          }
-        }
-        if (includeFilters) {
-          this.personalAccounts.push(_objectSpread(_objectSpread({}, this.allPersonalAccounts[i]), {}, {
-            document_type: this.allPersonalAccounts[i].document_type.name
-          }));
-        }
-      }
-    },
-    resetFilters: function resetFilters() {
-      this.personalAccountSearchText = '';
-      this.personalAccountStatus = 'all';
-      this.personalAccounts = this.allPersonalAccounts.map(function (personalAccount) {
-        return _objectSpread(_objectSpread({}, personalAccount), {}, {
-          document_type: personalAccount.document_type.name
-        });
-      });
+    resetFilterDasy: function resetFilterDasy() {
+      this.dateFrom = this.getToday(new Date(), 'yyyy-MM-dd'); //'2022-02-01'
+      this.dateTo = this.getToday(new Date(), 'yyyy-MM-dd');
     }
   },
-  computed: {
-    rows: function rows() {
-      return this.personalAccounts.length;
+  watch: {
+    currentPage: {
+      handler: function handler() {
+        this.getOperations();
+      }
     }
   },
+  computed: {},
   created: function created() {
-    this.getPersonalAccounts();
+    this.getOperations();
   }
 });
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/view/pages/accounts/Personal.vue?vue&type=template&id=5047f4bd&":
-/*!******************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/view/pages/accounts/Personal.vue?vue&type=template&id=5047f4bd& ***!
-  \******************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/view/pages/reports/sbs-report.vue?vue&type=template&id=6bfac8c9&":
+/*!*******************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/view/pages/reports/sbs-report.vue?vue&type=template&id=6bfac8c9& ***!
+  \*******************************************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -425,9 +460,7 @@ var render = function render() {
     staticClass: "col-lg-12 col-md-12 col-sm-12"
   }, [_c("div", {
     staticClass: "card card-custom gutter-b example example-compact"
-  }, [_vm._m(0), _vm._v(" "), _c("div", {
-    staticClass: "card-body"
-  }, [_vm.mainAlert ? _c("div", {
+  }, [_vm._m(0), _vm._v(" "), _vm.mainAlert ? _c("div", {
     staticClass: "row"
   }, [_c("div", {
     staticClass: "col-lg-12 col-md-12 col-sm-12"
@@ -444,191 +477,299 @@ var render = function render() {
       }
     }
   }, [_vm._v(_vm._s(_vm.mainAlertMessage))])], 1), _vm._v(" "), _c("hr")]) : _vm._e(), _vm._v(" "), _c("div", {
+    staticClass: "card-body"
+  }, [_c("div", {
     staticClass: "row m-2"
   }, [_c("div", {
-    staticClass: "col-lg-3 col-md-3 col-sm-12 mr-2"
+    staticClass: "col-lg-6 col-md-6 col-sm-12 d-flex"
   }, [_c("div", {
+    staticClass: "form-group mr-3 text-center"
+  }, [_c("label", [_vm._v("Fecha desde:")]), _vm._v(" "), _c("div", {}, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.dateFrom,
+      expression: "dateFrom"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "date",
+      placeholder: "Fecha de inicio"
+    },
+    domProps: {
+      value: _vm.dateFrom
+    },
+    on: {
+      change: function change($event) {
+        return _vm.getOperations();
+      },
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.dateFrom = $event.target.value;
+      }
+    }
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "form-group mr-3 text-center"
+  }, [_c("label", [_vm._v("Fecha hasta:")]), _vm._v(" "), _c("div", {}, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.dateTo,
+      expression: "dateTo"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "date",
+      placeholder: "Fecha de fin"
+    },
+    domProps: {
+      value: _vm.dateTo
+    },
+    on: {
+      change: function change($event) {
+        return _vm.getOperations();
+      },
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.dateTo = $event.target.value;
+      }
+    }
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "form-group mr-3 text-center"
+  }, [_c("label", [_vm._v("Buscar por Referencia:")]), _vm._v(" "), _c("div", {
     staticClass: "input-icon"
   }, [_c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: _vm.personalAccountSearchText,
-      expression: "personalAccountSearchText"
+      value: _vm.searchId,
+      expression: "searchId"
     }],
     staticClass: "form-control",
     attrs: {
       type: "text",
-      placeholder: "Buscar..."
+      placeholder: "Buscar por codigo de operación"
     },
     domProps: {
-      value: _vm.personalAccountSearchText
+      value: _vm.searchId
     },
     on: {
+      change: function change($event) {
+        return _vm.getOperations();
+      },
       input: function input($event) {
         if ($event.target.composing) return;
-        _vm.personalAccountSearchText = $event.target.value;
+        _vm.searchId = $event.target.value;
       }
     }
-  }), _vm._v(" "), _vm._m(1)])]), _vm._v(" "), _c("div", {
-    staticClass: "col-lg-3 col-md-3 col-sm-12 mr-2"
+  }), _vm._v(" "), _vm._m(1)])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-lg-3 col-md-3 col-sm-12"
   }, [_c("div", {
-    staticClass: "d-flex align-items-center"
-  }, [_c("label", {
-    staticClass: "mr-3 mb-0 d-none d-md-block"
-  }, [_vm._v("Estado:")]), _vm._v(" "), _c("select", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.personalAccountStatus,
-      expression: "personalAccountStatus"
-    }],
+    staticClass: "form-group"
+  }, [_c("label", [_vm._v("    ")]), _vm._v(" "), _c("br"), _vm._v(" "), _c("a", {
+    staticClass: "btn btn-light-primary font-weight-bold cursor-pointer",
+    on: {
+      click: function click($event) {
+        return _vm.exportReportToExcel();
+      }
+    }
+  }, [_vm._v("Descargar en EXCEL")])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-sm-12 d-flex"
+  }, [_c("div", {
+    staticClass: "col-sm-2 px-0"
+  }, [_c("div", {
+    staticClass: "form-group text-center d-flex align-items-center"
+  }, [_c("div", {
+    staticClass: "input-icon mr-2"
+  }, [_c("input", {
     staticClass: "form-control",
-    on: {
-      change: function change($event) {
-        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
-          return o.selected;
-        }).map(function (o) {
-          var val = "_value" in o ? o._value : o.value;
-          return val;
-        });
-        _vm.personalAccountStatus = $event.target.multiple ? $$selectedVal : $$selectedVal[0];
-      }
-    }
-  }, [_c("option", {
     attrs: {
-      value: "all"
-    }
-  }, [_vm._v("Todos")]), _vm._v(" "), _c("option", {
-    attrs: {
-      value: "not_deleted"
-    }
-  }, [_vm._v("Activos")]), _vm._v(" "), _c("option", {
-    attrs: {
-      value: "deleted"
-    }
-  }, [_vm._v("Eliminados")])])])]), _vm._v(" "), _c("div", {
-    staticClass: "col-lg-3 col-md-3 col-sm-12 mr-2"
-  }, [_c("a", {
-    staticClass: "btn btn-light-primary px-6 font-weight-bold cursor-pointer mr-2",
+      type: "radio",
+      id: "sevenDays",
+      name: "daysFilter"
+    },
     on: {
       click: function click($event) {
-        return _vm.filterPersonalAccounts();
+        return _vm.lastSevenDays();
       }
     }
-  }, [_vm._v("Buscar")]), _vm._v(" "), _c("a", {
-    staticClass: "btn btn-light-primary px-6 font-weight-bold cursor-pointer mr-2",
-    on: {
-      click: function click($event) {
-        return _vm.resetFilters();
-      }
-    }
-  }, [_vm._v("Resetear")])])]), _vm._v(" "), _c("hr"), _vm._v(" "), _c("div", {
-    staticClass: "row"
+  })]), _vm._v(" "), _c("span", [_vm._v("Ultimos 7 dias")])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-sm-2 px-0"
   }, [_c("div", {
-    staticClass: "col-lg-12 col-md-12 col-sm-12"
-  }, [_c("b-table", {
+    staticClass: "form-group text-center d-flex align-items-center"
+  }, [_c("div", {
+    staticClass: "input-icon mr-2"
+  }, [_c("input", {
+    staticClass: "form-control",
     attrs: {
-      id: "my-table",
+      type: "radio",
+      id: "fifteenDays",
+      name: "daysFilter"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.lastFifteenDays();
+      }
+    }
+  })]), _vm._v(" "), _c("span", [_vm._v("Ultimos 15 dias")])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-sm-2 px-0"
+  }, [_c("div", {
+    staticClass: "form-group text-center d-flex align-items-center"
+  }, [_c("div", {
+    staticClass: "input-icon mr-2"
+  }, [_c("input", {
+    staticClass: "form-control",
+    attrs: {
+      type: "radio",
+      id: "lastMonth",
+      name: "daysFilter"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.lastMonth();
+      }
+    }
+  })]), _vm._v(" "), _c("span", [_vm._v("Mes pasado")])])])])]), _vm._v(" "), _c("hr"), _vm._v(" "), _c("div", {
+    staticClass: "row tab-hidden"
+  }, [_c("div", {
+    staticClass: "col-lg-12 col-md-12 col-sm-12 my-4",
+    staticStyle: {
+      "max-width": "none",
+      width: "auto"
+    }
+  }, [_c("h2", {
+    staticClass: "mb-4"
+  }, [_vm._v(" Reporte de operaciones del " + _vm._s(_vm.dateFrom) + " hasta " + _vm._s(_vm.dateTo))]), _vm._v(" "), _c("b-table", {
+    attrs: {
+      id: "sbs-table",
       fields: _vm.fields,
-      items: _vm.personalAccounts,
-      "per-page": _vm.perPage,
+      items: _vm.operations,
+      "per-page": 0,
       "current-page": _vm.currentPage,
       "head-variant": "light",
       "table-variant": "light",
-      hover: ""
+      hover: "",
+      "show-empty": ""
     },
     scopedSlots: _vm._u([{
-      key: "cell(preferential)",
+      key: "cell(name)",
       fn: function fn(data) {
-        return [data.item.preferential == 1 ? _c("span", {
-          staticClass: "label label-lg label-light-success label-inline"
-        }, [_vm._v("Activo")]) : _c("span", {
-          staticClass: "label label-lg label-light-danger label-inline"
-        }, [_vm._v("Inactivo")])];
+        return [data.item.bank_account_send.personal_account != null ? _c("div", [_vm._v("\n                                      " + _vm._s(data.item.bank_account_send.personal_account.name) + " " + _vm._s(data.item.bank_account_send.personal_account.surname) + "\n                                  ")]) : data.item.bank_account_send.company_account != null ? _c("div", [_vm._v("\n                                      " + _vm._s(data.item.bank_account_send.company_account.business_name) + "\n                                  ")]) : _vm._e()];
       }
     }, {
-      key: "cell(deleted_at)",
+      key: "cell(type_doc)",
       fn: function fn(data) {
-        return [data.item.deleted_at ? _c("span", {
-          staticClass: "label label-lg label-light-danger label-inline"
-        }, [_vm._v("Eliminado")]) : _c("span", {
-          staticClass: "label label-lg label-light-success label-inline"
-        }, [_vm._v("Activo")])];
+        return [_vm._v("\n                                  " + _vm._s(data.item.bank_account_send.personal_account != null ? data.item.bank_account_send.personal_account.document_type.name : "RUC") + " \n                              ")];
       }
     }, {
-      key: "cell(actions)",
+      key: "cell(number_doc)",
       fn: function fn(data) {
-        return [data.item.deleted_at == null ? _c("a", {
-          directives: [{
-            name: "b-modal",
-            rawName: "v-b-modal.modal-edit-info",
-            modifiers: {
-              "modal-edit-info": true
-            }
-          }],
-          staticClass: "m-2",
-          attrs: {
-            title: "Editar cuenta"
-          },
-          on: {
-            click: function click($event) {
-              return _vm.updateSelectedAccount(data.item.id);
-            }
-          }
-        }, [_c("i", {
-          staticClass: "far fa-edit"
-        })]) : _vm._e(), _vm._v(" "), data.item.deleted_at == null ? _c("a", {
-          directives: [{
-            name: "b-modal",
-            rawName: "v-b-modal.modal-set-preferential",
-            modifiers: {
-              "modal-set-preferential": true
-            }
-          }],
-          staticClass: "m-2",
-          attrs: {
-            title: "Setear preferencial"
-          },
-          on: {
-            click: function click($event) {
-              return _vm.updateSelectedAccount(data.item.id);
-            }
-          }
-        }, [_c("i", {
-          staticClass: "fa fa-cog"
-        })]) : _vm._e(), _vm._v(" "), data.item.deleted_at == null ? _c("a", {
-          staticClass: "m-2 cursor-pointer",
-          attrs: {
-            title: "Eliminar cuenta"
-          },
-          on: {
-            click: function click($event) {
-              return _vm.deleteAccount(data.item.id);
-            }
-          }
-        }, [_c("i", {
-          staticClass: "fas fa-trash"
-        })]) : _vm._e(), _vm._v(" "), data.item.deleted_at != null ? _c("a", {
-          staticClass: "m-2 cursor-pointer",
-          attrs: {
-            title: "Restaurar cuenta"
-          },
-          on: {
-            click: function click($event) {
-              return _vm.restoreAccount(data.item.id);
-            }
-          }
-        }, [_c("i", {
-          staticClass: "fas fa-trash-restore-alt"
-        })]) : _vm._e()];
+        return [_vm._v("\n                                  " + _vm._s(data.item.bank_account_send.personal_account != null ? data.item.bank_account_send.personal_account.document_number : data.item.bank_account_send.company_account.ruc) + " \n                              ")];
       }
+    }, {
+      key: "cell(country)",
+      fn: function fn(data) {
+        return [_vm._v("\n                                  " + _vm._s(data.item.bank_account_send.personal_account != null ? data.item.bank_account_send.personal_account.country.name : data.item.bank_account_send.company_account.country.name) + " \n                              ")];
+      }
+    }, {
+      key: "cell(executer_name)",
+      fn: function fn(data) {
+        return [_vm._v("\n                                  " + _vm._s(data.item.bank_account_send.personal_account != null ? data.item.bank_account_send.personal_account.name + " " + data.item.bank_account_send.personal_account.surname : data.item.bank_account_send.company_account.name_lr + " " + data.item.bank_account_send.company_account.surname_lr) + " \n                              ")];
+      }
+    }, {
+      key: "cell(executer_document_type)",
+      fn: function fn(data) {
+        return [_vm._v("\n                                  " + _vm._s(data.item.bank_account_send.personal_account != null ? data.item.bank_account_send.personal_account.document_type.name : data.item.bank_account_send.company_account.document_type_lr.name) + " \n                              ")];
+      }
+    }, {
+      key: "cell(executer_document_number)",
+      fn: function fn(data) {
+        return [_vm._v("\n                                " + _vm._s(data.item.bank_account_send.personal_account != null ? data.item.bank_account_send.personal_account.document_number : data.item.bank_account_send.company_account.document_number_lr) + " \n                              ")];
+      }
+    }, {
+      key: "cell(executer_country)",
+      fn: function fn(data) {
+        return [_vm._v("\n                                " + _vm._s(data.item.bank_account_send.personal_account != null ? data.item.bank_account_send.personal_account.country.name : data.item.bank_account_send.company_account.country.name) + " \n                              ")];
+      }
+    }, {
+      key: "cell(benefic_name)",
+      fn: function fn(data) {
+        return [_vm._v("\n                                " + _vm._s(data.item.bank_account_receive.personal_account != null ? data.item.bank_account_receive.personal_account.name + " " + data.item.bank_account_receive.personal_account.surname : data.item.bank_account_receive.owner_name != null ? data.item.bank_account_receive.owner_name : data.item.bank_account_send.company_account.business_name) + "\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t")];
+      }
+    }, {
+      key: "cell(benefic_document_type)",
+      fn: function fn(data) {
+        return [_vm._v("\n                                " + _vm._s(data.item.bank_account_receive.personal_account != null ? data.item.bank_account_receive.personal_account.document_type.name : data.item.bank_account_receive.owner_document_type != null ? data.item.bank_account_receive.owner_document_type.name : "RUC") + "\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t")];
+      }
+    }, {
+      key: "cell(benefic_document_number)",
+      fn: function fn(data) {
+        return [_vm._v("\n                                " + _vm._s(data.item.bank_account_receive.personal_account != null ? data.item.bank_account_receive.personal_account.document_number : data.item.bank_account_receive.owner_document_number ? data.item.bank_account_receive.owner_document_number : data.item.bank_account_send.company_account.ruc) + " \n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t")];
+      }
+    }, {
+      key: "cell(benefic_country)",
+      fn: function fn(data) {
+        return [_vm._v("\n                                " + _vm._s(data.item.bank_account_receive.personal_account != null ? data.item.bank_account_receive.personal_account.country.name : data.item.bank_account_receive.company_account.country.name) + " \n                              ")];
+      }
+    }, {
+      key: "cell(operation_type)",
+      fn: function fn(data) {
+        return [_vm._v("\n                                " + _vm._s(data.item.bank_account_send.coin_type.code == "sol" ? "Compra de dolares" : "Venta de dolares") + " \n                              ")];
+      }
+    }, {
+      key: "cell(id_operation)",
+      fn: function fn(data) {
+        return [_vm._v("\n                                #" + _vm._s(data.item.operation_number != "null" ? data.item.operation_number : data.item.id) + " \n                              ")];
+      }
+    }, {
+      key: "cell(found_id)",
+      fn: function fn(data) {
+        return [_vm._v("\n                                  " + _vm._s(data.item.fund_origin.name) + "\n                              ")];
+      }
+    }, {
+      key: "cell(from_currency)",
+      fn: function fn(data) {
+        return [_vm._v("\n                                " + _vm._s(data.item.bank_account_receive.coin_type.name) + " \n                              ")];
+      }
+    }, {
+      key: "cell(amount)",
+      fn: function fn(data) {
+        return [_vm._v("\n                                " + _vm._s(_vm.$func.numberFormat(data.item.amount.toFixed(2))) + "\n                              ")];
+      }
+    }, {
+      key: "cell(to_currency)",
+      fn: function fn(data) {
+        return [_vm._v("\n                                " + _vm._s(data.item.bank_account_transfer.coin_type.name) + " \n                              ")];
+      }
+    }, {
+      key: "cell(change_amount)",
+      fn: function fn(data) {
+        return [_vm._v("\n                                  " + _vm._s(_vm.$func.numberFormat(data.item.change_amount.toFixed(2))) + "\n                              ")];
+      }
+    }, {
+      key: "cell(exchange_rate)",
+      fn: function fn(data) {
+        return [_vm._v("\n                                  " + _vm._s(_vm.$func.numberFormat(data.item.exchange_rate.toFixed(3))) + "\n                              ")];
+      }
+    }, {
+      key: "empty",
+      fn: function fn() {
+        return [_c("div", {
+          attrs: {
+            role: "alert",
+            "aria-live": "polite"
+          }
+        }, [_c("div", {
+          staticClass: "my-2"
+        }, [_vm._v("No se encontraron resultados.")])])];
+      },
+      proxy: true
     }])
   })], 1), _vm._v(" "), _c("div", {
     staticClass: "col-lg-12 col-md-12 col-sm-12"
   }, [_c("b-pagination", {
     attrs: {
-      "total-rows": _vm.rows,
+      "total-rows": _vm.totalItems,
       "per-page": _vm.perPage,
       "aria-controls": "my-table"
     },
@@ -639,724 +780,7 @@ var render = function render() {
       },
       expression: "currentPage"
     }
-  })], 1)])])])]), _vm._v(" "), Object.keys(_vm.selectedAccount).length ? _c("div", [_c("b-modal", {
-    attrs: {
-      id: "modal-edit-info",
-      size: "lg",
-      title: "Información de la cuenta",
-      "ok-title": "Actualizar",
-      "cancel-title": "Cancelar"
-    },
-    on: {
-      ok: function ok($event) {
-        return _vm.updateAccount($event);
-      }
-    }
-  }, [_c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.selectedAccount.id,
-      expression: "selectedAccount.id"
-    }],
-    ref: "id",
-    attrs: {
-      type: "hidden",
-      name: "id"
-    },
-    domProps: {
-      value: _vm.selectedAccount.id
-    },
-    on: {
-      input: function input($event) {
-        if ($event.target.composing) return;
-        _vm.$set(_vm.selectedAccount, "id", $event.target.value);
-      }
-    }
-  }), _vm._v(" "), _c("div", {
-    staticClass: "row"
-  }, [_c("div", {
-    staticClass: "col-lg-6 col-md-6 col-sm-6"
-  }, [_c("div", {
-    staticClass: "form-group"
-  }, [_c("label", [_vm._v("Nombre/s")]), _vm._v(" "), _c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.selectedAccount.name,
-      expression: "selectedAccount.name"
-    }],
-    ref: "name",
-    staticClass: "form-control",
-    attrs: {
-      type: "text",
-      name: "name",
-      placeholder: "Ingresa el nombre/s"
-    },
-    domProps: {
-      value: _vm.selectedAccount.name
-    },
-    on: {
-      input: function input($event) {
-        if ($event.target.composing) return;
-        _vm.$set(_vm.selectedAccount, "name", $event.target.value);
-      }
-    }
-  })])]), _vm._v(" "), _c("div", {
-    staticClass: "col-lg-6 col-md-6 col-sm-6"
-  }, [_c("div", {
-    staticClass: "form-group"
-  }, [_c("label", [_vm._v("Apellido/s")]), _vm._v(" "), _c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.selectedAccount.surname,
-      expression: "selectedAccount.surname"
-    }],
-    ref: "surname",
-    staticClass: "form-control",
-    attrs: {
-      type: "text",
-      name: "surname",
-      placeholder: "Ingresa el apellido/s"
-    },
-    domProps: {
-      value: _vm.selectedAccount.surname
-    },
-    on: {
-      input: function input($event) {
-        if ($event.target.composing) return;
-        _vm.$set(_vm.selectedAccount, "surname", $event.target.value);
-      }
-    }
-  })])])]), _vm._v(" "), _c("div", {
-    staticClass: "row"
-  }, [_c("div", {
-    staticClass: "col-lg-6 col-md-6 col-sm-6"
-  }, [_c("div", {
-    staticClass: "form-group"
-  }, [_c("label", [_vm._v("Tipo de documento")]), _vm._v(" "), _c("select", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.selectedAccount.document_type_id,
-      expression: "selectedAccount.document_type_id"
-    }],
-    ref: "document_type_id",
-    staticClass: "form-control",
-    attrs: {
-      name: "document_type_id"
-    },
-    on: {
-      change: function change($event) {
-        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
-          return o.selected;
-        }).map(function (o) {
-          var val = "_value" in o ? o._value : o.value;
-          return val;
-        });
-        _vm.$set(_vm.selectedAccount, "document_type_id", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
-      }
-    }
-  }, [_c("option", {
-    attrs: {
-      value: ""
-    }
-  }, [_vm._v("Selecciona el tipo de documento")]), _vm._v(" "), _c("option", {
-    attrs: {
-      value: "1"
-    }
-  }, [_vm._v("DNI")]), _vm._v(" "), _c("option", {
-    attrs: {
-      value: "AF"
-    }
-  }, [_vm._v("RELLENAR CON EL RESTO")])])])]), _vm._v(" "), _c("div", {
-    staticClass: "col-lg-6 col-md-6 col-sm-6"
-  }, [_c("div", {
-    staticClass: "form-group"
-  }, [_c("label", [_vm._v("Número de documento")]), _vm._v(" "), _c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.selectedAccount.document_number,
-      expression: "selectedAccount.document_number"
-    }],
-    ref: "document_number",
-    staticClass: "form-control",
-    attrs: {
-      type: "text",
-      name: "document_number",
-      placeholder: "Ingresa el número de documento"
-    },
-    domProps: {
-      value: _vm.selectedAccount.document_number
-    },
-    on: {
-      input: function input($event) {
-        if ($event.target.composing) return;
-        _vm.$set(_vm.selectedAccount, "document_number", $event.target.value);
-      }
-    }
-  })])])]), _vm._v(" "), _c("div", {
-    staticClass: "row"
-  }, [_c("div", {
-    staticClass: "col-lg-6 col-md-6 col-sm-6"
-  }, [_c("div", {
-    staticClass: "form-group"
-  }, [_c("label", [_vm._v("Fecha de nacimiento")]), _vm._v(" "), _c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.selectedAccount.birthdate,
-      expression: "selectedAccount.birthdate"
-    }],
-    ref: "birthdate",
-    staticClass: "form-control",
-    attrs: {
-      type: "date",
-      name: "birthdate",
-      placeholder: "Selecciona la fecha de nacimiento"
-    },
-    domProps: {
-      value: _vm.selectedAccount.birthdate
-    },
-    on: {
-      input: function input($event) {
-        if ($event.target.composing) return;
-        _vm.$set(_vm.selectedAccount, "birthdate", $event.target.value);
-      }
-    }
-  })])]), _vm._v(" "), _c("div", {
-    staticClass: "col-lg-6 col-md-6 col-sm-6"
-  }, [_c("div", {
-    staticClass: "form-group"
-  }, [_c("label", [_vm._v("Teléfono")]), _vm._v(" "), _c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.selectedAccount.phone,
-      expression: "selectedAccount.phone"
-    }],
-    ref: "phone",
-    staticClass: "form-control",
-    attrs: {
-      type: "text",
-      name: "phone",
-      placeholder: "Ingresa el número de telefono"
-    },
-    domProps: {
-      value: _vm.selectedAccount.phone
-    },
-    on: {
-      input: function input($event) {
-        if ($event.target.composing) return;
-        _vm.$set(_vm.selectedAccount, "phone", $event.target.value);
-      }
-    }
-  })])])]), _vm._v(" "), _c("div", {
-    staticClass: "row"
-  }, [_c("div", {
-    staticClass: "col-lg-6 col-md-6 col-sm-6"
-  }, [_c("div", {
-    staticClass: "form-group"
-  }, [_c("label", [_vm._v("Celular")]), _vm._v(" "), _c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.selectedAccount.cellphone1,
-      expression: "selectedAccount.cellphone1"
-    }],
-    ref: "cellphone1",
-    staticClass: "form-control",
-    attrs: {
-      type: "text",
-      name: "cellphone1",
-      placeholder: "Ingresa el número de celular"
-    },
-    domProps: {
-      value: _vm.selectedAccount.cellphone1
-    },
-    on: {
-      input: function input($event) {
-        if ($event.target.composing) return;
-        _vm.$set(_vm.selectedAccount, "cellphone1", $event.target.value);
-      }
-    }
-  })])]), _vm._v(" "), _c("div", {
-    staticClass: "col-lg-6 col-md-6 col-sm-6"
-  }, [_c("div", {
-    staticClass: "form-group"
-  }, [_c("label", [_vm._v("Otro celular")]), _vm._v(" "), _c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.selectedAccount.cellphone2,
-      expression: "selectedAccount.cellphone2"
-    }],
-    ref: "cellphone2",
-    staticClass: "form-control",
-    attrs: {
-      type: "text",
-      name: "cellphone2",
-      placeholder: "Ingresa otro número de celular"
-    },
-    domProps: {
-      value: _vm.selectedAccount.cellphone2
-    },
-    on: {
-      input: function input($event) {
-        if ($event.target.composing) return;
-        _vm.$set(_vm.selectedAccount, "cellphone2", $event.target.value);
-      }
-    }
-  })])])]), _vm._v(" "), _c("div", {
-    staticClass: "row"
-  }, [_c("div", {
-    staticClass: "col-lg-6 col-md-6 col-sm-6"
-  }, [_c("div", {
-    staticClass: "form-group"
-  }, [_c("label", [_vm._v("País")]), _vm._v(" "), _c("select", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.selectedAccount.country_id,
-      expression: "selectedAccount.country_id"
-    }],
-    ref: "country_id",
-    staticClass: "form-control",
-    attrs: {
-      name: "country_id"
-    },
-    on: {
-      change: function change($event) {
-        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
-          return o.selected;
-        }).map(function (o) {
-          var val = "_value" in o ? o._value : o.value;
-          return val;
-        });
-        _vm.$set(_vm.selectedAccount, "country_id", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
-      }
-    }
-  }, [_c("option", {
-    attrs: {
-      value: ""
-    }
-  }, [_vm._v("Selecciona el país")]), _vm._v(" "), _c("option", {
-    attrs: {
-      value: "1"
-    }
-  }, [_vm._v("Perú")]), _vm._v(" "), _c("option", {
-    attrs: {
-      value: "AF"
-    }
-  }, [_vm._v("RELLENAR CON EL RESTO")])])])]), _vm._v(" "), _c("div", {
-    staticClass: "col-lg-6 col-md-6 col-sm-6"
-  }, [_c("div", {
-    staticClass: "form-group"
-  }, [_c("label", [_vm._v("Departamento")]), _vm._v(" "), _c("select", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.selectedAccount.department_id,
-      expression: "selectedAccount.department_id"
-    }],
-    ref: "department_id",
-    staticClass: "form-control",
-    attrs: {
-      name: "department_id"
-    },
-    on: {
-      change: function change($event) {
-        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
-          return o.selected;
-        }).map(function (o) {
-          var val = "_value" in o ? o._value : o.value;
-          return val;
-        });
-        _vm.$set(_vm.selectedAccount, "department_id", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
-      }
-    }
-  }, [_c("option", {
-    attrs: {
-      value: ""
-    }
-  }, [_vm._v("Selecciona el departamento")]), _vm._v(" "), _c("option", {
-    attrs: {
-      value: "1"
-    }
-  }, [_vm._v("LIMA")]), _vm._v(" "), _c("option", {
-    attrs: {
-      value: "AF"
-    }
-  }, [_vm._v("RELLENAR CON EL RESTO")])])])])]), _vm._v(" "), _c("div", {
-    staticClass: "row"
-  }, [_c("div", {
-    staticClass: "col-lg-6 col-md-6 col-sm-6"
-  }, [_c("div", {
-    staticClass: "form-group"
-  }, [_c("label", [_vm._v("Provincia")]), _vm._v(" "), _c("select", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.selectedAccount.province_id,
-      expression: "selectedAccount.province_id"
-    }],
-    ref: "province_id",
-    staticClass: "form-control",
-    attrs: {
-      name: "province_id"
-    },
-    on: {
-      change: function change($event) {
-        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
-          return o.selected;
-        }).map(function (o) {
-          var val = "_value" in o ? o._value : o.value;
-          return val;
-        });
-        _vm.$set(_vm.selectedAccount, "province_id", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
-      }
-    }
-  }, [_c("option", {
-    attrs: {
-      value: ""
-    }
-  }, [_vm._v("Selecciona la provincia")]), _vm._v(" "), _c("option", {
-    attrs: {
-      value: "1"
-    }
-  }, [_vm._v("LIMA")]), _vm._v(" "), _c("option", {
-    attrs: {
-      value: "AF"
-    }
-  }, [_vm._v("RELLENAR CON EL RESTO")])])])]), _vm._v(" "), _c("div", {
-    staticClass: "col-lg-6 col-md-6 col-sm-6"
-  }, [_c("div", {
-    staticClass: "form-group"
-  }, [_c("label", [_vm._v("Distrito")]), _vm._v(" "), _c("select", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.selectedAccount.district_id,
-      expression: "selectedAccount.district_id"
-    }],
-    ref: "district_id",
-    staticClass: "form-control",
-    attrs: {
-      name: "district_id"
-    },
-    on: {
-      change: function change($event) {
-        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
-          return o.selected;
-        }).map(function (o) {
-          var val = "_value" in o ? o._value : o.value;
-          return val;
-        });
-        _vm.$set(_vm.selectedAccount, "district_id", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
-      }
-    }
-  }, [_c("option", {
-    attrs: {
-      value: ""
-    }
-  }, [_vm._v("Selecciona el distrito")]), _vm._v(" "), _c("option", {
-    attrs: {
-      value: "1"
-    }
-  }, [_vm._v("LIMA")]), _vm._v(" "), _c("option", {
-    attrs: {
-      value: "AF"
-    }
-  }, [_vm._v("RELLENAR CON EL RESTO")])])])])]), _vm._v(" "), _c("div", {
-    staticClass: "row"
-  }, [_c("div", {
-    staticClass: "col-lg-12 col-md-12 col-sm-12"
-  }, [_c("div", {
-    staticClass: "form-group"
-  }, [_c("label", [_vm._v("Dirección")]), _vm._v(" "), _c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.selectedAccount.address,
-      expression: "selectedAccount.address"
-    }],
-    ref: "address",
-    staticClass: "form-control",
-    attrs: {
-      type: "text",
-      name: "address",
-      placeholder: "Ingresa el domicilio"
-    },
-    domProps: {
-      value: _vm.selectedAccount.address
-    },
-    on: {
-      input: function input($event) {
-        if ($event.target.composing) return;
-        _vm.$set(_vm.selectedAccount, "address", $event.target.value);
-      }
-    }
-  })])])]), _vm._v(" "), _c("div", {
-    staticClass: "row"
-  }, [_c("div", {
-    staticClass: "col-lg-6 col-md-6 col-sm-6"
-  }, [_c("div", {
-    staticClass: "form-group"
-  }, [_c("label", [_vm._v("Ocupación")]), _vm._v(" "), _c("select", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.selectedAccount.ocupation_id,
-      expression: "selectedAccount.ocupation_id"
-    }],
-    ref: "ocupation_id",
-    staticClass: "form-control",
-    attrs: {
-      name: "ocupation_id"
-    },
-    on: {
-      change: function change($event) {
-        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
-          return o.selected;
-        }).map(function (o) {
-          var val = "_value" in o ? o._value : o.value;
-          return val;
-        });
-        _vm.$set(_vm.selectedAccount, "ocupation_id", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
-      }
-    }
-  }, [_c("option", {
-    attrs: {
-      value: ""
-    }
-  }, [_vm._v("Selecciona la ocupación")]), _vm._v(" "), _c("option", {
-    attrs: {
-      value: "1"
-    }
-  }, [_vm._v("Estudiante")]), _vm._v(" "), _c("option", {
-    attrs: {
-      value: "AF"
-    }
-  }, [_vm._v("RELLENAR CON EL RESTO")])])])])]), _vm._v(" "), _c("div", {
-    staticClass: "row"
-  }, [_c("div", {
-    staticClass: "col-xl-12"
-  }, [_c("div", {
-    staticClass: "form-group"
-  }, [_c("b-form-group", {
-    attrs: {
-      label: "Confirme por favor si usted es una persona políticamente expuesta."
-    }
-  }, [_c("b-form-radio", {
-    ref: "exposed_person",
-    attrs: {
-      checked: _vm.selectedAccount.exposed_person == 1,
-      name: "exposed_person",
-      size: "lg",
-      value: "1"
-    },
-    model: {
-      value: _vm.selectedAccount.exposed_person,
-      callback: function callback($$v) {
-        _vm.$set(_vm.selectedAccount, "exposed_person", $$v);
-      },
-      expression: "selectedAccount.exposed_person"
-    }
-  }, [_vm._v("Si, soy")]), _vm._v(" "), _c("b-form-radio", {
-    ref: "exposed_person",
-    attrs: {
-      checked: _vm.selectedAccount.exposed_person == 0,
-      name: "exposed_person",
-      size: "lg",
-      value: "0"
-    },
-    model: {
-      value: _vm.selectedAccount.exposed_person,
-      callback: function callback($$v) {
-        _vm.$set(_vm.selectedAccount, "exposed_person", $$v);
-      },
-      expression: "selectedAccount.exposed_person"
-    }
-  }, [_vm._v("No, no soy")])], 1)], 1)])]), _vm._v(" "), _vm.selectedAccount.exposed_person == 1 ? _c("div", {
-    staticClass: "row"
-  }, [_c("div", {
-    staticClass: "col-lg-6 col-md-6 col-sm-6"
-  }, [_c("div", {
-    staticClass: "form-group"
-  }, [_c("label", [_vm._v("Cargo")]), _vm._v(" "), _c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.selectedAccount.position,
-      expression: "selectedAccount.position"
-    }],
-    ref: "position",
-    staticClass: "form-control",
-    attrs: {
-      type: "text",
-      name: "position",
-      placeholder: "Ingresa el cargo"
-    },
-    domProps: {
-      value: _vm.selectedAccount.position
-    },
-    on: {
-      input: function input($event) {
-        if ($event.target.composing) return;
-        _vm.$set(_vm.selectedAccount, "position", $event.target.value);
-      }
-    }
-  })])]), _vm._v(" "), _c("div", {
-    staticClass: "col-lg-6 col-md-6 col-sm-6"
-  }, [_c("div", {
-    staticClass: "form-group"
-  }, [_c("label", [_vm._v("Lugar de trabajo")]), _vm._v(" "), _c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.selectedAccount.workplace,
-      expression: "selectedAccount.workplace"
-    }],
-    ref: "workplace",
-    staticClass: "form-control",
-    attrs: {
-      type: "text",
-      name: "workplace",
-      placeholder: "Ingresa el lugar de trabajo"
-    },
-    domProps: {
-      value: _vm.selectedAccount.workplace
-    },
-    on: {
-      input: function input($event) {
-        if ($event.target.composing) return;
-        _vm.$set(_vm.selectedAccount, "workplace", $event.target.value);
-      }
-    }
-  })])])]) : _vm._e(), _vm._v(" "), _vm.updateAlert ? _c("div", {
-    staticClass: "row"
-  }, [_c("div", {
-    staticClass: "col-lg-12 col-md-12 col-sm-12"
-  }, [_c("b-alert", {
-    attrs: {
-      show: "",
-      variant: _vm.updateAlertVariant
-    }
-  }, [_vm._v(_vm._s(_vm.updateAlertMessage))])], 1)]) : _vm._e()]), _vm._v(" "), _c("b-modal", {
-    attrs: {
-      id: "modal-set-preferential",
-      title: "Tipo de cambio preferencial",
-      "ok-title": "Guardar",
-      "cancel-title": "Cancelar"
-    },
-    on: {
-      ok: function ok($event) {
-        return _vm.setPreferential($event);
-      }
-    }
-  }, [_c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.selectedAccount.id,
-      expression: "selectedAccount.id"
-    }],
-    ref: "id",
-    attrs: {
-      type: "hidden",
-      name: "id"
-    },
-    domProps: {
-      value: _vm.selectedAccount.id
-    },
-    on: {
-      input: function input($event) {
-        if ($event.target.composing) return;
-        _vm.$set(_vm.selectedAccount, "id", $event.target.value);
-      }
-    }
-  }), _vm._v(" "), _c("div", {
-    staticClass: "row"
-  }, [_c("div", {
-    staticClass: "col-lg-12 col-md-12 col-sm-12"
-  }, [_c("div", {
-    staticClass: "form-group"
-  }, [_c("label", [_vm._v("Compra")]), _vm._v(" "), _c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.selectedAccount.preferential_purchase,
-      expression: "selectedAccount.preferential_purchase"
-    }],
-    ref: "preferential_purchase",
-    staticClass: "form-control",
-    attrs: {
-      type: "text",
-      name: "preferential_purchase",
-      placeholder: "Ingresa el valor de compra"
-    },
-    domProps: {
-      value: _vm.selectedAccount.preferential_purchase
-    },
-    on: {
-      input: function input($event) {
-        if ($event.target.composing) return;
-        _vm.$set(_vm.selectedAccount, "preferential_purchase", $event.target.value);
-      }
-    }
-  })])]), _vm._v(" "), _c("div", {
-    staticClass: "col-lg-12 col-md-12 col-sm-12"
-  }, [_c("div", {
-    staticClass: "form-group"
-  }, [_c("label", [_vm._v("Venta")]), _vm._v(" "), _c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.selectedAccount.preferential_sale,
-      expression: "selectedAccount.preferential_sale"
-    }],
-    ref: "preferential_sale",
-    staticClass: "form-control",
-    attrs: {
-      type: "text",
-      name: "preferential_sale",
-      placeholder: "Ingresa el valor de venta"
-    },
-    domProps: {
-      value: _vm.selectedAccount.preferential_sale
-    },
-    on: {
-      input: function input($event) {
-        if ($event.target.composing) return;
-        _vm.$set(_vm.selectedAccount, "preferential_sale", $event.target.value);
-      }
-    }
-  })])])]), _vm._v(" "), _vm.selectedAccount.preferential == 1 ? _c("b-button", {
-    staticClass: "mt-3",
-    attrs: {
-      variant: "outline-danger",
-      block: ""
-    },
-    on: {
-      click: function click($event) {
-        return _vm.deletePreferential();
-      }
-    }
-  }, [_vm._v("Eliminar tipo de cambio preferencial")]) : _vm._e(), _vm._v(" "), _vm.preferentialAlert ? _c("div", {
-    staticClass: "row"
-  }, [_c("div", {
-    staticClass: "col-lg-12 col-md-12 col-sm-12"
-  }, [_c("b-alert", {
-    "class": {
-      "mt-2": _vm.selectedAccount.preferential == 1
-    },
-    attrs: {
-      show: "",
-      variant: _vm.preferentialAlertVariant
-    }
-  }, [_vm._v(_vm._s(_vm.preferentialAlertMessage))])], 1)]) : _vm._e()], 1)], 1) : _vm._e()]);
+  })], 1)])])])])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -1366,10 +790,10 @@ var staticRenderFns = [function () {
   }, [_c("div", {
     staticClass: "row w-100"
   }, [_c("div", {
-    staticClass: "col-lg-12 col-md-12 col-sm-12"
+    staticClass: "col-lg-4 col-md-12 col-sm-12"
   }, [_c("h3", {
     staticClass: "pt-4"
-  }, [_c("strong", [_vm._v("Cuentas Personales")])])])])]);
+  }, [_c("strong", [_vm._v("Reporte")])])])])]);
 }, function () {
   var _vm = this,
     _c = _vm._self._c;
@@ -1382,17 +806,17 @@ render._withStripped = true;
 
 /***/ }),
 
-/***/ "./resources/js/src/view/pages/accounts/Personal.vue":
-/*!***********************************************************!*\
-  !*** ./resources/js/src/view/pages/accounts/Personal.vue ***!
-  \***********************************************************/
+/***/ "./resources/js/src/view/pages/reports/sbs-report.vue":
+/*!************************************************************!*\
+  !*** ./resources/js/src/view/pages/reports/sbs-report.vue ***!
+  \************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Personal_vue_vue_type_template_id_5047f4bd___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Personal.vue?vue&type=template&id=5047f4bd& */ "./resources/js/src/view/pages/accounts/Personal.vue?vue&type=template&id=5047f4bd&");
-/* harmony import */ var _Personal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Personal.vue?vue&type=script&lang=js& */ "./resources/js/src/view/pages/accounts/Personal.vue?vue&type=script&lang=js&");
+/* harmony import */ var _sbs_report_vue_vue_type_template_id_6bfac8c9___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./sbs-report.vue?vue&type=template&id=6bfac8c9& */ "./resources/js/src/view/pages/reports/sbs-report.vue?vue&type=template&id=6bfac8c9&");
+/* harmony import */ var _sbs_report_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./sbs-report.vue?vue&type=script&lang=js& */ "./resources/js/src/view/pages/reports/sbs-report.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -1402,9 +826,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _Personal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _Personal_vue_vue_type_template_id_5047f4bd___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _Personal_vue_vue_type_template_id_5047f4bd___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _sbs_report_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _sbs_report_vue_vue_type_template_id_6bfac8c9___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _sbs_report_vue_vue_type_template_id_6bfac8c9___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -1414,38 +838,38 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/src/view/pages/accounts/Personal.vue"
+component.options.__file = "resources/js/src/view/pages/reports/sbs-report.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/src/view/pages/accounts/Personal.vue?vue&type=script&lang=js&":
-/*!************************************************************************************!*\
-  !*** ./resources/js/src/view/pages/accounts/Personal.vue?vue&type=script&lang=js& ***!
-  \************************************************************************************/
+/***/ "./resources/js/src/view/pages/reports/sbs-report.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/src/view/pages/reports/sbs-report.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Personal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./Personal.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/view/pages/accounts/Personal.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Personal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_sbs_report_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./sbs-report.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/view/pages/reports/sbs-report.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_sbs_report_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/src/view/pages/accounts/Personal.vue?vue&type=template&id=5047f4bd&":
-/*!******************************************************************************************!*\
-  !*** ./resources/js/src/view/pages/accounts/Personal.vue?vue&type=template&id=5047f4bd& ***!
-  \******************************************************************************************/
+/***/ "./resources/js/src/view/pages/reports/sbs-report.vue?vue&type=template&id=6bfac8c9&":
+/*!*******************************************************************************************!*\
+  !*** ./resources/js/src/view/pages/reports/sbs-report.vue?vue&type=template&id=6bfac8c9& ***!
+  \*******************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_Personal_vue_vue_type_template_id_5047f4bd___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./Personal.vue?vue&type=template&id=5047f4bd& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/view/pages/accounts/Personal.vue?vue&type=template&id=5047f4bd&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_Personal_vue_vue_type_template_id_5047f4bd___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_sbs_report_vue_vue_type_template_id_6bfac8c9___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./sbs-report.vue?vue&type=template&id=6bfac8c9& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/view/pages/reports/sbs-report.vue?vue&type=template&id=6bfac8c9&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_sbs_report_vue_vue_type_template_id_6bfac8c9___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_Personal_vue_vue_type_template_id_5047f4bd___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_sbs_report_vue_vue_type_template_id_6bfac8c9___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

@@ -19,41 +19,72 @@
 
               <div class="card-body">
                   <div class="row m-2">
-                      <div class="col-lg-5 col-md-5 col-sm-12 d-flex">
+                      <div class="col-lg-6  col-md-6 col-sm-12 d-flex">
                           <div class="form-group mr-3 text-center">
                               <label>Fecha desde:</label>
-                              <div class="input-icon">
-                                  <input type="date" class="form-control" placeholder="Fecha de inicio" v-model="dateFrom">
-                                  <span>
-                                      <i class="flaticon2-search-1 text-muted"></i>
-                                  </span>
+                              <div class="">
+                                  <input type="date" class="form-control" @change="getOperations()" placeholder="Fecha de inicio" v-model="dateFrom">
                               </div>
                           </div>
                           <div class="form-group mr-3 text-center">
                               <label>Fecha hasta:</label>
+                              <div class="">
+                                  <input type="date" class="form-control" @change="getOperations()" placeholder="Fecha de fin" v-model="dateTo">
+                                  
+                              </div>
+                          </div>
+                          <div class="form-group mr-3 text-center">
+                              <label>Buscar por Referencia:</label>
                               <div class="input-icon">
-                                  <input type="date" class="form-control" placeholder="Fecha de fin" v-model="dateTo">
+                                  <input type="text" class="form-control" @change="getOperations()" placeholder="Buscar por codigo de operación" v-model="searchId">
                                   <span>
                                       <i class="flaticon2-search-1 text-muted"></i>
                                   </span>
                               </div>
                           </div>
                       </div>
-                      <div class="col-lg-5 col-md-5 col-sm-12">
+                      <div class="col-lg-3 col-md-3 col-sm-12">
                           <div class="form-group">
                               <label>&nbsp;&nbsp;&nbsp;&nbsp;</label>
                               <br>
-                              <a class="btn btn-light-primary px-3 font-weight-bold cursor-pointer mr-2" @click="getOperations()">Buscar</a>
+                              <!-- <a class="btn btn-light-primary px-3 font-weight-bold cursor-pointer mr-2" @click="getOperations()">Buscar</a> -->
                               <!-- <a class="btn btn-light-primary px-3 font-weight-bold cursor-pointer mr-2" @click="resetFilters()">Resetear</a> -->
-                              <a class="btn btn-light-primary px-3 font-weight-bold cursor-pointer" @click="exportReportToExcel()">Descargar en EXCEL</a>
+                              <a class="btn btn-light-primary font-weight-bold cursor-pointer" @click="exportReportToExcel()">Descargar en EXCEL</a>
                             </div>
+                      </div>
+                      <div class="col-sm-12 d-flex">
+                        <div class="col-sm-2 px-0">
+                          <div class="form-group text-center d-flex align-items-center">
+                            <div class="input-icon mr-2">
+                              <input type="radio" id="sevenDays" name="daysFilter" class="form-control" @click="lastSevenDays()" >
+                            </div>
+                            <span>Ultimos 7 dias</span>
+                          </div>
+                        </div>
+                        <div class="col-sm-2 px-0">
+                          <div class="form-group text-center d-flex align-items-center">
+                            <div class="input-icon mr-2">
+                              <input type="radio" id="fifteenDays" name="daysFilter" class="form-control" @click="lastFifteenDays()" >
+                            </div>
+                            <span>Ultimos 15 dias</span>
+                          </div>
+                        </div>
+                        <div class="col-sm-2 px-0">
+                          <div class="form-group text-center d-flex align-items-center">
+                            <div class="input-icon mr-2">
+                              <input type="radio" id="lastMonth" name="daysFilter" class="form-control" @click="lastMonth()" >
+                            </div>
+                            <span>Mes pasado</span>
+                          </div>
+                        </div>
                       </div>
                   </div>
 
                   <hr>
 
                   <div class="row tab-hidden">
-                      <div class="col-lg-12 col-md-12 col-sm-12 text-center" style="max-width: none; width: auto;">
+                      <div class="col-lg-12 col-md-12 col-sm-12 my-4" style="max-width: none; width: auto;">
+                        <h2 class="mb-4"> Reporte de operaciones del {{ dateFrom }} hasta {{ dateTo }}</h2>
                           <!-- Set per-page to 0 to disable local pagination -->
                           <b-table
                               id="sbs-table"
@@ -194,7 +225,7 @@
                                   {{ $func.numberFormat(data.item.exchange_rate.toFixed(3)) }}
                               </template>
                               <template #empty="">
-                                  <div role="alert" aria-live="polite"><div class="text-center my-2">No se encontraron resultados.</div></div>
+                                  <div role="alert" aria-live="polite"><div class=" my-2">No se encontraron resultados.</div></div>
                               </template>
                           </b-table>
                       </div>
@@ -217,7 +248,7 @@
 <script>
   import { REPORT_SBS_COMPLETE_GET_PAGINATED } from "@/core/services/store/report.module";
   import exportFromJSON from "export-from-json"
-  import TableToExcel from "@linways/table-to-excel";
+  import TableToExcel, { date } from "@linways/table-to-excel";
 
   export default {
       data() {
@@ -226,14 +257,15 @@
               mainAlertVariant: "",
               mainAlertMessage: "",
               operationDataAlert: false,
-              operationDataAlertVariant: '',
-              operationDataAlertMessage: '',
+              operationDataAlertVariant: "",
+              operationDataAlertMessage: "",
               allOperations: [],
               operations: [],
-              dateFrom: '2022-02-01',
+              dateFrom: this.getToday(new Date,'yyyy-MM-dd'), //'2022-02-01'
               dateTo: this.getToday(new Date,'yyyy-MM-dd'),
               selectedOperation: {},
               modalChangeStatusText: "",
+              searchId:"",
               // Table variables
               currentPage: 1,
               totalItems : 0,
@@ -244,7 +276,8 @@
                       label: 'Codigo de la operación',
                       thStyle:{ textAlign: 'center', width: 'max-content', backgroundColor: '#1F4E78', color:'#ffffff',},
                       thAttr:this.getThAtt(),
-                      tdAttr:this.getTdAtt()
+                      tdAttr:this.getTdAtt(),
+                      headerTitle: 'prueba'
                   },
                   {
                       key: 'created_at',
@@ -392,31 +425,76 @@
           }
       },
       mounted() {
-        
       },
       methods: {
           getToday(fecha, formato){
             //formato del filtro de fechas.
             const map = {
-              dd: fecha.getDate() < '10' ? '0' + fecha.getDate() : fecha.getDate()  ,
-              MM: (fecha.getMonth() + 1) < 10 ? '0' + (fecha.getMonth() + 1): '0' + (fecha.getMonth() + 1) ,
+              dd: fecha.getDate() < 10 ? '0' + fecha.getDate() : fecha.getDate()  ,
+              MM: (fecha.getMonth() + 1) < 10 ? '0' + (fecha.getMonth() + 1) : (fecha.getMonth() + 1) ,
               yyyy: fecha.getFullYear()
             }
             return formato.replace(/yyyy|MM|dd/gi, matched => map[matched])
+          },
+
+          lastMonth(){
+            const fecha = new Date;
+            const formato = 'yyyy-MM-dd';
+            let elx = document.getElementById('lastMonth').checked;
+            if(elx == true){
+              let map = {
+                dd: '01',
+                MM: (fecha.getMonth()) < 10 ? '0' + (fecha.getMonth()) : (fecha.getMonth()) ,
+                yyyy: fecha.getFullYear()
+              }
+              this.dateFrom = formato.replace(/yyyy|MM|dd/gi, matched => map[matched])
+
+              
+              let lastday= new Date(fecha.getFullYear(), fecha.getMonth(), 0)
+              map = {
+                dd: lastday.getDate(),
+                MM: (fecha.getMonth()) < 10 ? '0' + (fecha.getMonth()) : (fecha.getMonth()) ,
+                yyyy: fecha.getFullYear()
+              }
+              this.dateTo =  formato.replace(/yyyy|MM|dd/gi, matched => map[matched])
+              this.getOperations()
+            }
+          },
+
+          lastSevenDays(){
+            //formato del filtro de fechas.
+            let elx = document.getElementById('sevenDays').checked;
+            if(elx == true){
+              let neW= Date.now() - (86400000*7);
+              neW = new Date(neW)
+              this.dateTo   = this.getToday(new Date,'yyyy-MM-dd'),
+              this.dateFrom = this.getToday(neW,'yyyy-MM-dd');
+              this.getOperations()
+            }
+          },
+          lastFifteenDays(){
+            //formato del filtro de fechas.
+            let elx = document.getElementById('fifteenDays').checked;
+            if(elx == true){
+              let neW= Date.now() - (86400000*15);
+              neW = new Date(neW)
+              this.dateTo   = this.getToday(new Date,'yyyy-MM-dd'),
+              this.dateFrom = this.getToday(neW,'yyyy-MM-dd');
+              this.getOperations()
+            }
           },
           getOperations () {
               let query = '?';
               let queryParams = ['page=' + this.currentPage];
               queryParams.push('dateFrom=' + this.dateFrom);
               queryParams.push('dateTo=' + this.dateTo);
-
+              
               for (let i = 0; i < queryParams.length; i++) {
                   if (i != 0) {
                       query += '&';
                   }
                   query += queryParams[i];
               }
-              console.log(query)
               this.$store
                   .dispatch(REPORT_SBS_COMPLETE_GET_PAGINATED, query)
                   .then((data) => {
@@ -426,7 +504,6 @@
                       }
                       this.allOperations = data.data.data;
                       this.operations = this.allOperations;
-                      console.log(this.operations)
                       // Table data
                       this.totalItems = data.data.data.total;
                       this.perPage = data.data.data.per_page
@@ -434,46 +511,6 @@
                   .catch((err) => {
                       this.showMainAlert('danger', err)
                   });
-          },
-          downloadXls(){
-            const table = [];
-            console.log(this.operations)
-            this.operations.map( (operation) => {
-              console.log(operation)
-              table.push({
-                'Fecha de solicitud': operation.created_at , 
-                'Fecha de operación':operation.updated_at, 
-                'Departamento':operation.bank_account_send.personal_account != null ? operation.bank_account_send.personal_account.department.name : operation.bank_account_send.company_account.department.name, 
-                'Provincia':operation.bank_account_send.personal_account != null ? operation.bank_account_send.personal_account.province.name : operation.bank_account_send.company_account.province.name, 
-                'Distrito':operation.bank_account_send.personal_account != null ? operation.bank_account_send.personal_account.district.name : operation.bank_account_send.company_account.district.name, 
-                'Tipo de Doc':operation.bank_account_send.personal_account != null ? operation.bank_account_send.personal_account.document_type.name : operation.bank_account_send.company_account.document_type_lr.name, 
-                'N° Doc':operation.bank_account_send.personal_account != null ? operation.bank_account_send.personal_account.document_number : operation.bank_account_send.company_account.document_number_lr, 
-                'Ap Paterno':operation.bank_account_send.personal_account != null ? this.partLastnames(operation.bank_account_send.personal_account.surname)[0] : this.partLastnames(operation.bank_account_send.company_account.surname_lr)[0], 
-                'Ap Materno':operation.bank_account_send.personal_account != null ? this.partLastnames(operation.bank_account_send.personal_account.surname)[1] : this.partLastnames(operation.bank_account_send.company_account.surname_lr)[1], 
-                'Nombres':operation.bank_account_send.personal_account != null ? operation.bank_account_send.personal_account.name : operation.bank_account_send.company_account.name_lr, 
-                'Pais':operation.bank_account_send.personal_account != null ? operation.bank_account_send.personal_account.country.name : operation.bank_account_send.company_account.country.name, 
-                'Ocupación':operation.bank_account_send.personal_account != null ? operation.bank_account_send.personal_account.ocupation.name : operation.bank_account_send.company_account.ocupation_lr.name, 
-                'Dirección':operation.bank_account_send.personal_account != null ? operation.bank_account_send.personal_account.address : operation.bank_account_send.company_account.fiscal_address, 
-                'Telefono':operation.bank_account_send.personal_account != null ? operation.bank_account_send.personal_account.cellphone1 : operation.bank_account_send.company_account.phone, 
-                'Correo electronico':operation.bank_account_send.personal_account != null ? operation.bank_account_send.personal_account.user.email : operation.bank_account_send.company_account.email, 
-                'RUC':operation.bank_account_send.personal_account != null ? '': operation.bank_account_send.company_account.ruc, 
-                'Razon social':operation.bank_account_send.personal_account != null ? '': operation.bank_account_send.company_account.business_name, 
-                'Giro de negocio':operation.bank_account_send.personal_account != null ? '': operation.bank_account_send.company_account.business_turn, 
-                'Ap Paterno de Contacto':operation.bank_account_send.personal_account != null ? '' : this.partLastnames(operation.bank_account_send.company_account.surname_c)[0], 
-                'Ap Materno de Contacto':operation.bank_account_send.personal_account != null ? '' : this.partLastnames(operation.bank_account_send.company_account.surname_c)[1], 
-                'Nombres de Contacto':operation.bank_account_send.personal_account != null ? '' : operation.bank_account_send.company_account.name_c, 
-                'Tipo de Doc. de Contacto':operation.bank_account_send.personal_account != null ? '' : operation.bank_account_send.company_account.document_type_c.name, 
-                'N° Doc. de Contacto':operation.bank_account_send.personal_account != null ? '' : operation.bank_account_send.company_account.document_number_c, 
-                'Telefono de Contacto':operation.bank_account_send.personal_account != null ? '' : operation.bank_account_send.company_account.phone_c, 
-                'Oringenes de fondo':operation.fund_origin.name, 
-                'A: Moneda':operation.bank_account_receive.coin_type.name, 
-                'De: Monto':this.$func.numberFormat(operation.amount.toFixed(2)), 
-                'De: Moneda':operation.bank_account_transfer.coin_type.name, 
-                'A: Monto':this.$func.numberFormat(operation.change_amount.toFixed(2)), 
-                'Tipo de cambio':this.$func.numberFormat(operation.exchange_rate.toFixed(3)), 
-              })
-            })
-            exportFromJSON({ data: table, fileName: 'SBS-REPORT', exportType: exportFromJSON.types.csv, withBOM:true })
           },
           exportReportToExcel() {
             let table = document.getElementById('sbs-table'); //selecionamos la tabla
@@ -501,14 +538,14 @@
               'data-b-a-s':'solid',
               'data-b-a-c':'000000'
             }
-            return attr
+            return attr // Formato de estilos de las celdas Header 
           },
           getTdAtt(){
             let attr = {
               'data-a-h':'center',
               'data-b-a-c':'FF0000'
             }
-            return attr
+            return attr // Formato de estilos de las celdas Body
           },
           showMainAlert(variant, message) {
               this.mainAlertVariant = variant;
@@ -516,6 +553,10 @@
               this.mainAlert = true;
               window.scrollTo(0,0);
           },
+          resetFilterDasy(){
+            this.dateFrom = this.getToday(new Date,'yyyy-MM-dd') //'2022-02-01'
+            this.dateTo   = this.getToday(new Date,'yyyy-MM-dd')
+          }
       },
       watch: {
           currentPage: {
