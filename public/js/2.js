@@ -1717,16 +1717,9 @@ render._withStripped = true;
   !*** ./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/sass-loader/dist/cjs.js??ref--7-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/view/layout/brand/Brand.vue?vue&type=style&index=0&id=5a6fc46b&lang=scss&scoped=true& ***!
   \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-// Imports
-var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
-exports = ___CSS_LOADER_API_IMPORT___(false);
-// Module
-exports.push([module.i, ".aside-toggle[data-v-5a6fc46b] {\n  outline: none;\n}", ""]);
-// Exports
-module.exports = exports;
-
+throw new Error("Module build failed (from ./node_modules/sass-loader/dist/cjs.js):\nTypeError: this.getOptions is not a function\n    at Object.loader (C:\\Users\\vrivero\\Documents\\presto\\node_modules\\sass-loader\\dist\\index.js:27:24)");
 
 /***/ }),
 
@@ -1735,16 +1728,9 @@ module.exports = exports;
   !*** ./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/sass-loader/dist/cjs.js??ref--7-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/view/layout/extras/offcanvas/QuickUser.vue?vue&type=style&index=0&id=0d66a8a8&lang=scss&scoped=true& ***!
   \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-// Imports
-var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
-exports = ___CSS_LOADER_API_IMPORT___(false);
-// Module
-exports.push([module.i, "#kt_quick_user[data-v-0d66a8a8] {\n  overflow: hidden;\n}", ""]);
-// Exports
-module.exports = exports;
-
+throw new Error("Module build failed (from ./node_modules/sass-loader/dist/cjs.js):\nTypeError: this.getOptions is not a function\n    at Object.loader (C:\\Users\\vrivero\\Documents\\presto\\node_modules\\sass-loader\\dist\\index.js:27:24)");
 
 /***/ }),
 

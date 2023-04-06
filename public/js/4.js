@@ -723,16 +723,9 @@ render._withStripped = true;
   !*** ./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/sass-loader/dist/cjs.js??ref--7-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/view/pages/auth/login/Login.vue?vue&type=style&index=0&id=45f29018&lang=scss& ***!
   \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-// Imports
-var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
-exports = ___CSS_LOADER_API_IMPORT___(false);
-// Module
-exports.push([module.i, ".login.login-1 .login-aside .aside-img {\n  min-height: 450px;\n}\n.login.login-1 .login-signin,\n.login.login-1 .login-signup,\n.login.login-1 .login-forgot {\n  display: none;\n}\n.login.login-1.login-signin-on .login-signup {\n  display: none;\n}\n.login.login-1.login-signin-on .login-signin {\n  display: block;\n}\n.login.login-1.login-signin-on .login-forgot {\n  display: none;\n}\n.login.login-1.login-signup-on .login-signup {\n  display: block;\n}\n.login.login-1.login-signup-on .login-signin {\n  display: none;\n}\n.login.login-1.login-signup-on .login-forgot {\n  display: none;\n}\n.login.login-1.login-forgot-on .login-signup {\n  display: none;\n}\n.login.login-1.login-forgot-on .login-signin {\n  display: none;\n}\n.login.login-1.login-forgot-on .login-forgot {\n  display: block;\n}\n@media (min-width: 992px) {\n.login.login-1 .login-aside {\n    width: 100%;\n    max-width: 700px;\n}\n.login.login-1 .login-content {\n    width: 100%;\n    max-width: 500px;\n}\n.login.login-1 .login-content .login-form {\n    width: 100%;\n    max-width: 450px;\n}\n}\n@media (min-width: 992px) and (max-width: 1399.98px) {\n.login.login-1 .login-aside {\n    width: 100%;\n    max-width: 450px;\n}\n}\n@media (max-width: 991.98px) {\n.login.login-1 .login-content .login-form {\n    width: 100%;\n    max-width: 400px;\n}\n}\n@media (max-width: 575.98px) {\n.login.login-1 .aside-img {\n    min-height: 300px !important;\n    background-size: 400px;\n}\n.login.login-1 .login-content .login-form {\n    width: 100%;\n    max-width: 100%;\n}\n}", ""]);
-// Exports
-module.exports = exports;
-
+throw new Error("Module build failed (from ./node_modules/sass-loader/dist/cjs.js):\nTypeError: this.getOptions is not a function\n    at Object.loader (C:\\Users\\vrivero\\Documents\\presto\\node_modules\\sass-loader\\dist\\index.js:27:24)");
 
 /***/ }),
 
