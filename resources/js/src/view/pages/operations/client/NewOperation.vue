@@ -171,7 +171,7 @@
                                                         <div class="row justify-content-center">
                                                             <div class="col-lg-8 col-mg-8 col-sm-12 mb-2">
                                                                 <label><strong>Número de operación</strong></label>
-                                                                <input type="text" class="form-control" v-model="selectedFundOrigin.operation_number" placeholder="Ingrese el número de operación">
+                                                                <input type="text" class="form-control" v-model="newOperation.operation_number" placeholder="Ingrese el número de operación">
                                                             </div>
                                                         </div>
                                                     </div>

@@ -44,9 +44,9 @@
                               <label>&nbsp;&nbsp;&nbsp;&nbsp;</label>
                               <br>
                               <a class="btn btn-light-primary px-3 font-weight-bold cursor-pointer mr-2" @click="getOperations()">Buscar</a>
-                              <a class="btn btn-light-primary px-3 font-weight-bold cursor-pointer mr-2" @click="resetFilters()">Resetear</a>
-                              <a class="btn btn-light-primary px-3 font-weight-bold cursor-pointer" @click="exportTableToExcel()">Descargar en EXCEL</a>
-                          </div>
+                              <!-- <a class="btn btn-light-primary px-3 font-weight-bold cursor-pointer mr-2" @click="resetFilters()">Resetear</a> -->
+                              <a class="btn btn-light-primary px-3 font-weight-bold cursor-pointer" @click="exportReportToExcel()">Descargar en EXCEL</a>
+                            </div>
                       </div>
                   </div>
 
@@ -68,80 +68,113 @@
 
                               
                           >
+                          
                               <!-- user and owner of company data -->
-                              <template #cell(departament)="data">
-                                  {{ data.item.bank_account_send.personal_account != null ? data.item.bank_account_send.personal_account.department.name : data.item.bank_account_send.company_account.department.name }} 
-                              </template>
-                              <template #cell(province)="data">
-                                  {{ data.item.bank_account_send.personal_account != null ? data.item.bank_account_send.personal_account.province.name : data.item.bank_account_send.company_account.province.name}} 
-                              </template>
-                              <template #cell(distrit)="data">
-                                  {{ data.item.bank_account_send.personal_account != null ? data.item.bank_account_send.personal_account.district.name : data.item.bank_account_send.company_account.district.name}} 
-                              </template>
-                              <template #cell(type_doc)="data">
-                                  {{ data.item.bank_account_send.personal_account != null ? data.item.bank_account_send.personal_account.document_type.name : data.item.bank_account_send.company_account.document_type_lr.name}} 
-                              </template>
-                              <template #cell(number_doc)="data">
-                                  {{ data.item.bank_account_send.personal_account != null ? data.item.bank_account_send.personal_account.document_number : data.item.bank_account_send.company_account.document_number_lr}} 
-                              </template>
-                              <template #cell(ln_father)="data">
-                                {{ data.item.bank_account_send.personal_account != null ? partLastnames(data.item.bank_account_send.personal_account.surname)[0] : partLastnames(data.item.bank_account_send.company_account.surname_lr)[0] }} 
-                              </template>
-                              <template #cell(ln_mother)="data">
-                                {{ data.item.bank_account_send.personal_account != null ? partLastnames(data.item.bank_account_send.personal_account.surname)[1] : partLastnames(data.item.bank_account_send.company_account.surname_lr)[1]}} 
-                              </template>
                               <template #cell(name)="data">
                                   <div v-if="data.item.bank_account_send.personal_account != null">
-                                      {{ data.item.bank_account_send.personal_account.name }}
+                                      {{ data.item.bank_account_send.personal_account.name }} {{ data.item.bank_account_send.personal_account.surname }}
                                   </div>
                                   <div v-else-if="data.item.bank_account_send.company_account != null">
-                                      {{ data.item.bank_account_send.company_account.name_lr }}
+                                      {{ data.item.bank_account_send.company_account.business_name }}
                                   </div>
                               </template>
+                              <template #cell(type_doc)="data">
+                                  {{ 
+																		data.item.bank_account_send.personal_account != null ? 
+																		data.item.bank_account_send.personal_account.document_type.name : 
+																		'RUC'
+																	}} 
+                              </template>
+                              <template #cell(number_doc)="data">
+                                  {{ 
+																		data.item.bank_account_send.personal_account != null ? 
+																		data.item.bank_account_send.personal_account.document_number : 
+																		data.item.bank_account_send.company_account.ruc
+																	}} 
+                              </template>
                               <template #cell(country)="data">
-                                  {{ data.item.bank_account_send.personal_account != null ? data.item.bank_account_send.personal_account.country.name : data.item.bank_account_send.company_account.country.name}} 
-                              </template>
-                              <template #cell(ocupation)="data">
-                                  {{ data.item.bank_account_send.personal_account != null ? data.item.bank_account_send.personal_account.ocupation.name : data.item.bank_account_send.company_account.ocupation_lr.name}} 
-                              </template>
-                              <template #cell(address)="data">
-                                {{ data.item.bank_account_send.personal_account != null ? data.item.bank_account_send.personal_account.address : data.item.bank_account_send.company_account.fiscal_address}} 
-                              </template>
-                              <template #cell(phone)="data">
-                                  {{ data.item.bank_account_send.personal_account != null ? data.item.bank_account_send.personal_account.cellphone1 : data.item.bank_account_send.company_account.phone}} 
-                              </template>
-                              <template #cell(email)="data">
-                                  {{ data.item.bank_account_send.personal_account != null ? data.item.bank_account_send.personal_account.user.email : data.item.bank_account_send.company_account.email}} 
+                                  {{ 
+																		data.item.bank_account_send.personal_account != null ? 
+																		data.item.bank_account_send.personal_account.country.name : 
+																		data.item.bank_account_send.company_account.country.name
+																	}} 
                               </template>
                               <!-- Company data -->
-                              <template #cell(ruc)="data">
-                                  {{ data.item.bank_account_send.personal_account != null ? '': data.item.bank_account_send.company_account.ruc}} 
+                              <template #cell(executer_name)="data">
+                                  {{ 
+                                    data.item.bank_account_send.personal_account != null ? 
+                                    data.item.bank_account_send.personal_account.name +' '+data.item.bank_account_send.personal_account.surname : 
+                                    data.item.bank_account_send.company_account.name_lr +' '+ data.item.bank_account_send.company_account.surname_lr
+                                  }} 
                               </template>
-                              <template #cell(business_name)="data">
-                                  {{ data.item.bank_account_send.personal_account != null ? '': data.item.bank_account_send.company_account.business_name}} 
+                              <template #cell(executer_document_type)="data">
+                                  {{ 
+																		data.item.bank_account_send.personal_account != null ?
+                                  	data.item.bank_account_send.personal_account.document_type.name : 
+                                  	data.item.bank_account_send.company_account.document_type_lr.name
+																	}} 
                               </template>
-                              <template #cell(business_turn)="data">
-                                  {{ data.item.bank_account_send.personal_account != null ? '': data.item.bank_account_send.company_account.business_turn}} 
+                              <template #cell(executer_document_number)="data">
+                                {{ 
+                                  data.item.bank_account_send.personal_account != null ? 
+                                  data.item.bank_account_send.personal_account.document_number : 
+                                  data.item.bank_account_send.company_account.document_number_lr
+                                }} 
                               </template>
-                              <template #cell(ln_father_c)="data">
-                                {{ data.item.bank_account_send.personal_account != null ? '' : partLastnames(data.item.bank_account_send.company_account.surname_c)[0] }} 
+                              <template #cell(executer_country)="data">
+                                {{ 	
+                                	data.item.bank_account_send.personal_account != null ? 
+                                	data.item.bank_account_send.personal_account.country.name : 
+                                	data.item.bank_account_send.company_account.country.name 
+																}} 
                               </template>
-                              <template #cell(ln_mother_c)="data">
-                                {{ data.item.bank_account_send.personal_account != null ? '' : partLastnames(data.item.bank_account_send.company_account.surname_c)[1]}} 
+                              <template #cell(benefic_name)="data">
+                                {{ 
+                                  data.item.bank_account_receive.personal_account != null ? 
+                                  data.item.bank_account_receive.personal_account.name +' '+data.item.bank_account_receive.personal_account.surname :
+                                  data.item.bank_account_receive.owner_name != null ? data.item.bank_account_receive.owner_name :
+                                  data.item.bank_account_send.company_account.business_name
+                                }}
+																<!-- data.item.bank_account_receive.company_account.name_lr +' '+ data.item.bank_account_receive.company_account.surname_lr -->
                               </template>
-                              <template #cell(name_c)="data">
-                                {{ data.item.bank_account_send.personal_account != null ? '' : data.item.bank_account_send.company_account.name_c}} 
+                              <template #cell(benefic_document_type)="data">
+                                {{ 
+                                  data.item.bank_account_receive.personal_account != null ? 
+                                  data.item.bank_account_receive.personal_account.document_type.name :
+                                  data.item.bank_account_receive.owner_document_type != null ?
+                                  data.item.bank_account_receive.owner_document_type.name :
+                                  'RUC'		
+                                }}
+																<!-- data.item.bank_account_receive.company_account.document_type_lr.name -->
                               </template>
-                              <template #cell(type_doc_c)="data">
-                                {{ data.item.bank_account_send.personal_account != null ? '' : data.item.bank_account_send.company_account.document_type_c.name}} 
+                              <template #cell(benefic_document_number)="data">
+                                {{
+																	data.item.bank_account_receive.personal_account != null ? 
+																	data.item.bank_account_receive.personal_account.document_number :
+                                  data.item.bank_account_receive.owner_document_number ?
+                                  data.item.bank_account_receive.owner_document_number :
+                                  data.item.bank_account_send.company_account.ruc
+																}} 
+																<!-- data.item.bank_account_receive.company_account.document_number_lr  analizar cual es mejor -->
                               </template>
-                              <template #cell(number_doc_c)="data">
-                                {{ data.item.bank_account_send.personal_account != null ? '' : data.item.bank_account_send.company_account.document_number_c}} 
+                              <template #cell(benefic_country)="data">
+                                {{ 
+																	data.item.bank_account_receive.personal_account != null ?  
+																	data.item.bank_account_receive.personal_account.country.name : 
+																	data.item.bank_account_receive.company_account.country.name
+																}} 
                               </template>
-                              <template #cell(phone_c)="data">
-                                {{ data.item.bank_account_send.personal_account != null ? '' : data.item.bank_account_send.company_account.phone_c}} 
-                              </template>
+                              
                               <!-- operation data -->
+                              <template #cell(operation_type)="data">
+                                {{ 
+																	data.item.bank_account_send.coin_type.code == 'sol' ? 
+																	'Compra de dolares' : 'Venta de dolares'  
+																}} 
+                              </template>
+                              <template #cell(id_operation)="data">
+                                #{{data.item.operation_number != "null" ? data.item.operation_number : data.item.id }} 
+                              </template>
                               <template #cell(found_id)="data">
                                   {{  data.item.fund_origin.name }}
                               </template>
@@ -197,7 +230,7 @@
               operationDataAlertMessage: '',
               allOperations: [],
               operations: [],
-              dateFrom: this.getToday(new Date,'yyyy-MM-dd'),
+              dateFrom: '2022-02-01',
               dateTo: this.getToday(new Date,'yyyy-MM-dd'),
               selectedOperation: {},
               modalChangeStatusText: "",
@@ -207,171 +240,108 @@
               perPage: 15,
               fields: [
                   {
+                      key: 'id_operation',
+                      label: 'Codigo de la operación',
+                      thStyle:{ textAlign: 'center', width: 'max-content', backgroundColor: '#1F4E78', color:'#ffffff',},
+                      thAttr:this.getThAtt(),
+                      tdAttr:this.getTdAtt()
+                  },
+                  {
                       key: 'created_at',
-                      label: 'Fecha de la opereacion',
-                      thStyle:{ textAlign: 'center', width: '200px', backgroundColor: '#1F4E78'},
+                      label: 'Fecha de la operación',
+                      thStyle:{ textAlign: 'center', width: 'max-content', backgroundColor: '#1F4E78', color:'#ffffff',},
                       thAttr:this.getThAtt(),
                       tdAttr:this.getTdAtt()
                   },
                   {
-                      key: 'departament',
-                      label: 'Departamento',
-                      thStyle:{ textAlign: 'center', width: '200px', backgroundColor: '#1F4E78'},
-                      thAttr:this.getThAtt(),
-                      tdAttr:this.getTdAtt()
-                  },
-                  {
-                      key: 'province',
-                      label: 'Provincia',
-                      thStyle:{ textAlign: 'center', width: '200px', backgroundColor: '#1F4E78'},
-                      thAttr:this.getThAtt(),
-                      tdAttr:this.getTdAtt()
-                  },
-                  {
-                      key: 'distrit',
-                      label: 'Distrito',
-                      thStyle:{ textAlign: 'center', width: '200px', backgroundColor: '#1F4E78'},
+                      key: 'name',
+                      label: 'Nombre completo o Razón Social Cuenta de origen.',
+                      thStyle:{ textAlign: 'center', width: 'max-content', backgroundColor: '#1F4E78', color:'#ffffff',},
                       thAttr:this.getThAtt(),
                       tdAttr:this.getTdAtt()
                   },
                   {
                       key: 'type_doc',
                       label: 'Tipo de Doc',
-                      thStyle:{ textAlign: 'center', width: '200px', backgroundColor: '#1F4E78'},
+                      thStyle:{ textAlign: 'center', width: 'max-content', backgroundColor: '#1F4E78', color:'#ffffff',},
                       thAttr:this.getThAtt(),
                       tdAttr:this.getTdAtt()
                   },
                   {
                       key: 'number_doc',
                       label: 'N° Doc',
-                      thStyle:{ textAlign: 'center', width: '200px', backgroundColor: '#1F4E78'},
+                      thStyle:{ textAlign: 'center', width: 'max-content', backgroundColor: '#1F4E78', color:'#ffffff',},
                       thAttr:this.getThAtt(),
                       tdAttr:this.getTdAtt()
                   },
-                  {
-                      key: 'ln_father',
-                      label: 'Ap Paterno',
-                      thStyle:{ textAlign: 'center', width: '200px', backgroundColor: '#1F4E78'},
-                      thAttr:this.getThAtt(),
-                      tdAttr:this.getTdAtt()
-                  },
-                  {
-                      key: 'ln_mother',
-                      label: 'Ap Materno',
-                      thStyle:{ textAlign: 'center', width: '200px', backgroundColor: '#1F4E78'},
-                      thAttr:this.getThAtt(),
-                      tdAttr:this.getTdAtt()
-                  },
-                  
-                  {
-                      key: 'name',
-                      label: 'Nombres',
-                      thStyle:{ textAlign: 'center', width: '200px', backgroundColor: '#1F4E78'},
-                      thAttr:this.getThAtt(),
-                      tdAttr:this.getTdAtt()
-                  },
+
                   {
                       key: 'country',
                       label: 'Pais',
-                      thStyle:{ textAlign: 'center', width: '200px', backgroundColor: '#1F4E78'},
+                      thStyle:{ textAlign: 'center', width: 'max-content', backgroundColor: '#1F4E78', color:'#ffffff',borderRight:'2px solid #000000'},
                       thAttr:this.getThAtt(),
                       tdAttr:this.getTdAtt()
                   },
                   {
-                      key: 'ocupation',
-                      label: 'Ocupación',
-                      thStyle:{ textAlign: 'center', width: '200px', backgroundColor: '#1F4E78'},
+                      key: 'executer_name',
+                      label: 'Nombre de la persona que realiza la operación',
+                      thStyle:{ textAlign: 'center', width: 'max-content', backgroundColor: '#1F4E78', color:'#ffffff',},
                       thAttr:this.getThAtt(),
                       tdAttr:this.getTdAtt()
                   },
                   {
-                      key: 'address',
-                      label: 'Dirección',
-                      thStyle:{ textAlign: 'center', width: '200px', backgroundColor: '#1F4E78'},
+                      key: 'executer_document_type',
+                      label: 'Tipo de documento',
+                      thStyle:{ textAlign: 'center', width: 'max-content', backgroundColor: '#1F4E78', color:'#ffffff',},
                       thAttr:this.getThAtt(),
                       tdAttr:this.getTdAtt()
                   },
                   {
-                      key: 'phone',
-                      label: 'Telefono',
-                      thStyle:{ textAlign: 'center', width: '200px', backgroundColor: '#1F4E78'},
+                      key: 'executer_document_number',
+                      label: 'Número de documento',
+                      thStyle:{ textAlign: 'center', width: 'max-content', backgroundColor: '#1F4E78', color:'#ffffff',},
                       thAttr:this.getThAtt(),
                       tdAttr:this.getTdAtt()
                   },
                   {
-                      key: 'email',
-                      label: 'Correo electronico',
-                      thStyle:{ textAlign: 'center', width: '200px', backgroundColor: '#1F4E78'},
+                      key: 'executer_country',
+                      label: 'País',
+                      thStyle:{ textAlign: 'center', width: 'max-content', backgroundColor: '#1F4E78', color:'#ffffff', borderRight:'2px solid #000000'},
                       thAttr:this.getThAtt(),
                       tdAttr:this.getTdAtt()
                   },
                   {
-                      key: 'ruc',
-                      label: 'RUC',
-                      thStyle:{ textAlign: 'center', width: '200px', backgroundColor: '#1F4E78'},
+                      key: 'benefic_name',
+                      label: 'Nombre o razón social del titular de la cuenta de destino',
+                      thStyle:{ textAlign: 'center', width: 'max-content', backgroundColor: '#1F4E78', color:'#ffffff',},
                       thAttr:this.getThAtt(),
                       tdAttr:this.getTdAtt()
                   },
                   {
-                      key: 'business_name',
-                      label: 'Razon social',
-                      thStyle:{ textAlign: 'center', width: '200px', backgroundColor: '#1F4E78'},
+                      key: 'benefic_document_type',
+                      label: 'Tipo de documento',
+                      thStyle:{ textAlign: 'center', width: 'max-content', backgroundColor: '#1F4E78', color:'#ffffff',},
                       thAttr:this.getThAtt(),
                       tdAttr:this.getTdAtt()
                   },
                   {
-                      key: 'business_turn',
-                      label: 'Giro de negocio',
-                      thStyle:{ textAlign: 'center', width: '200px', backgroundColor: '#1F4E78'},
+                      key: 'benefic_document_number',
+                      label: 'Número de documento',
+                      thStyle:{ textAlign: 'center', width: 'max-content', backgroundColor: '#1F4E78', color:'#ffffff',},
                       thAttr:this.getThAtt(),
                       tdAttr:this.getTdAtt()
                   },
                   {
-                      key: 'ln_father_c',
-                      label: 'Ap Paterno de Contacto',
-                      thStyle:{ textAlign: 'center', width: '200px', backgroundColor: '#1F4E78'},
+                      key: 'benefic_country',
+                      label: 'País ',
+                      thStyle:{ textAlign: 'center', width: 'max-content', backgroundColor: '#1F4E78', color:'#ffffff',},
                       thAttr:this.getThAtt(),
                       tdAttr:this.getTdAtt()
                   },
                   {
-                      key: 'ln_mother_c',
-                      label: 'Ap Materno de Contacto',
-                      thStyle:{ textAlign: 'center', width: '200px', backgroundColor: '#1F4E78'},
-                      thAttr:this.getThAtt(),
-                      tdAttr:this.getTdAtt()
-                  },
-                  {
-                      key: 'name_c',
-                      label: 'Nombres de Contacto',
-                      thStyle:{ textAlign: 'center', width: '200px', backgroundColor: '#1F4E78'},
-                      thAttr:this.getThAtt(),
-                      tdAttr:this.getTdAtt()
-                  },
-                  {
-                      key: 'type_doc_c',
-                      label: 'Tipo de Doc. de Contacto',
-                      thStyle:{ textAlign: 'center', width: '200px', backgroundColor: '#1F4E78'},
-                      thAttr:this.getThAtt(),
-                      tdAttr:this.getTdAtt()
-                  },
-                  {
-                      key: 'number_doc_c',
-                      label: 'N° Doc. de Contacto ',
-                      thStyle:{ textAlign: 'center', width: '200px', backgroundColor: '#1F4E78'},
-                      thAttr:this.getThAtt(),
-                      tdAttr:this.getTdAtt()
-                  },
-                  {
-                      key: 'phone_c',
-                      label: 'Telefono de Contacto ',
-                      thStyle:{ textAlign: 'center', width: '200px', backgroundColor: '#1F4E78'},
-                      thAttr:this.getThAtt(),
-                      tdAttr:this.getTdAtt()
-                  },
-                  {
-                      key: 'found_id',
-                      label: 'Oringenes de fondo',
-                      thStyle:{ textAlign: 'center', width: '200px', backgroundColor: '#1F4E78'},
+                      key: 'operation_type',
+                      label: 'Tipo de operación ',
+                      thStyle:{ textAlign: 'center', width: 'max-content', backgroundColor: '#1F4E78', color:'#ffffff', borderRight:'2px solid #000000'},
                       thAttr:this.getThAtt(),
                       tdAttr:this.getTdAtt()
                   },
@@ -379,39 +349,46 @@
                   {
                       key: 'to_currency',
                       label: 'A: Moneda',
-                      thStyle:{ textAlign: 'center', width: '200px', backgroundColor: '#1F4E78'},
+                      thStyle:{ textAlign: 'center', width: 'max-content', backgroundColor: '#1F4E78', color:'#ffffff',},
                       thAttr:this.getThAtt(),
                       tdAttr:this.getTdAtt()
                   },
                   {
                       key: 'amount',
                       label: 'De: Monto',
-                      thStyle:{ textAlign: 'center', width: '200px', backgroundColor: '#1F4E78'},
+                      thStyle:{ textAlign: 'center', width: 'max-content', backgroundColor: '#1F4E78', color:'#ffffff',},
                       thAttr:this.getThAtt(),
                       tdAttr:this.getTdAtt()
                   },
                   {
                       key: 'from_currency',
                       label: 'De: Moneda',
-                      thStyle:{ textAlign: 'center', width: '200px', backgroundColor: '#1F4E78'},
+                      thStyle:{ textAlign: 'center', width: 'max-content', backgroundColor: '#1F4E78', color:'#ffffff',},
                       thAttr:this.getThAtt(),
                       tdAttr:this.getTdAtt()
                   },
                   {
                       key: 'change_amount',
                       label: 'A: Monto',
-                      thStyle:{ textAlign: 'center', width: '200px', backgroundColor: '#1F4E78'},
+                      thStyle:{ textAlign: 'center', width: 'max-content', backgroundColor: '#1F4E78', color:'#ffffff',},
                       thAttr:this.getThAtt(),
                       tdAttr:this.getTdAtt()
                   },
                   {
                       key: 'exchange_rate',
                       label: 'Tipo de cambio',
-                      thStyle:{ textAlign: 'center', width: '200px', backgroundColor: '#1F4E78'},
+                      thStyle:{ textAlign: 'center', width: 'max-content', backgroundColor: '#1F4E78', color:'#ffffff',},
                       thAttr:this.getThAtt(),
                       tdAttr:this.getTdAtt()
                   },
-              ],
+                  {
+                      key: 'found_id',
+                      label: 'Oringenes de fondo',
+                      thStyle:{ textAlign: 'center', width: 'max-content', backgroundColor: '#1F4E78', color:'#ffffff',},
+                      thAttr:this.getThAtt(),
+                      tdAttr:this.getTdAtt()
+                  },
+              ], //campos de la tabla sbs
           }
       },
       mounted() {
@@ -419,6 +396,7 @@
       },
       methods: {
           getToday(fecha, formato){
+            //formato del filtro de fechas.
             const map = {
               dd: fecha.getDate() < '10' ? '0' + fecha.getDate() : fecha.getDate()  ,
               MM: (fecha.getMonth() + 1) < 10 ? '0' + (fecha.getMonth() + 1): '0' + (fecha.getMonth() + 1) ,
@@ -448,7 +426,7 @@
                       }
                       this.allOperations = data.data.data;
                       this.operations = this.allOperations;
-                      console.log(data)
+                      console.log(this.operations)
                       // Table data
                       this.totalItems = data.data.data.total;
                       this.perPage = data.data.data.per_page
@@ -498,68 +476,59 @@
             exportFromJSON({ data: table, fileName: 'SBS-REPORT', exportType: exportFromJSON.types.csv, withBOM:true })
           },
           exportReportToExcel() {
-            let table = document.getElementById('sbs-table');
-            let row = 0;
-            this.opertaions.map(()=>{
-              return row +1;
-            })
-            console.log(row)
+            let table = document.getElementById('sbs-table'); //selecionamos la tabla
             
-            // table.setAttribute('data-cols-width', '30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30')
-            // TableToExcel.convert(table, {
-            //   name: `SBS-REPORT.xlsx`,
-            //   sheet: {
-            //     name: 'Sheet 1'
-            //   }
-            // });
-          },
-          exportTableToExcel(tableID){
-            var downloadLink;
-            var dataType = 'application/vnd.ms-excel;charset=utf-8';
-            var tableSelect = document.getElementById(tableID);
-            var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
-    
-            // Specify file name
-            let filename = 'SBS-REPORT.xls';
-            
-            // Create download link element
-            downloadLink = document.createElement("a");
-            
-            document.body.appendChild(downloadLink);
-            
-            if(navigator.msSaveOrOpenBlob){
-                var blob = new Blob(['ufeff', tableHTML], {
-                    type: dataType
-                });
-                navigator.msSaveOrOpenBlob( blob, filename);
-            }else{
-                // Create a link to the file
-                downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
-            
-                // Setting the file name
-                downloadLink.download = filename;
-                
-                //triggering the function
-                downloadLink.click();
+            let row = ''; // cantidad de columnas, estos nos ayudara a determinar cuantas columnas hay y asi asignarle atributos o estilos
+            for (let index = 1; index < this.fields.length; index++) {
+              row += '30,' //
             }
-          },
-          partLastnames(op){
-            return op.split(' ');
-            
-          },
+            table.setAttribute('data-cols-width', row)  // a cada columna le damos anchura de 30 points 
 
-          resetOperationAccion() {
-              this.selectedOperationToChangeStatus = {};
+            TableToExcel.convert(table, {
+              name: `SBS-REPORT.xlsx`,
+              sheet: {
+                name: 'Reporte SBS'
+              }
+            }); //exportamos el xlsx
           },
-
-          setSelectedOperation(operationId) {
-              this.selectedOperation = Object.assign({}, this.allOperations.find(operation => operation.id == operationId));
+          getThAtt(){
+            let attr = {
+              'data-f-sz':'12',
+              'data-f-bold':true, 
+              'data-f-color':'FFFFFF',
+              'data-a-h':'center',
+              'data-fill-color':'1F4E78',
+              'data-b-a-s':'solid',
+              'data-b-a-c':'000000'
+            }
+            return attr
           },
-
-          resetSelectedOperation(){
-              this.selectedOperation = {};
+          getTdAtt(){
+            let attr = {
+              'data-a-h':'center',
+              'data-b-a-c':'FF0000'
+            }
+            return attr
           },
+          showMainAlert(variant, message) {
+              this.mainAlertVariant = variant;
+              this.mainAlertMessage = message;
+              this.mainAlert = true;
+              window.scrollTo(0,0);
+          },
+      },
+      watch: {
+          currentPage: {
+              handler: function() {
+                  this.getOperations();
+              }
+          }
+      },
+      computed: {
 
-          resetOperationDataAlert(){
-              this.operationDataAlertVariant = '';
-              this.
+      },
+      created() {
+          this.getOperations();
+      },
+  };
+</script>

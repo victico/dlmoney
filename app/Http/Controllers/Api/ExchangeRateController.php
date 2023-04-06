@@ -24,28 +24,28 @@ class ExchangeRateController extends Controller
 
     public function getLast(Request $request)
     {
-        if($request->user()->active_account_type == 0){
-            $personalAccount = PersonalAccount::find($request->user()->active_account);
+        // if($request->user()->active_account_type == 0){
+        //     $personalAccount = PersonalAccount::find($request->user()->active_account);
 
-            if ($personalAccount->preferential == 1) {
-                $exchangeRate = new stdClass();
-                $exchangeRate->sale = $personalAccount->preferential_sale;
-                $exchangeRate->purchase = $personalAccount->preferential_purchase;
+        //     if ($personalAccount->preferential == 1) {
+        //         $exchangeRate = new stdClass();
+        //         $exchangeRate->sale = $personalAccount->preferential_sale;
+        //         $exchangeRate->purchase = $personalAccount->preferential_purchase;
 
-                return $this->returnSuccess(200, $exchangeRate);
-            }
-        }
-        else if($request->user()->active_account_type == 1){
-            $companyAccount = CompanyAccount::find($request->user()->active_account);
+        //         return $this->returnSuccess(200, $exchangeRate);
+        //     }
+        // }
+        // else if($request->user()->active_account_type == 1){
+        //     $companyAccount = CompanyAccount::find($request->user()->active_account);
 
-            if ($companyAccount->preferential == 1) {
-                $exchangeRate = new stdClass();
-                $exchangeRate->sale = $companyAccount->preferential_sale;
-                $exchangeRate->purchase = $companyAccount->preferential_purchase;
+        //     if ($companyAccount->preferential == 1) {
+        //         $exchangeRate = new stdClass();
+        //         $exchangeRate->sale = $companyAccount->preferential_sale;
+        //         $exchangeRate->purchase = $companyAccount->preferential_purchase;
 
-                return $this->returnSuccess(200, $exchangeRate);
-            }
-        }
+        //         return $this->returnSuccess(200, $exchangeRate);
+        //     }
+        // }
 
         return $this->returnSuccess(200, ExchangeRate::orderBy('id', 'DESC')->first());
     }

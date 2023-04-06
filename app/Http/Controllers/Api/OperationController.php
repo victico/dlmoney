@@ -119,7 +119,7 @@ class OperationController extends Controller
         if (!$validated['validated']) {
             return $this->returnFail(400, $validated['message']);
         }
-
+        date_default_timezone_set('America/Lima');
         $operation = Operation::create([
             'bank_account_send_id' => $request->bank_account_send_id,
             'bank_account_receive_id' => $request->bank_account_receive_id,
@@ -184,6 +184,11 @@ class OperationController extends Controller
             'bank_account_send.bank_account_type',
             'bank_account_receive.bank',
             'bank_account_receive.coin_type',
+            'bank_account_receive.owner_document_type',
+            'bank_account_receive.personal_account.country',
+            'bank_account_receive.company_account.country',
+            'bank_account_receive.company_account.document_type_lr',
+            'bank_account_receive.personal_account.document_type',
             'bank_account_transfer.bank',
             'bank_account_transfer.coin_type',
             'fund_origin'
