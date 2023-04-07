@@ -90,10 +90,41 @@
 }
 
 .light-style .authentication-wrapper.authentication-bg {
-  background-color: #fff;
+  background-color: #f1f2f2;
+
+  background-image: url("../../media/backgrounds/bg-blanco.jpg");
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover; /* Resize the background image to cover the entire container */
 }
+  
+}
+.txtazul {
+  color: #005A87;
+}
+.txtnaranja {
+  color: #F99030;
+}
+
 .light-style .auth-cover-bg-color {
-  background-color: #f8f7fa;
+  background-image: url("../../media/illustrations/registrong.png");
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover; /* Resize the background image to cover the entire container */
+}
+
+.light-style .registro {
+  background-image: url("../../media/backgrounds/fondo-registro01.jpg");
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover; /* Resize the background image to cover the entire container */
+}
+
+.light-style .registrocompleto {
+  background-image: url("../../media/backgrounds/lateral-registro.jpg");
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover; /* Resize the background image to cover the entire container */
 }
 
 .dark-style .authentication-wrapper.authentication-bg {

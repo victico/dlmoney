@@ -67,6 +67,7 @@ router.beforeEach(async (to, from, next) => {
         next,
         store
     }
+    document.title =`${to.name.charAt(0).toUpperCase()}${to.name.substring(1)} | DLS Money Plataforma de cambio de dolares a soles online`
 
     return middleware[0]({
       ...context,

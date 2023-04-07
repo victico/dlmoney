@@ -26,6 +26,17 @@ mix.webpackConfig({
       'vue$': 'vue/dist/vue.runtime.esm.js',
       '@': path.resolve(__dirname, 'resources/js/src/')
     }
+  },
+  module: {
+    rules: [{
+      test: /\.html$/,
+      use: [{
+        loader: 'html-loader',
+        options: {
+          minimize: true
+        }
+      }]
+    }]
   }
 });
 mix.disableNotifications();

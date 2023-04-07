@@ -334,6 +334,7 @@ th {
 
 label {
   display: inline-block;
+  font-size: 11px;
 }
 
 button {
@@ -2098,14 +2099,16 @@ progress {
 .form-control-lg {
   min-height: calc(1.5em + 1.188rem + 2px);
   padding: 0.594rem 1rem;
-  font-size: 1.125rem;
+  font-size: 1.625rem;
   border-radius: 0.5rem;
+  background-color: transparent;
 }
 .form-control-lg::file-selector-button {
   padding: 0.594rem 1rem;
   margin: -0.594rem -1rem;
   -webkit-margin-end: 1rem;
           margin-inline-end: 1rem;
+          background-color: transparent;
 }
 
 textarea.form-control {
@@ -8226,7 +8229,7 @@ html:not([dir=rtl]) .input-group > .btn-group:last-child > .btn:not([class*=btn-
 .nav-tabs .nav-link:not(.active):hover, .nav-tabs .nav-link:not(.active):focus,
 .nav-pills .nav-link:not(.active):hover,
 .nav-pills .nav-link:not(.active):focus {
-  color: #7367f0;
+  color: #006ba3;
 }
 .nav-tabs:not(.nav-fill):not(.nav-justified) .nav-link,
 .nav-pills:not(.nav-fill):not(.nav-justified) .nav-link {
@@ -12320,6 +12323,8 @@ html:not([dir=rtl]) .card .card-separator {
 
 .pt-4 {
   padding-top: 1.5rem !important;
+  background-image: url("../../../img/backgrounds/registro.jpg");
+  
 }
 
 .pt-5 {
@@ -16997,6 +17002,7 @@ body {
 .container-xxl {
   padding-right: 1rem;
   padding-left: 1rem;
+  background-image: url("../../../img/backgrounds/bg-blanco.jpg");
 }
 @media (min-width: 992px) {
   .container,
@@ -18998,7 +19004,7 @@ html:not([dir=rtl]) .app-brand-text {
 
 .custom-option-icon.checked i,
 .custom-option-icon.checked svg {
-  color: #7367f0;
+  color: #f29122;
 }
 .custom-option-icon .custom-option-content {
   text-align: center;
@@ -19771,7 +19777,7 @@ html:not([dir=rtl]) .switches-stacked .switch {
   box-shadow: 0 0 0 2px #fff;
 }
 .avatar.avatar-online:after {
-  background-color: #28c76f;
+  background-color: #f29122;
 }
 .avatar.avatar-offline:after {
   background-color: #a8aaae;
