@@ -1,172 +1,73 @@
 <template>
-  <ul class="menu-nav bg-transparent">
+  <ul class="menu-inner py-4">
+    <!-- Dashboards -->
     <router-link to="/dashboard" v-slot="{ href, navigate, isActive, isExactActive }">
-      <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item mb-1" :class="[isActive && 'menu-item-active', isExactActive && 'menu-item-active']">
-        <a :href="href" class="menu-link rounded ml-1" @click="navigate">
-          <i class="menu-icon flaticon2-architecture-and-city"></i>
-          <span class="menu-text"><strong>Inicio</strong></span>
+      <li class="menu-item" aria-haspopup="true" data-menu-toggle="hover"  :class="[isActive && 'active', isExactActive && 'active']" >
+        <a  :href="href" class="menu-link" @click="navigate">
+          <i class="fa-solid fa-house"></i>
+          <div>&nbsp; &nbsp;INICIO</div>
         </a>
+      </li>
+    </router-link>
+    <!-- Apps & Pages -->
+    <router-link v-if="!isAdmin" to="/my-operations" v-slot="{ href, navigate, isActive, isExactActive }">
+      <li class="menu-item" aria-haspopup="true" data-menu-toggle="hover" :class="[isActive && 'active', isExactActive && 'active']" >
+        <a  :href="href" class="menu-link" @click="navigate">
+          <i class="fa-solid fa-file-lines"></i>
+          <div>&nbsp; &nbsp;Mis movimientos</div>
+        </a>
+      </li>
+    </router-link>
+    <router-link v-if="isAdmin" to="/all-operations" v-slot="{ href, navigate, isActive, isExactActive }" >
+      <li class="menu-item" aria-haspopup="true" data-menu-toggle="hover" :class="[isActive && 'active', isExactActive && 'active']" >
+        <a  :href="href" class="menu-link" @click="navigate">
+          <i class="fa-solid fa-file-lines"></i>
+          <div>&nbsp; &nbsp;Todas la operaciones</div>
+        </a>
+      </li>
+    </router-link>
+    <router-link v-if="!isAdmin" to="/operations/new" v-slot="{ href, navigate, isActive, isExactActive }" >
+      <li class="menu-item" aria-haspopup="true" data-menu-toggle="hover" :class="[isActive && 'active', isExactActive && 'active']" >
+        <a :href="href" class="menu-link" @click="navigate">
+          <i class="fa-solid fa-money-bill-transfer"></i>
+          <div>&nbsp; &nbsp;Cambiar divisas</div>
+        </a> 
       </li>
     </router-link>
     <router-link to="/bank/accounts" v-slot="{ href, navigate, isActive, isExactActive }">
-      <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item mb-1" :class="[isActive && 'menu-item-active', isExactActive && 'menu-item-active']">
-        <a :href="href" class="menu-link rounded ml-1" @click="navigate">
-          <i class="menu-icon fas fa-credit-card"></i>
-          <span class="menu-text"><strong>Cuentas Bancarias</strong></span>
-        </a>
+      <li  class="menu-item" aria-haspopup="true" data-menu-toggle="hover" :class="[isActive && 'active', isExactActive && 'active']" >
+        <a :href="href" class="menu-link" @click="navigate">
+          <i class="fa-solid fa-building-columns"></i>
+          <div>&nbsp; &nbsp;Mis cuentas</div>
+        </a>  
       </li>
     </router-link>
-    <router-link v-if="isAdmin" to="/banks" v-slot="{ href, navigate, isActive, isExactActive }">
-      <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item mb-1" :class="[isActive && 'menu-item-active', isExactActive && 'menu-item-active']">
-        <a :href="href" class="menu-link rounded ml-1" @click="navigate">
-          <i class="menu-icon fa fa-university"></i>
-          <span class="menu-text"><strong>Bancos</strong></span>
+    <li v-if="isAdmin"  class="menu-item menu-father" >
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+          <i class="fa-solid fa-file-lines"></i>
+          <div>&nbsp; &nbsp;Reporte</div>
         </a>
-      </li>
-    </router-link>
 
-    <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu mb-1">
-      <a href="#" class="menu-link menu-toggle rounded ml-1">
-        <i class="menu-icon fas fa-calculator"></i>
-        <span class="menu-text"><strong>Operaciones</strong></span>
-        <i class="menu-arrow"></i>
-      </a>
-      <div class="menu-submenu">
-        <span class="menu-arrow"></span>
-        <ul class="menu-subnav mt-1">
-          <!-- <router-link v-if="isAdmin" to="/operations/manual" v-slot="{ href, navigate, isActive, isExactActive }" >
-            <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item mb-1" :class="[isActive && 'menu-item-active', isExactActive && 'menu-item-active']">
-              <a :href="href" class="menu-link rounded ml-1" @click="navigate">
-                <i class="menu-bullet menu-bullet-dot">
-                  <span></span>
-                </i>
-                <span class="menu-text"><strong>Operación Manual</strong></span>
-              </a>
-            </li>
-          </router-link> -->
-          <router-link v-if="isAdmin" to="/all-operations" v-slot="{ href, navigate, isActive, isExactActive }" >
-            <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item mb-1" :class="[isActive && 'menu-item-active', isExactActive && 'menu-item-active']">
-              <a :href="href" class="menu-link rounded ml-1" @click="navigate">
-                <i class="menu-bullet menu-bullet-dot">
-                  <span></span>
-                </i>
-                <span class="menu-text"><strong>Todas las Operaciones</strong></span>
-              </a>
-            </li>
-          </router-link>
-
-          <router-link v-if="!isAdmin" to="/operations/new" v-slot="{ href, navigate, isActive, isExactActive }" >
-            <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item mb-1" :class="[isActive && 'menu-item-active', isExactActive && 'menu-item-active']">
-              <a :href="href" class="menu-link rounded ml-1" @click="navigate">
-                <i class="menu-bullet menu-bullet-dot">
-                  <span></span>
-                </i>
-                <span class="menu-text"><strong>Nueva Operación</strong></span>
-              </a>
-            </li>
-          </router-link>
-          <router-link v-if="!isAdmin" to="/my-operations" v-slot="{ href, navigate, isActive, isExactActive }" >
-            <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item mb-1" :class="[isActive && 'menu-item-active', isExactActive && 'menu-item-active']">
-              <a :href="href" class="menu-link rounded ml-1" @click="navigate">
-                <i class="menu-bullet menu-bullet-dot">
-                  <span></span>
-                </i>
-                <span class="menu-text"><strong>Mis Operaciones</strong></span>
-              </a>
-            </li>
-          </router-link>
-        </ul>
-      </div>
-    </li>
-
-    <router-link to="/profiles" v-slot="{ href, navigate, isActive, isExactActive }">
-      <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item mb-1" :class="[isActive && 'menu-item-active', isExactActive && 'menu-item-active']">
-        <a :href="href" class="menu-link rounded ml-1" @click="navigate">
-          <i class="menu-icon fas fa-users"></i>
-          <span class="menu-text"><strong>Mis Perfiles</strong></span>
-        </a>
-      </li>
-    </router-link>
-
-    <li v-if="isAdmin" aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu mb-1">
-      <a href="#" class="menu-link menu-toggle rounded ml-1">
-        <i class="menu-icon fas fa-users"></i>
-        <span class="menu-text"><strong>Usuarios</strong></span>
-        <i class="menu-arrow"></i>
-      </a>
-      <div class="menu-submenu">
-        <span class="menu-arrow"></span>
-        <ul class="menu-subnav mt-1">
-          <router-link to="/personal/accounts" v-slot="{ href, navigate, isActive, isExactActive }" >
-            <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item mb-1" :class="[isActive && 'menu-item-active', isExactActive && 'menu-item-active']">
-              <a :href="href" class="menu-link rounded ml-1" @click="navigate">
-                <i class="menu-bullet menu-bullet-dot">
-                  <span></span>
-                </i>
-                <span class="menu-text"><strong>Cuentas Personales</strong></span>
-              </a>
-            </li>
-          </router-link>
-          <router-link to="/company/accounts" v-slot="{ href, navigate, isActive, isExactActive }" >
-            <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item mb-1" :class="[isActive && 'menu-item-active', isExactActive && 'menu-item-active']">
-              <a :href="href" class="menu-link rounded ml-1" @click="navigate">
-                <i class="menu-bullet menu-bullet-dot">
-                  <span></span>
-                </i>
-                <span class="menu-text"><strong>Cuentas Empresariales</strong></span>
-              </a>
-            </li>
-          </router-link>
-        </ul>
-      </div>
-    </li>
-
-    <router-link v-if="isAdmin" to="/exchange-rate" v-slot="{ href, navigate, isActive, isExactActive }">
-      <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item mb-1" :class="[isActive && 'menu-item-active', isExactActive && 'menu-item-active']">
-        <a :href="href" class="menu-link rounded ml-1" @click="navigate">
-          <i class="menu-icon fas fa-coins"></i>
-          <span class="menu-text"><strong>Tipo de Cambio</strong></span>
-        </a>
-      </li>
-    </router-link>
-
-    <li v-if="isAdmin" aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu mb-1">
-      <a href="#" class="menu-link menu-toggle rounded ml-1">
-        <i class="menu-icon flaticon-graphic"></i>
-        <span class="menu-text"><strong>Reportes</strong></span>
-        <i class="menu-arrow"></i>
-      </a>
-      <div class="menu-submenu">
-        <span class="menu-arrow"></span>
-        <ul class="menu-subnav mt-1">
+        <ul class="menu-sub">
           <router-link to="/report-sbs" v-slot="{ href, navigate, isActive, isExactActive }" >
-            <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item mb-1" :class="[isActive && 'menu-item-active', isExactActive && 'menu-item-active']">
-              <a :href="href" class="menu-link rounded ml-1" @click="navigate">
-                <i class="menu-bullet menu-bullet-dot">
-                  <span></span>
-                </i>
-                <span class="menu-text"><strong>SBS</strong></span>
+            <li class="menu-item" aria-haspopup="true" data-menu-toggle="hover" :class="[isActive && 'active', isExactActive && 'active']" >
+              <a  :href="href" class="menu-link" @click="navigate">
+                <div>&nbsp; &nbsp;Reporte SBS</div>
               </a>
             </li>
           </router-link>
         </ul>
-      </div>
     </li>
-
-    
-    <!-- <li class="menu-section">
-      <h4 class="menu-text">LINKS QUE VAN EN OTROS LUGARES</h4>
-      <i class="menu-icon flaticon-more-v2"></i>
-    </li> -->
-
-    <router-link to="/create-account" v-slot="{ href, navigate, isActive, isExactActive }">
-      <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item mb-1" :class="[isActive && 'menu-item-active', isExactActive && 'menu-item-active']">
-        <a :href="href" class="menu-link rounded ml-1" @click="navigate">
-          <i class="menu-icon flaticon2-architecture-and-city"></i>
-          <span class="menu-text"><strong>Crear nueva cuenta</strong></span>
-        </a>
-      </li>
-    </router-link>
+    <!-- Misc -->
+    <li class="menu-header small text-uppercase">
+      <span class="menu-header-text">&nbsp; &nbsp;Ayuda</span>
+    </li>
+    <li class="menu-item" aria-haspopup="true" data-menu-toggle="hover"  >
+      <a href="https://pixinvent.ticksy.com/" target="_blank" class="menu-link">
+        <i class="menu-icon tf-icons ti ti-lifebuoy"></i>
+        <div>&nbsp; &nbsp;Whatsapp</div>
+      </a>
+    </li>
   </ul>
 </template>
 
@@ -178,7 +79,15 @@ export default {
       isAdmin: false,
     }
   },
+  
   methods: {
+    activeChildren(){
+      setTimeout(()=>{
+        const child = document.querySelector('.menu-item.active');
+        const father = child.closest('.menu-father');
+        father.classList.add("open","active");
+      }, 200)
+    },
     hasActiveChildren(match) {
       return this.$route["path"].indexOf(match) !== -1;
     },
@@ -189,6 +98,7 @@ export default {
   },
   mounted() {
     this.getIsAdmin();
+    this.activeChildren();
   },
 };
 </script>

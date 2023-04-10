@@ -27,7 +27,7 @@
         }
 
         .login-signin {
-            display: block;
+            display: flex;
         }
 
         .login-forgot {
@@ -37,7 +37,7 @@
 
     &.login-signup-on {
         .login-signup {
-            display: block;
+            display: flex;
         }
 
         .login-signin {
@@ -59,7 +59,7 @@
         }
 
         .login-forgot {
-            display: block;
+            display: flex;
         }
     }
 }

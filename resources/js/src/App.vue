@@ -13,11 +13,13 @@
 @import "assets/plugins/flag-icons.css";
 @import "assets/plugins/fontawesome.css";
 @import "assets/plugins/tabler-icons.css";
-
 @import "assets/plugins/keenthemes-icons/font/ki.css";
 
 // Main demo style scss;
 // @import "assets/sass/style.vue";
+// @import "assets/sass/style.vue";
+@import "assets/sass/core";
+@import "assets/sass/theme-default";
 // Check documentation for RTL css
 // Update HTML with RTL attribute at public/index.html
 /*@import "assets/css/style.vue.rtl";*/

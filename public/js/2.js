@@ -149,12 +149,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _assets_js_layout_base_aside_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/assets/js/layout/base/aside.js */ "./resources/js/src/assets/js/layout/base/aside.js");
 /* harmony import */ var _assets_js_layout_base_aside_menu_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/assets/js/layout/base/aside-menu.js */ "./resources/js/src/assets/js/layout/base/aside-menu.js");
 /* harmony import */ var _view_layout_aside_Menu_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/view/layout/aside/Menu.vue */ "./resources/js/src/view/layout/aside/Menu.vue");
+/* harmony import */ var _concept_menu__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../concept/menu */ "./resources/js/src/concept/menu.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
 function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+
 
 
 
@@ -173,19 +175,36 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     KTMenu: _view_layout_aside_Menu_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
   mounted: function mounted() {
-    var _this = this;
-    this.$nextTick(function () {
-      // Init Aside
-      _assets_js_layout_base_aside_js__WEBPACK_IMPORTED_MODULE_2__["default"].init(_this.$refs["kt_aside"]);
+    new _concept_menu__WEBPACK_IMPORTED_MODULE_5__["Menu"](document.getElementById('layout-menu'));
+    // this.$nextTick(() => {
+    //   // Init Aside
+    //   KTLayoutAside.init(this.$refs["kt_aside"]);
 
-      // Init Aside Menu
-      _assets_js_layout_base_aside_menu_js__WEBPACK_IMPORTED_MODULE_3__["default"].init(_this.$refs["kt_aside_menu"]);
-    });
+    //   // Init Aside Menu
+    //   KTLayoutAsideMenu.init(this.$refs["kt_aside_menu"]);
+    // });
+    this.menu();
   },
   methods: {
     /**
      * Use for fixed left aside menu, to show menu on mouseenter event.
      */
+    menu: function menu() {
+      var menuToggler = document.querySelectorAll('.layout-menu-toggle');
+      menuToggler.forEach(function (item) {
+        item.addEventListener('click', function (event) {
+          event.preventDefault();
+          console.log(window);
+          window.Helpers.toggleCollapsed();
+          // Enable menu state with local storage support if enableMenuLocalStorage = true from config.js
+          if (config.enableMenuLocalStorage && !window.Helpers.isSmallScreen()) {
+            try {
+              localStorage.setItem('templateCustomizer-vertical-menu-template--LayoutCollapsed', String(window.Helpers.isCollapsed()));
+            } catch (e) {}
+          }
+        });
+      });
+    },
     mouseEnter: function mouseEnter() {
       if (this.layoutConfig("aside.self.minimize.hoverable")) {
         // check if the left aside menu is fixed
@@ -262,6 +281,13 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    activeChildren: function activeChildren() {
+      setTimeout(function () {
+        var child = document.querySelector('.menu-item.active');
+        var father = child.closest('.menu-father');
+        father.classList.add("open", "active");
+      }, 200);
+    },
     hasActiveChildren: function hasActiveChildren(match) {
       return this.$route["path"].indexOf(match) !== -1;
     },
@@ -271,6 +297,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.getIsAdmin();
+    this.activeChildren();
   }
 });
 
@@ -501,11 +528,15 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
   },
   mounted: function mounted() {
     // Init Desktop & Mobile Headers
-    _assets_js_layout_base_header_js__WEBPACK_IMPORTED_MODULE_2__["default"].init("kt_header", "kt_header_mobile");
+    _assets_js_layout_base_header_js__WEBPACK_IMPORTED_MODULE_2__["default"].init("kt_header");
 
     // Init Header Menu
-    _assets_js_layout_base_header_menu_js__WEBPACK_IMPORTED_MODULE_3__["default"].init(this.$refs["kt_header_menu"], this.$refs["kt_header_menu_wrapper"]);
+    // KTLayoutHeaderMenu.init(
+    //   this.$refs["kt_header_menu"],
+    //   this.$refs["kt_header_menu_wrapper"]
+    // );
   },
+
   computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(["layoutConfig", "getClasses"])), {}, {
     /**
      * Check if the header menu is enabled
@@ -691,26 +722,25 @@ var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
   return _vm.isAuthenticated ? _c("div", {
-    staticClass: "d-flex flex-column flex-root"
-  }, [_c("KTHeaderMobile"), _vm._v(" "), _vm.loaderEnabled ? _c("Loader", {
-    attrs: {
-      logo: _vm.loaderLogo
-    }
-  }) : _vm._e(), _vm._v(" "), _c("div", {
-    staticClass: "d-flex flex-row flex-column-fluid page"
+    staticClass: "layout-wrapper layout-content-navbar"
   }, [_c("div", {
-    staticClass: "d-flex flex-column flex-row-fluid wrapper",
+    staticClass: "layout-container"
+  }, [_vm.asideEnabled ? _c("KTAside") : _vm._e(), _vm._v(" "), _c("div", {
+    staticClass: "layout-page",
     attrs: {
       id: "kt_wrapper"
     }
   }, [_c("KTHeader"), _vm._v(" "), _c("div", {
-    staticClass: "content d-flex flex-column flex-column-fluid",
+    staticClass: "content-wrapper",
     attrs: {
       id: "kt_content"
     }
   }, [_c("div", {
-    staticClass: "d-flex flex-column-fluid"
-  }, [_vm.asideEnabled ? _c("KTAside") : _vm._e(), _vm._v(" "), _c("div", {
+    staticClass: "container-xxl flex-grow-1 container-p-y",
+    style: {
+      backgroundImage: "url('media/backgrounds/bg-blanco.jpg')"
+    }
+  }, [_c("div", {
     "class": {
       "container-fluid": _vm.contentFluid,
       container: !_vm.contentFluid
@@ -719,7 +749,11 @@ var render = function render() {
     attrs: {
       name: "fade-in-up"
     }
-  }, [_c("router-view")], 1)], 1)], 1)]), _vm._v(" "), _c("KTFooter")], 1)]), _vm._v(" "), _c("KTScrollTop")], 1) : _vm._e();
+  }, [_c("router-view")], 1)], 1)])])], 1)], 1), _vm._v(" "), _c("div", {
+    staticClass: "layout-overlay layout-menu-toggle"
+  }), _vm._v(" "), _c("div", {
+    staticClass: "drag-target"
+  })]) : _vm._e();
 };
 var staticRenderFns = [];
 render._withStripped = true;
@@ -741,42 +775,41 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div", {
-    ref: "kt_aside",
-    staticClass: "aside aside-left d-flex flex-column flex-row-auto pt-0",
-    staticStyle: {
-      "background-color": "#eef0f8"
-    },
+  return _c("aside", {
+    staticClass: "layout-menu menu-vertical menu bg-menu-theme",
     attrs: {
-      id: "kt_aside"
-    },
-    on: {
-      mouseover: _vm.mouseEnter,
-      mouseleave: _vm.mouseLeave
-    }
-  }, [_c("KTBrand"), _vm._v(" "), _c("div", {
-    staticClass: "aside-menu-wrapper flex-column-fluid",
-    attrs: {
-      id: "kt_aside_menu_wrapper"
+      id: "layout-menu",
+      "data-bg-class": "bg-menu-theme"
     }
   }, [_c("div", {
-    ref: "kt_aside_menu",
-    staticClass: "aside-menu my-4 bg-transparent",
-    "class": _vm.asideMenuClass,
+    staticClass: "app-brand demo"
+  }, [_c("router-link", {
+    staticClass: "app-brand-link gap-2",
     attrs: {
-      id: "kt_aside_menu",
-      "data-menu-vertical": "1",
-      "data-menu-dropdown-timeout": "500"
+      to: "/"
     }
-  }, [_c("perfect-scrollbar", {
-    staticClass: "aside-menu scroll bg-transparent",
-    staticStyle: {
-      "max-height": "90vh",
-      position: "relative"
+  }, [_c("img", {
+    attrs: {
+      src: "media/logos/logo-dls.png"
     }
-  }, [_c("KTMenu")], 1)], 1)])], 1);
+  })]), _vm._v(" "), _vm._m(0)], 1), _vm._v(" "), _c("div", {
+    staticClass: "menu-inner-shadow"
+  }), _vm._v(" "), _c("KTMenu")], 1);
 };
-var staticRenderFns = [];
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("a", {
+    staticClass: "layout-menu-toggle menu-link text-large ms-auto",
+    attrs: {
+      href: "javascript:void(0);"
+    }
+  }, [_c("i", {
+    staticClass: "ti menu-toggle-icon d-none d-xl-block ti-sm align-middle"
+  }), _vm._v(" "), _c("i", {
+    staticClass: "ti ti-x d-block d-xl-none ti-sm align-middle"
+  })]);
+}];
 render._withStripped = true;
 
 
@@ -797,7 +830,7 @@ var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
   return _c("ul", {
-    staticClass: "menu-nav bg-transparent"
+    staticClass: "menu-inner py-4"
   }, [_c("router-link", {
     attrs: {
       to: "/dashboard"
@@ -810,14 +843,14 @@ var render = function render() {
           isActive = _ref.isActive,
           isExactActive = _ref.isExactActive;
         return [_c("li", {
-          staticClass: "menu-item mb-1",
-          "class": [isActive && "menu-item-active", isExactActive && "menu-item-active"],
+          staticClass: "menu-item",
+          "class": [isActive && "active", isExactActive && "active"],
           attrs: {
             "aria-haspopup": "true",
             "data-menu-toggle": "hover"
           }
         }, [_c("a", {
-          staticClass: "menu-link rounded ml-1",
+          staticClass: "menu-link",
           attrs: {
             href: href
           },
@@ -825,15 +858,13 @@ var render = function render() {
             click: navigate
           }
         }, [_c("i", {
-          staticClass: "menu-icon flaticon2-architecture-and-city"
-        }), _vm._v(" "), _c("span", {
-          staticClass: "menu-text"
-        }, [_c("strong", [_vm._v("Inicio")])])])])];
+          staticClass: "fa-solid fa-house"
+        }), _vm._v(" "), _c("div", [_vm._v("   INICIO")])])])];
       }
     }])
-  }), _vm._v(" "), _c("router-link", {
+  }), _vm._v(" "), !_vm.isAdmin ? _c("router-link", {
     attrs: {
-      to: "/bank/accounts"
+      to: "/my-operations"
     },
     scopedSlots: _vm._u([{
       key: "default",
@@ -843,14 +874,14 @@ var render = function render() {
           isActive = _ref2.isActive,
           isExactActive = _ref2.isExactActive;
         return [_c("li", {
-          staticClass: "menu-item mb-1",
-          "class": [isActive && "menu-item-active", isExactActive && "menu-item-active"],
+          staticClass: "menu-item",
+          "class": [isActive && "active", isExactActive && "active"],
           attrs: {
             "aria-haspopup": "true",
             "data-menu-toggle": "hover"
           }
         }, [_c("a", {
-          staticClass: "menu-link rounded ml-1",
+          staticClass: "menu-link",
           attrs: {
             href: href
           },
@@ -858,15 +889,13 @@ var render = function render() {
             click: navigate
           }
         }, [_c("i", {
-          staticClass: "menu-icon fas fa-credit-card"
-        }), _vm._v(" "), _c("span", {
-          staticClass: "menu-text"
-        }, [_c("strong", [_vm._v("Cuentas Bancarias")])])])])];
+          staticClass: "fa-solid fa-file-lines"
+        }), _vm._v(" "), _c("div", [_vm._v("   Mis movimientos")])])])];
       }
-    }])
-  }), _vm._v(" "), _vm.isAdmin ? _c("router-link", {
+    }], null, false, 1374225326)
+  }) : _vm._e(), _vm._v(" "), _vm.isAdmin ? _c("router-link", {
     attrs: {
-      to: "/banks"
+      to: "/all-operations"
     },
     scopedSlots: _vm._u([{
       key: "default",
@@ -876,14 +905,14 @@ var render = function render() {
           isActive = _ref3.isActive,
           isExactActive = _ref3.isExactActive;
         return [_c("li", {
-          staticClass: "menu-item mb-1",
-          "class": [isActive && "menu-item-active", isExactActive && "menu-item-active"],
+          staticClass: "menu-item",
+          "class": [isActive && "active", isExactActive && "active"],
           attrs: {
             "aria-haspopup": "true",
             "data-menu-toggle": "hover"
           }
         }, [_c("a", {
-          staticClass: "menu-link rounded ml-1",
+          staticClass: "menu-link",
           attrs: {
             href: href
           },
@@ -891,27 +920,13 @@ var render = function render() {
             click: navigate
           }
         }, [_c("i", {
-          staticClass: "menu-icon fa fa-university"
-        }), _vm._v(" "), _c("span", {
-          staticClass: "menu-text"
-        }, [_c("strong", [_vm._v("Bancos")])])])])];
+          staticClass: "fa-solid fa-file-lines"
+        }), _vm._v(" "), _c("div", [_vm._v("   Todas la operaciones")])])])];
       }
-    }], null, false, 1298869597)
-  }) : _vm._e(), _vm._v(" "), _c("li", {
-    staticClass: "menu-item menu-item-submenu mb-1",
+    }], null, false, 2921816503)
+  }) : _vm._e(), _vm._v(" "), !_vm.isAdmin ? _c("router-link", {
     attrs: {
-      "aria-haspopup": "true",
-      "data-menu-toggle": "hover"
-    }
-  }, [_vm._m(0), _vm._v(" "), _c("div", {
-    staticClass: "menu-submenu"
-  }, [_c("span", {
-    staticClass: "menu-arrow"
-  }), _vm._v(" "), _c("ul", {
-    staticClass: "menu-subnav mt-1"
-  }, [_vm.isAdmin ? _c("router-link", {
-    attrs: {
-      to: "/all-operations"
+      to: "/operations/new"
     },
     scopedSlots: _vm._u([{
       key: "default",
@@ -921,14 +936,14 @@ var render = function render() {
           isActive = _ref4.isActive,
           isExactActive = _ref4.isExactActive;
         return [_c("li", {
-          staticClass: "menu-item mb-1",
-          "class": [isActive && "menu-item-active", isExactActive && "menu-item-active"],
+          staticClass: "menu-item",
+          "class": [isActive && "active", isExactActive && "active"],
           attrs: {
             "aria-haspopup": "true",
             "data-menu-toggle": "hover"
           }
         }, [_c("a", {
-          staticClass: "menu-link rounded ml-1",
+          staticClass: "menu-link",
           attrs: {
             href: href
           },
@@ -936,15 +951,13 @@ var render = function render() {
             click: navigate
           }
         }, [_c("i", {
-          staticClass: "menu-bullet menu-bullet-dot"
-        }, [_c("span")]), _vm._v(" "), _c("span", {
-          staticClass: "menu-text"
-        }, [_c("strong", [_vm._v("Todas las Operaciones")])])])])];
+          staticClass: "fa-solid fa-money-bill-transfer"
+        }), _vm._v(" "), _c("div", [_vm._v("   Cambiar divisas")])])])];
       }
-    }], null, false, 53949437)
-  }) : _vm._e(), _vm._v(" "), !_vm.isAdmin ? _c("router-link", {
+    }], null, false, 4108069345)
+  }) : _vm._e(), _vm._v(" "), _c("router-link", {
     attrs: {
-      to: "/operations/new"
+      to: "/bank/accounts"
     },
     scopedSlots: _vm._u([{
       key: "default",
@@ -954,14 +967,14 @@ var render = function render() {
           isActive = _ref5.isActive,
           isExactActive = _ref5.isExactActive;
         return [_c("li", {
-          staticClass: "menu-item mb-1",
-          "class": [isActive && "menu-item-active", isExactActive && "menu-item-active"],
+          staticClass: "menu-item",
+          "class": [isActive && "active", isExactActive && "active"],
           attrs: {
             "aria-haspopup": "true",
             "data-menu-toggle": "hover"
           }
         }, [_c("a", {
-          staticClass: "menu-link rounded ml-1",
+          staticClass: "menu-link",
           attrs: {
             href: href
           },
@@ -969,15 +982,17 @@ var render = function render() {
             click: navigate
           }
         }, [_c("i", {
-          staticClass: "menu-bullet menu-bullet-dot"
-        }, [_c("span")]), _vm._v(" "), _c("span", {
-          staticClass: "menu-text"
-        }, [_c("strong", [_vm._v("Nueva Operación")])])])])];
+          staticClass: "fa-solid fa-building-columns"
+        }), _vm._v(" "), _c("div", [_vm._v("   Mis cuentas")])])])];
       }
-    }], null, false, 2896311245)
-  }) : _vm._e(), _vm._v(" "), !_vm.isAdmin ? _c("router-link", {
+    }])
+  }), _vm._v(" "), _vm.isAdmin ? _c("li", {
+    staticClass: "menu-item menu-father"
+  }, [_vm._m(0), _vm._v(" "), _c("ul", {
+    staticClass: "menu-sub"
+  }, [_c("router-link", {
     attrs: {
-      to: "/my-operations"
+      to: "/report-sbs"
     },
     scopedSlots: _vm._u([{
       key: "default",
@@ -987,296 +1002,62 @@ var render = function render() {
           isActive = _ref6.isActive,
           isExactActive = _ref6.isExactActive;
         return [_c("li", {
-          staticClass: "menu-item mb-1",
-          "class": [isActive && "menu-item-active", isExactActive && "menu-item-active"],
+          staticClass: "menu-item",
+          "class": [isActive && "active", isExactActive && "active"],
           attrs: {
             "aria-haspopup": "true",
             "data-menu-toggle": "hover"
           }
         }, [_c("a", {
-          staticClass: "menu-link rounded ml-1",
+          staticClass: "menu-link",
           attrs: {
             href: href
           },
           on: {
             click: navigate
           }
-        }, [_c("i", {
-          staticClass: "menu-bullet menu-bullet-dot"
-        }, [_c("span")]), _vm._v(" "), _c("span", {
-          staticClass: "menu-text"
-        }, [_c("strong", [_vm._v("Mis Operaciones")])])])])];
+        }, [_c("div", [_vm._v("   Reporte SBS")])])])];
       }
-    }], null, false, 3167428217)
-  }) : _vm._e()], 1)])]), _vm._v(" "), _c("router-link", {
-    attrs: {
-      to: "/profiles"
-    },
-    scopedSlots: _vm._u([{
-      key: "default",
-      fn: function fn(_ref7) {
-        var href = _ref7.href,
-          navigate = _ref7.navigate,
-          isActive = _ref7.isActive,
-          isExactActive = _ref7.isExactActive;
-        return [_c("li", {
-          staticClass: "menu-item mb-1",
-          "class": [isActive && "menu-item-active", isExactActive && "menu-item-active"],
-          attrs: {
-            "aria-haspopup": "true",
-            "data-menu-toggle": "hover"
-          }
-        }, [_c("a", {
-          staticClass: "menu-link rounded ml-1",
-          attrs: {
-            href: href
-          },
-          on: {
-            click: navigate
-          }
-        }, [_c("i", {
-          staticClass: "menu-icon fas fa-users"
-        }), _vm._v(" "), _c("span", {
-          staticClass: "menu-text"
-        }, [_c("strong", [_vm._v("Mis Perfiles")])])])])];
-      }
-    }])
-  }), _vm._v(" "), _vm.isAdmin ? _c("li", {
-    staticClass: "menu-item menu-item-submenu mb-1",
-    attrs: {
-      "aria-haspopup": "true",
-      "data-menu-toggle": "hover"
-    }
-  }, [_vm._m(1), _vm._v(" "), _c("div", {
-    staticClass: "menu-submenu"
-  }, [_c("span", {
-    staticClass: "menu-arrow"
-  }), _vm._v(" "), _c("ul", {
-    staticClass: "menu-subnav mt-1"
-  }, [_c("router-link", {
-    attrs: {
-      to: "/personal/accounts"
-    },
-    scopedSlots: _vm._u([{
-      key: "default",
-      fn: function fn(_ref8) {
-        var href = _ref8.href,
-          navigate = _ref8.navigate,
-          isActive = _ref8.isActive,
-          isExactActive = _ref8.isExactActive;
-        return [_c("li", {
-          staticClass: "menu-item mb-1",
-          "class": [isActive && "menu-item-active", isExactActive && "menu-item-active"],
-          attrs: {
-            "aria-haspopup": "true",
-            "data-menu-toggle": "hover"
-          }
-        }, [_c("a", {
-          staticClass: "menu-link rounded ml-1",
-          attrs: {
-            href: href
-          },
-          on: {
-            click: navigate
-          }
-        }, [_c("i", {
-          staticClass: "menu-bullet menu-bullet-dot"
-        }, [_c("span")]), _vm._v(" "), _c("span", {
-          staticClass: "menu-text"
-        }, [_c("strong", [_vm._v("Cuentas Personales")])])])])];
-      }
-    }], null, false, 2312916175)
-  }), _vm._v(" "), _c("router-link", {
-    attrs: {
-      to: "/company/accounts"
-    },
-    scopedSlots: _vm._u([{
-      key: "default",
-      fn: function fn(_ref9) {
-        var href = _ref9.href,
-          navigate = _ref9.navigate,
-          isActive = _ref9.isActive,
-          isExactActive = _ref9.isExactActive;
-        return [_c("li", {
-          staticClass: "menu-item mb-1",
-          "class": [isActive && "menu-item-active", isExactActive && "menu-item-active"],
-          attrs: {
-            "aria-haspopup": "true",
-            "data-menu-toggle": "hover"
-          }
-        }, [_c("a", {
-          staticClass: "menu-link rounded ml-1",
-          attrs: {
-            href: href
-          },
-          on: {
-            click: navigate
-          }
-        }, [_c("i", {
-          staticClass: "menu-bullet menu-bullet-dot"
-        }, [_c("span")]), _vm._v(" "), _c("span", {
-          staticClass: "menu-text"
-        }, [_c("strong", [_vm._v("Cuentas Empresariales")])])])])];
-      }
-    }], null, false, 4280489276)
-  })], 1)])]) : _vm._e(), _vm._v(" "), _vm.isAdmin ? _c("router-link", {
-    attrs: {
-      to: "/exchange-rate"
-    },
-    scopedSlots: _vm._u([{
-      key: "default",
-      fn: function fn(_ref10) {
-        var href = _ref10.href,
-          navigate = _ref10.navigate,
-          isActive = _ref10.isActive,
-          isExactActive = _ref10.isExactActive;
-        return [_c("li", {
-          staticClass: "menu-item mb-1",
-          "class": [isActive && "menu-item-active", isExactActive && "menu-item-active"],
-          attrs: {
-            "aria-haspopup": "true",
-            "data-menu-toggle": "hover"
-          }
-        }, [_c("a", {
-          staticClass: "menu-link rounded ml-1",
-          attrs: {
-            href: href
-          },
-          on: {
-            click: navigate
-          }
-        }, [_c("i", {
-          staticClass: "menu-icon fas fa-coins"
-        }), _vm._v(" "), _c("span", {
-          staticClass: "menu-text"
-        }, [_c("strong", [_vm._v("Tipo de Cambio")])])])])];
-      }
-    }], null, false, 1158517736)
-  }) : _vm._e(), _vm._v(" "), _vm.isAdmin ? _c("li", {
-    staticClass: "menu-item menu-item-submenu mb-1",
-    attrs: {
-      "aria-haspopup": "true",
-      "data-menu-toggle": "hover"
-    }
-  }, [_vm._m(2), _vm._v(" "), _c("div", {
-    staticClass: "menu-submenu"
-  }, [_c("span", {
-    staticClass: "menu-arrow"
-  }), _vm._v(" "), _c("ul", {
-    staticClass: "menu-subnav mt-1"
-  }, [_c("router-link", {
-    attrs: {
-      to: "/report-sbs"
-    },
-    scopedSlots: _vm._u([{
-      key: "default",
-      fn: function fn(_ref11) {
-        var href = _ref11.href,
-          navigate = _ref11.navigate,
-          isActive = _ref11.isActive,
-          isExactActive = _ref11.isExactActive;
-        return [_c("li", {
-          staticClass: "menu-item mb-1",
-          "class": [isActive && "menu-item-active", isExactActive && "menu-item-active"],
-          attrs: {
-            "aria-haspopup": "true",
-            "data-menu-toggle": "hover"
-          }
-        }, [_c("a", {
-          staticClass: "menu-link rounded ml-1",
-          attrs: {
-            href: href
-          },
-          on: {
-            click: navigate
-          }
-        }, [_c("i", {
-          staticClass: "menu-bullet menu-bullet-dot"
-        }, [_c("span")]), _vm._v(" "), _c("span", {
-          staticClass: "menu-text"
-        }, [_c("strong", [_vm._v("SBS")])])])])];
-      }
-    }], null, false, 2399988312)
-  })], 1)])]) : _vm._e(), _vm._v(" "), _c("router-link", {
-    attrs: {
-      to: "/create-account"
-    },
-    scopedSlots: _vm._u([{
-      key: "default",
-      fn: function fn(_ref12) {
-        var href = _ref12.href,
-          navigate = _ref12.navigate,
-          isActive = _ref12.isActive,
-          isExactActive = _ref12.isExactActive;
-        return [_c("li", {
-          staticClass: "menu-item mb-1",
-          "class": [isActive && "menu-item-active", isExactActive && "menu-item-active"],
-          attrs: {
-            "aria-haspopup": "true",
-            "data-menu-toggle": "hover"
-          }
-        }, [_c("a", {
-          staticClass: "menu-link rounded ml-1",
-          attrs: {
-            href: href
-          },
-          on: {
-            click: navigate
-          }
-        }, [_c("i", {
-          staticClass: "menu-icon flaticon2-architecture-and-city"
-        }), _vm._v(" "), _c("span", {
-          staticClass: "menu-text"
-        }, [_c("strong", [_vm._v("Crear nueva cuenta")])])])])];
-      }
-    }])
-  })], 1);
+    }], null, false, 3847160251)
+  })], 1)]) : _vm._e(), _vm._v(" "), _vm._m(1), _vm._v(" "), _vm._m(2)], 1);
 };
 var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("a", {
-    staticClass: "menu-link menu-toggle rounded ml-1",
+    staticClass: "menu-link menu-toggle",
     attrs: {
-      href: "#"
+      href: "javascript:void(0);"
     }
   }, [_c("i", {
-    staticClass: "menu-icon fas fa-calculator"
-  }), _vm._v(" "), _c("span", {
-    staticClass: "menu-text"
-  }, [_c("strong", [_vm._v("Operaciones")])]), _vm._v(" "), _c("i", {
-    staticClass: "menu-arrow"
-  })]);
+    staticClass: "fa-solid fa-file-lines"
+  }), _vm._v(" "), _c("div", [_vm._v("   Reporte")])]);
 }, function () {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("a", {
-    staticClass: "menu-link menu-toggle rounded ml-1",
-    attrs: {
-      href: "#"
-    }
-  }, [_c("i", {
-    staticClass: "menu-icon fas fa-users"
-  }), _vm._v(" "), _c("span", {
-    staticClass: "menu-text"
-  }, [_c("strong", [_vm._v("Usuarios")])]), _vm._v(" "), _c("i", {
-    staticClass: "menu-arrow"
-  })]);
+  return _c("li", {
+    staticClass: "menu-header small text-uppercase"
+  }, [_c("span", {
+    staticClass: "menu-header-text"
+  }, [_vm._v("   Ayuda")])]);
 }, function () {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("a", {
-    staticClass: "menu-link menu-toggle rounded ml-1",
+  return _c("li", {
+    staticClass: "menu-item",
     attrs: {
-      href: "#"
+      "aria-haspopup": "true",
+      "data-menu-toggle": "hover"
+    }
+  }, [_c("a", {
+    staticClass: "menu-link",
+    attrs: {
+      href: "https://pixinvent.ticksy.com/",
+      target: "_blank"
     }
   }, [_c("i", {
-    staticClass: "menu-icon flaticon-graphic"
-  }), _vm._v(" "), _c("span", {
-    staticClass: "menu-text"
-  }, [_c("strong", [_vm._v("Reportes")])]), _vm._v(" "), _c("i", {
-    staticClass: "menu-arrow"
-  })]);
+    staticClass: "menu-icon tf-icons ti ti-lifebuoy"
+  }), _vm._v(" "), _c("div", [_vm._v("   Whatsapp")])])]);
 }];
 render._withStripped = true;
 
@@ -1596,28 +1377,256 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div", {
+  return _c("nav", {
     ref: "kt_header",
-    staticClass: "header",
-    "class": _vm.headerClasses,
+    staticClass: "layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme",
+    style: {
+      backgroundImage: "url('media/backgrounds/bg-blanco.jpg')"
+    },
     attrs: {
       id: "kt_header"
     }
-  }, [_c("div", {
-    staticClass: "container-fluid d-flex align-items-center justify-content-between"
-  }, [_c("div", {
-    ref: "kt_header_menu_wrapper",
-    staticClass: "header-menu-wrapper header-menu-wrapper-left"
-  }, [_vm.headerMenuEnabled ? _c("div", {
-    ref: "kt_header_menu",
-    staticClass: "header-menu header-menu-mobile",
-    "class": _vm.headerMenuClasses,
-    attrs: {
-      id: "kt_header_menu"
-    }
-  }) : _vm._e()]), _vm._v(" "), _c("KTTopbar")], 1)]);
+  }, [_vm._m(0), _vm._v(" "), _vm._m(1)]);
 };
-var staticRenderFns = [];
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none"
+  }, [_c("a", {
+    staticClass: "nav-item nav-link px-0 me-xl-4",
+    attrs: {
+      href: "javascript:void(0)"
+    }
+  }, [_c("i", {
+    staticClass: "ti ti-menu-2 ti-sm"
+  })])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "navbar-nav-right d-flex align-items-center",
+    attrs: {
+      id: "navbar-collapse"
+    }
+  }, [_c("div", {
+    staticClass: "navbar-nav align-items-center"
+  }, [_c("div", {
+    staticClass: "nav-item navbar-search-wrapper mb-0"
+  }, [_c("span", {
+    staticClass: "d-none d-md-inline-block text-muted"
+  }, [_vm._v("Abiertos 9:00AM a 7:00PM")])])]), _vm._v(" "), _c("ul", {
+    staticClass: "navbar-nav flex-row align-items-center ms-auto"
+  }, [_c("li", {
+    staticClass: "nav-item dropdown-shortcuts navbar-dropdown dropdown me-2 me-xl-0"
+  }, [_c("a", {
+    staticClass: "nav-link dropdown-toggle hide-arrow",
+    attrs: {
+      href: "javascript:void(0);",
+      "data-bs-toggle": "dropdown",
+      "data-bs-auto-close": "outside",
+      "aria-expanded": "false"
+    }
+  }, [_c("i", {
+    staticClass: "ti ti-layout-grid-add ti-md"
+  })]), _vm._v(" "), _c("div", {
+    staticClass: "dropdown-menu dropdown-menu-end py-0"
+  }, [_c("div", {
+    staticClass: "dropdown-menu-header border-bottom"
+  }, [_c("div", {
+    staticClass: "dropdown-header d-flex align-items-center py-3"
+  }, [_c("h5", {
+    staticClass: "text-body mb-0 me-auto"
+  }, [_vm._v("Link Directos")]), _vm._v(" "), _c("a", {
+    staticClass: "dropdown-shortcuts-add text-body",
+    attrs: {
+      href: "javascript:void(0)",
+      "data-bs-toggle": "tooltip",
+      "data-bs-placement": "top",
+      title: "Add shortcuts"
+    }
+  }, [_c("i", {
+    staticClass: "ti ti-sm ti-apps"
+  })])])]), _vm._v(" "), _c("div", {
+    staticClass: "dropdown-shortcuts-list scrollable-container"
+  }, [_c("div", {
+    staticClass: "row row-bordered overflow-visible g-0"
+  }, [_c("div", {
+    staticClass: "dropdown-shortcuts-item col"
+  }, [_c("span", {
+    staticClass: "dropdown-shortcuts-icon rounded-circle mb-2"
+  }, [_c("i", {
+    staticClass: "ti ti-calendar fs-4"
+  })]), _vm._v(" "), _c("a", {
+    staticClass: "stretched-link",
+    attrs: {
+      href: "app-calendar.html"
+    }
+  }, [_vm._v("Calendar")]), _vm._v(" "), _c("small", {
+    staticClass: "text-muted mb-0"
+  }, [_vm._v("Appointments")])]), _vm._v(" "), _c("div", {
+    staticClass: "dropdown-shortcuts-item col"
+  }, [_c("span", {
+    staticClass: "dropdown-shortcuts-icon rounded-circle mb-2"
+  }, [_c("i", {
+    staticClass: "ti ti-file-invoice fs-4"
+  })]), _vm._v(" "), _c("a", {
+    staticClass: "stretched-link",
+    attrs: {
+      href: "app-invoice-list.html"
+    }
+  }, [_vm._v("Invoice App")]), _vm._v(" "), _c("small", {
+    staticClass: "text-muted mb-0"
+  }, [_vm._v("Manage Accounts")])])]), _vm._v(" "), _c("div", {
+    staticClass: "row row-bordered overflow-visible g-0"
+  }, [_c("div", {
+    staticClass: "dropdown-shortcuts-item col"
+  }, [_c("span", {
+    staticClass: "dropdown-shortcuts-icon rounded-circle mb-2"
+  }, [_c("i", {
+    staticClass: "ti ti-users fs-4"
+  })]), _vm._v(" "), _c("a", {
+    staticClass: "stretched-link",
+    attrs: {
+      href: "app-user-list.html"
+    }
+  }, [_vm._v("User App")]), _vm._v(" "), _c("small", {
+    staticClass: "text-muted mb-0"
+  }, [_vm._v("Manage Users")])]), _vm._v(" "), _c("div", {
+    staticClass: "dropdown-shortcuts-item col"
+  }, [_c("span", {
+    staticClass: "dropdown-shortcuts-icon rounded-circle mb-2"
+  }, [_c("i", {
+    staticClass: "ti ti-lock fs-4"
+  })]), _vm._v(" "), _c("a", {
+    staticClass: "stretched-link",
+    attrs: {
+      href: "app-access-roles.html"
+    }
+  }, [_vm._v("Role Management")]), _vm._v(" "), _c("small", {
+    staticClass: "text-muted mb-0"
+  }, [_vm._v("Permission")])])]), _vm._v(" "), _c("div", {
+    staticClass: "row row-bordered overflow-visible g-0"
+  }, [_c("div", {
+    staticClass: "dropdown-shortcuts-item col"
+  }, [_c("span", {
+    staticClass: "dropdown-shortcuts-icon rounded-circle mb-2"
+  }, [_c("i", {
+    staticClass: "ti ti-chart-bar fs-4"
+  })]), _vm._v(" "), _c("a", {
+    staticClass: "stretched-link",
+    attrs: {
+      href: "index.html"
+    }
+  }, [_vm._v("Dashboard")]), _vm._v(" "), _c("small", {
+    staticClass: "text-muted mb-0"
+  }, [_vm._v("User Profile")])]), _vm._v(" "), _c("div", {
+    staticClass: "dropdown-shortcuts-item col"
+  }, [_c("span", {
+    staticClass: "dropdown-shortcuts-icon rounded-circle mb-2"
+  }, [_c("i", {
+    staticClass: "ti ti-settings fs-4"
+  })]), _vm._v(" "), _c("a", {
+    staticClass: "stretched-link",
+    attrs: {
+      href: "pages-account-settings-account.html"
+    }
+  }, [_vm._v("Setting")]), _vm._v(" "), _c("small", {
+    staticClass: "text-muted mb-0"
+  }, [_vm._v("Account Settings")])])]), _vm._v(" "), _c("div", {
+    staticClass: "row row-bordered overflow-visible g-0"
+  }, [_c("div", {
+    staticClass: "dropdown-shortcuts-item col"
+  }, [_c("span", {
+    staticClass: "dropdown-shortcuts-icon rounded-circle mb-2"
+  }, [_c("i", {
+    staticClass: "ti ti-help fs-4"
+  })]), _vm._v(" "), _c("a", {
+    staticClass: "stretched-link",
+    attrs: {
+      href: "pages-help-center-landing.html"
+    }
+  }, [_vm._v("Help Center")]), _vm._v(" "), _c("small", {
+    staticClass: "text-muted mb-0"
+  }, [_vm._v("FAQs & Articles")])]), _vm._v(" "), _c("div", {
+    staticClass: "dropdown-shortcuts-item col"
+  }, [_c("span", {
+    staticClass: "dropdown-shortcuts-icon rounded-circle mb-2"
+  }, [_c("i", {
+    staticClass: "ti ti-square fs-4"
+  })]), _vm._v(" "), _c("a", {
+    staticClass: "stretched-link",
+    attrs: {
+      href: "modal-examples.html"
+    }
+  }, [_vm._v("Modals")]), _vm._v(" "), _c("small", {
+    staticClass: "text-muted mb-0"
+  }, [_vm._v("Useful Popups")])])])])])]), _vm._v(" "), _c("li", {
+    staticClass: "nav-item navbar-dropdown dropdown-user dropdown"
+  }, [_c("a", {
+    staticClass: "nav-link dropdown-toggle hide-arrow",
+    attrs: {
+      href: "javascript:void(0);",
+      "data-bs-toggle": "dropdown"
+    }
+  }, [_c("div", {
+    staticClass: "avatar avatar-online"
+  }, [_c("img", {
+    staticClass: "h-auto rounded-circle",
+    attrs: {
+      src: "media/avatars/1.png",
+      alt: ""
+    }
+  })])]), _vm._v(" "), _c("ul", {
+    staticClass: "dropdown-menu dropdown-menu-end"
+  }, [_c("li", [_c("a", {
+    staticClass: "dropdown-item",
+    attrs: {
+      href: "perfil.html"
+    }
+  }, [_c("div", {
+    staticClass: "d-flex"
+  }, [_c("div", {
+    staticClass: "flex-shrink-0 me-3"
+  }, [_c("div", {
+    staticClass: "avatar avatar-online"
+  }, [_c("img", {
+    staticClass: "h-auto rounded-circle",
+    attrs: {
+      src: "media/avatars/1.png",
+      alt: ""
+    }
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "flex-grow-1"
+  }, [_c("span", {
+    staticClass: "fw-semibold d-block"
+  }, [_vm._v("John Doe")]), _vm._v(" "), _c("small", {
+    staticClass: "text-muted"
+  }, [_vm._v("Persona natural")])])])])]), _vm._v(" "), _c("li", [_c("div", {
+    staticClass: "dropdown-divider"
+  })]), _vm._v(" "), _c("li", [_c("a", {
+    staticClass: "dropdown-item",
+    attrs: {
+      href: "pages-profile-user.html"
+    }
+  }, [_c("i", {
+    staticClass: "ti ti-user-check me-2 ti-sm"
+  }), _vm._v(" "), _c("span", {
+    staticClass: "align-middle"
+  }, [_vm._v("Mi perfil")])])]), _vm._v(" "), _c("li", [_c("div", {
+    staticClass: "dropdown-divider"
+  })]), _vm._v(" "), _c("li", [_c("a", {
+    staticClass: "dropdown-item",
+    attrs: {
+      href: "auth-login-cover.html",
+      target: "_blank"
+    }
+  }, [_c("i", {
+    staticClass: "ti ti-logout me-2 ti-sm"
+  }), _vm._v(" "), _c("span", {
+    staticClass: "align-middle"
+  }, [_vm._v("Salir")])])])])])])]);
+}];
 render._withStripped = true;
 
 

@@ -28,6 +28,12 @@ var _vuetify = _interopRequireDefault(require("@/core/plugins/vuetify"));
 
 require("@/core/plugins/portal-vue");
 
+require("@/concept/bootstrap");
+
+var _helpers = require("./concept/helpers");
+
+require("@/concept/menu");
+
 require("@/core/plugins/bootstrap-vue");
 
 require("@/core/plugins/perfect-scrollbar");
@@ -60,11 +66,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 _vue["default"].config.productionTip = false;
 _vue["default"].prototype.$func = _utils.func;
-_vue["default"].prototype.$mainColor = '#FDC300';
-_vue["default"].prototype.$secondaryColor = '#7963A9'; // Global 3rd party plugins
+_vue["default"].prototype.$mainColor = '#1869A0';
+_vue["default"].prototype.$secondaryColor = '#F19023'; // Global 3rd party plugins
 
 window.PerfectScrollbar = _perfectScrollbar["default"];
 window.ClipboardJS = _clipboard["default"]; // Vue 3rd party plugins
+
+window.Helpers = _helpers.Helpers; // Apexcharts library
 
 _vue["default"].use(_vueApexcharts["default"]);
 

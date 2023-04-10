@@ -27,19 +27,6 @@ mix.webpackConfig({
             '@': path.resolve(__dirname, 'resources/js/src/')
         }
     },
-    module: {
-        rules: [
-            {
-                test: /\.html$/,
-                use: [
-                  {
-                    loader: 'html-loader',
-                    options: { minimize: true }
-                  }
-                ]
-              }
-        ]
-    }
 });
 
 mix.disableNotifications();

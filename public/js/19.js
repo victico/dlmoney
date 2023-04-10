@@ -77,20 +77,22 @@ __webpack_require__.r(__webpack_exports__);
         }
         query += queryParams[i];
       }
-      this.$store.dispatch(_core_services_store_operation_module__WEBPACK_IMPORTED_MODULE_0__["OPERATIONS_GET_PAGINATED"], query).then(function (data) {
-        if (data.code != 200) {
-          _this.showMainAlert('danger', 'Error desconocido al obtener las operaciones.');
-          return;
-        }
-        _this.allOperations = data.data.data;
-        _this.operations = _this.allOperations;
-        console.log(data);
-        // Table data
-        _this.totalItems = data.data.total;
-        _this.perPage = data.data.per_page;
-      })["catch"](function (err) {
-        _this.showMainAlert('danger', err);
-      });
+      setTimeout(function () {
+        _this.$store.dispatch(_core_services_store_operation_module__WEBPACK_IMPORTED_MODULE_0__["OPERATIONS_GET_PAGINATED"], query).then(function (data) {
+          if (data.code != 200) {
+            _this.showMainAlert('danger', 'Error desconocido al obtener las operaciones.');
+            return;
+          }
+          _this.allOperations = data.data.data;
+          _this.operations = _this.allOperations;
+          console.log(data);
+          // Table data
+          _this.totalItems = data.data.total;
+          _this.perPage = data.data.per_page;
+        })["catch"](function (err) {
+          _this.showMainAlert('danger', err);
+        });
+      }, 600);
     },
     setSelectedOperationChangeStatusData: function setSelectedOperationChangeStatusData(operationId, currentStatus, newStatus) {
       this.selectedOperationToChangeStatus = {
@@ -173,7 +175,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {},
   created: function created() {
-    this.getOperations();
+    setTimeout(this.getOperations(), 10000);
   }
 });
 

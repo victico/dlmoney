@@ -1,21 +1,17 @@
 <template>
-  <!-- begin:: Aside -->
-  <div class="aside aside-left d-flex flex-column flex-row-auto pt-0" id="kt_aside" ref="kt_aside" @mouseover="mouseEnter" @mouseleave="mouseLeave" style="background-color: #eef0f8">
-    <!-- begin:: Aside -->
-    <KTBrand></KTBrand>
-    <!-- end:: Aside -->
-
-    <!-- begin:: Aside Menu -->
-    <div class="aside-menu-wrapper flex-column-fluid" id="kt_aside_menu_wrapper">
-      <div ref="kt_aside_menu" id="kt_aside_menu" class="aside-menu my-4 bg-transparent" data-menu-vertical="1" data-menu-dropdown-timeout="500" v-bind:class="asideMenuClass">
-        <!-- example static menu here -->
-        <perfect-scrollbar class="aside-menu scroll bg-transparent" style="max-height: 90vh; position: relative;">
-          <KTMenu></KTMenu>
-        </perfect-scrollbar>
-      </div>
+  <aside class="layout-menu menu-vertical menu bg-menu-theme" id="layout-menu" data-bg-class="bg-menu-theme" >
+    <div class="app-brand demo">
+      <router-link to="/" class="app-brand-link gap-2">
+          <img src="media/logos/logo-dls.png"> 
+      </router-link>
+      <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
+        <i class="ti menu-toggle-icon d-none d-xl-block ti-sm align-middle"></i>
+        <i class="ti ti-x d-block d-xl-none ti-sm align-middle"></i>
+      </a>
     </div>
-  </div>
-  <!-- end:: Aside -->
+    <div class="menu-inner-shadow"></div>
+      <KTMenu></KTMenu>
+  </aside>
 </template>
 
 <script>
@@ -25,6 +21,7 @@ import KTBrand from "@/view/layout/brand/Brand.vue";
 import KTLayoutAside from "@/assets/js/layout/base/aside.js";
 import KTLayoutAsideMenu from "@/assets/js/layout/base/aside-menu.js";
 import KTMenu from "@/view/layout/aside/Menu.vue";
+import { Menu } from "../../../concept/menu";
 
 export default {
   name: "KTAside",
@@ -39,18 +36,39 @@ export default {
     KTMenu
   },
   mounted() {
-    this.$nextTick(() => {
-      // Init Aside
-      KTLayoutAside.init(this.$refs["kt_aside"]);
+    new Menu(document.getElementById('layout-menu'))
+    // this.$nextTick(() => {
+    //   // Init Aside
+    //   KTLayoutAside.init(this.$refs["kt_aside"]);
 
-      // Init Aside Menu
-      KTLayoutAsideMenu.init(this.$refs["kt_aside_menu"]);
-    });
+    //   // Init Aside Menu
+    //   KTLayoutAsideMenu.init(this.$refs["kt_aside_menu"]);
+    // });
+    this.menu()
   },
   methods: {
     /**
      * Use for fixed left aside menu, to show menu on mouseenter event.
      */
+    menu(){
+      let menuToggler = document.querySelectorAll('.layout-menu-toggle');
+      menuToggler.forEach(item => {
+        item.addEventListener('click', event => {
+          event.preventDefault();
+          console.log(window)
+          window.Helpers.toggleCollapsed();
+          // Enable menu state with local storage support if enableMenuLocalStorage = true from config.js
+          if (config.enableMenuLocalStorage && !window.Helpers.isSmallScreen()) {
+            try {
+              localStorage.setItem(
+                'templateCustomizer-vertical-menu-template--LayoutCollapsed',
+                String(window.Helpers.isCollapsed())
+              );
+            } catch (e) {}
+          }
+        });
+      });
+    },
     mouseEnter() {
       if (this.layoutConfig("aside.self.minimize.hoverable")) {
         // check if the left aside menu is fixed

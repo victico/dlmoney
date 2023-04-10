@@ -9,8 +9,8 @@ import { func } from '@/core/services/utils/utils.js'
 
 Vue.config.productionTip = false;
 Vue.prototype.$func = func
-Vue.prototype.$mainColor = '#FDC300'
-Vue.prototype.$secondaryColor = '#7963A9'
+Vue.prototype.$mainColor = '#1869A0'
+Vue.prototype.$secondaryColor = '#F19023'
 
 // Global 3rd party plugins
 import "popper.js";
@@ -24,6 +24,10 @@ window.ClipboardJS = ClipboardJS;
 import i18n from "@/core/plugins/vue-i18n";
 import vuetify from "@/core/plugins/vuetify";
 import "@/core/plugins/portal-vue";
+import "@/concept/bootstrap";
+import "@/concept/menu"
+import { Helpers } from "./concept/helpers";
+
 import "@/core/plugins/bootstrap-vue";
 import "@/core/plugins/perfect-scrollbar";
 import "@/core/plugins/highlight-js";
@@ -35,6 +39,7 @@ import "@mdi/font/css/materialdesignicons.css";
 import "@/core/plugins/formvalidation";
 import middlewarePipeline from './middlewares/middlewarePipeline'
 
+window.Helpers = Helpers;
 // Apexcharts library
 import VueApexCharts from 'vue-apexcharts'
 Vue.use(VueApexCharts)

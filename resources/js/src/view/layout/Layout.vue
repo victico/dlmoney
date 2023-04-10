@@ -1,38 +1,39 @@
 <template>
-  <div class="d-flex flex-column flex-root" v-if="isAuthenticated">
-    <!-- begin:: Header Mobile -->
-    <KTHeaderMobile></KTHeaderMobile>
-    <!-- end:: Header Mobile -->
+  <div class="layout-wrapper layout-content-navbar" v-if="isAuthenticated">
+    <div class="layout-container">
+      <!-- begin:: Header Mobile -->
+      <!-- <KTHeaderMobile></KTHeaderMobile> -->
+      <!-- end:: Header Mobile -->
+      <!-- begin:: Aside Left -->
+      <KTAside v-if="asideEnabled"></KTAside>
+      <!-- end:: Aside Left -->
 
-    <Loader v-if="loaderEnabled" v-bind:logo="loaderLogo"></Loader>
+      <!-- <Loader v-if="loaderEnabled" v-bind:logo="loaderLogo"></Loader> -->
 
-    <!-- begin::Body -->
-    <div class="d-flex flex-row flex-column-fluid page">
-      <div id="kt_wrapper" class="d-flex flex-column flex-row-fluid wrapper">
-        <!-- begin:: Header -->
-        <KTHeader></KTHeader>
-        <!-- end:: Header -->
-
-        <!-- begin:: Content -->
-        <div id="kt_content" class="content d-flex flex-column flex-column-fluid">
-          <!-- begin:: Content Head -->
-
-          <!-- begin:: Content Body -->
-          <div class="d-flex flex-column-fluid">
-            <!-- begin:: Aside Left -->
-            <KTAside v-if="asideEnabled"></KTAside>
-            <!-- end:: Aside Left -->
-            <div :class="{'container-fluid': contentFluid, container: !contentFluid}">
-              <transition name="fade-in-up">
-                <router-view />
-              </transition>
+      <!-- begin::Body -->
+      <div id="kt_wrapper" class="layout-page">
+          <!-- begin:: Header -->
+          <KTHeader></KTHeader>
+          <!-- end:: Header -->
+          <!-- begin:: Content -->
+          <div id="kt_content" class="content-wrapper">
+            <div class="container-xxl flex-grow-1 container-p-y" :style="{ backgroundImage: `url('media/backgrounds/bg-blanco.jpg')` }">
+              <div :class="{'container-fluid': contentFluid, container: !contentFluid}">
+                <transition name="fade-in-up">
+                  <router-view />
+                </transition>
+              </div>
             </div>
           </div>
-        </div>
-        <KTFooter></KTFooter>
+          <!-- end:: Content -->
       </div>
+      
     </div>
-    <KTScrollTop></KTScrollTop>
+    <!-- Overlay -->
+    <div class="layout-overlay layout-menu-toggle"></div>
+
+    <!-- Drag Target Area To SlideIn Menu On Small Screens -->
+    <div class="drag-target"></div>
   </div>
 </template>
 

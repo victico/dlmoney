@@ -359,7 +359,7 @@
                     }
                     query += queryParams[i];
                 }
-
+                setTimeout(()=>{
                 this.$store
                     .dispatch(OPERATIONS_GET_PAGINATED, query)
                     .then((data) => {
@@ -378,6 +378,7 @@
                     .catch((err) => {
                         this.showMainAlert('danger', err)
                     });
+                },600)
             },
 
             setSelectedOperationChangeStatusData(operationId, currentStatus, newStatus) {
@@ -472,7 +473,7 @@
 
         },
         created() {
-            this.getOperations();
+            setTimeout(this.getOperations(),10000);
         },
     };
 </script>

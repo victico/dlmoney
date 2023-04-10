@@ -291,8 +291,8 @@
         methods: {
             getOperations () {
                 let query = '?page=' + this.currentPage;
-
-                this.$store
+                setTimeout(()=>{
+                    this.$store
                     .dispatch(OPERATIONS_GET_PAGINATED, query)
                     .then((data) => {
                         if (data.code != 200){
@@ -310,6 +310,8 @@
                     .catch((err) => {
                         this.showMainAlert('danger', err)
                     });
+                },600)
+                
             },
 
             setSelectedOperation(operationId) {
