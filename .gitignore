@@ -11,4 +11,6 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
-/public/media/images
+/public/media/
+node_modules.zip
+template DLS.zip
