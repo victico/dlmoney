@@ -21,7 +21,7 @@ import KTBrand from "@/view/layout/brand/Brand.vue";
 import KTLayoutAside from "@/assets/js/layout/base/aside.js";
 import KTLayoutAsideMenu from "@/assets/js/layout/base/aside-menu.js";
 import KTMenu from "@/view/layout/aside/Menu.vue";
-import { Menu } from "../../../concept/menu";
+import { Menu } from "@/concept/menu";
 
 export default {
   name: "KTAside",

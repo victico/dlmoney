@@ -16,8 +16,8 @@
       <!-- /Left Text -->
 
       <!-- Forms Side -->
-      <div class="col-12 col-lg-5 align-items-center p-sm-5 p-4 ">
-        <div class="w-px-400 mx-auto">
+      <div class="col-12 col-lg-5 align-items-center p-sm-5 p-0 ">
+        <div class="w-px-400 mx-auto w-xs-px-350">
             <!-- Logo -->
           <div class="app-brand mb-4">
             <a href="#" class="app-brand-link gap-2">
@@ -33,7 +33,7 @@
             </p>
             <div class="">
               <form class="mb-3 form" novalidate="novalidate" id="kt_login_signin_form">
-                <div role="alert" v-bind:class="{ show: errors.length }" class="alert fade alert-danger">
+                <div v-if="errors.length > 0" role="alert" v-bind:class="{ show: errors.length }" class="alert fade alert-danger">
                   <div class="alert-text" v-for="(error, i) in errors" :key="i">
                     {{ error }}
                   </div>
@@ -43,7 +43,7 @@
                   <input
                     type="text"
                     class="form-control"
-                  
+                    autocomplete="off"
                     placeholder="Ingresa tu correo electrónico"
                     autofocus
                     name="email" 
@@ -286,63 +286,63 @@ export default {
       plugins: {
         trigger: new Trigger(),
         submitButton: new SubmitButton(),
-        bootstrap: new Bootstrap()
+        // bootstrap: new Bootstrap()
       }
     });
 
-    // this.fv1 = formValidation(signup_form, {
-    //   fields: {
-    //     username: {
-    //       validators: {
-    //         notEmpty: {
-    //           message: "El usuario es requerido"
-    //         }
-    //       }
-    //     },
-    //     email: {
-    //       validators: {
-    //         notEmpty: {
-    //           message: "El email es requerido"
-    //         },
-    //         emailAddress: {
-    //           message: "El valor ingresado no es un email válido"
-    //         }
-    //       }
-    //     },
-    //     password: {
-    //       validators: {
-    //         notEmpty: {
-    //           message: "La contraseña es requerida"
-    //         }
-    //       }
-    //     },
-    //     cpassword: {
-    //       validators: {
-    //         notEmpty: {
-    //           message: "La confirmación de contraseña es requerida"
-    //         },
-    //         identical: {
-    //           compare: function() {
-    //             return signup_form.querySelector('[name="password"]').value;
-    //           },
-    //           message: "La contraseña y su confirmacion no coinciden"
-    //         }
-    //       }
-    //     },
-    //     agree: {
-    //       validators: {
-    //         notEmpty: {
-    //           message: "Debes aceptar los términos y condiciones"
-    //         }
-    //       }
-    //     }
-    //   },
-    //   plugins: {
-    //     trigger: new Trigger(),
-    //     submitButton: new SubmitButton(),
-    //     bootstrap: new Bootstrap()
-    //   }
-    // });
+    this.fv1 = formValidation(signup_form, {
+      fields: {
+        username: {
+          validators: {
+            notEmpty: {
+              message: "El usuario es requerido"
+            }
+          }
+        },
+        email: {
+          validators: {
+            notEmpty: {
+              message: "El email es requerido"
+            },
+            emailAddress: {
+              message: "El valor ingresado no es un email válido"
+            }
+          }
+        },
+        password: {
+          validators: {
+            notEmpty: {
+              message: "La contraseña es requerida"
+            }
+          }
+        },
+        cpassword: {
+          validators: {
+            notEmpty: {
+              message: "La confirmación de contraseña es requerida"
+            },
+            identical: {
+              compare: function() {
+                return signup_form.querySelector('[name="password"]').value;
+              },
+              message: "La contraseña y su confirmacion no coinciden"
+            }
+          }
+        },
+        agree: {
+          validators: {
+            notEmpty: {
+              message: "Debes aceptar los términos y condiciones"
+            }
+          }
+        }
+      },
+      plugins: {
+        trigger: new Trigger(),
+        submitButton: new SubmitButton(),
+        // bootstrap: new Bootstrap()
+      }
+    });
 
     // this.fv2 = formValidation(forgot_form, {
     //   fields: {
@@ -372,8 +372,8 @@ export default {
       this.$store.dispatch(LOGOUT);
 
       // set spinner to submit button
-      const submitButton = this.$refs["kt_login_signin_submit"];
-      submitButton.classList.add("spinner", "spinner-light", "spinner-right");
+      // const submitButton = this.$refs["kt_login_signin_submit"];
+      // submitButton.classList.add("spinner", "spinner-light", "spinner-right");
 
       // dummy delay
       setTimeout(() => {
@@ -385,8 +385,9 @@ export default {
             console.log('si')  // go to which page after successfully login
           })
           .catch(() => {
+
           });
-        this.removeSpinnerFromSubmitButton(submitButton);
+        // this.removeSpinnerFromSubmitButton(submitButton);
       }, 500);
     });
 
@@ -417,8 +418,8 @@ export default {
       this.$store.dispatch(LOGOUT);
 
       // set spinner to submit button
-      const submitButton = this.$refs["kt_login_signup_submit"];
-      submitButton.classList.add("spinner", "spinner-light", "spinner-right");
+      // const submitButton = this.$refs["kt_login_signup_submit"];
+      // submitButton.classList.add("spinner", "spinner-light", "spinner-right");
 
       // dummy delay
       setTimeout(() => {
@@ -431,7 +432,7 @@ export default {
             password_confirmation: password_confirmation
           })
           .then((data) => {
-            this.removeSpinnerFromSubmitButton(submitButton);
+            // this.removeSpinnerFromSubmitButton(submitButton);
 
             this.registerData.show = true;
             this.registerData.status = data.status;

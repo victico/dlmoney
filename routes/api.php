@@ -100,6 +100,7 @@ Route::middleware('auth:api')->prefix('bank-accounts')->name('bank-accounts.')->
 
 Route::middleware('auth:api')->prefix('operations')->name('operations.')->group(function () {
     Route::get('', [OperationController::class, 'getPaginated']);
+    Route::get('/last', [OperationController::class, 'getLast']);
     Route::put('/{operation_id}/change-status', [OperationController::class, 'changeStatus']);
     Route::post('', [OperationController::class, 'store']);
 });

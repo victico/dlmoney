@@ -12,7 +12,9 @@ $cs: #FFFFFF;
 body {
   background: $body-bg;
 }
-
+.close{
+  margin-right: 5px!important;
+}
 .bg-body {
   background: $body-bg !important;
 }

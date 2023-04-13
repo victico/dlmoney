@@ -173,7 +173,8 @@
 //
 // `<button>`-specific styles are denoted with `// For <button>s`
 .dropdown-item {
-  display: block;
+  display: flex;
+  align-items: flex-end;
   width: 100%; // For `<button>`s
   padding: var(--#{$prefix}dropdown-item-padding-y) var(--#{$prefix}dropdown-item-padding-x);
   clear: both;
@@ -206,6 +207,9 @@
     background-color: transparent;
     // Remove CSS gradients if they're enabled
     background-image: if($enable-gradients, none, null);
+  }
+  & span.active{
+    color: $primary;
   }
 }
 

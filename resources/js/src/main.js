@@ -25,7 +25,6 @@ import i18n from "@/core/plugins/vue-i18n";
 import vuetify from "@/core/plugins/vuetify";
 import "@/core/plugins/portal-vue";
 import "@/concept/bootstrap";
-import "@/concept/menu"
 import { Helpers } from "./concept/helpers";
 
 import "@/core/plugins/bootstrap-vue";

@@ -345,7 +345,6 @@
             getOperations () {
                 let query = '?';
                 let queryParams = ['page=' + this.currentPage];
-                console.log(this.$store)
                 if (this.operationSearch != ''){
                     queryParams.push('search=' + this.operationSearch);
                 } 

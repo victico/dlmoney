@@ -82,7 +82,46 @@ class OperationController extends Controller
         $operations->orderBy('id', 'desc');
         return $this->returnSuccess(200, $operations->paginate());
     }
+    public function getLast(Request $request)
+    {
+        $operations = Operation::query();
+        $operations->with([
+            'bank_account_send.personal_account.user',
+            'bank_account_send.personal_account.document_type',
+            'bank_account_send.company_account.user',
+            'bank_account_send.bank',
+            'bank_account_send.coin_type',
+            'bank_account_receive.bank',
+            'bank_account_receive.coin_type',
+            'bank_account_transfer.bank',
+            'fund_origin'
+        ]);
 
+        if (!$request->user()->hasRole('admin')) {
+            if($request->user()->active_account_type == 0){
+                $personalAccountId = PersonalAccount::find($request->user()->active_account)->id;
+
+                $operations->where(function($query) use ($personalAccountId) {
+                    $query->whereHas('bank_account_send.personal_account', function ($query) use ($personalAccountId) {
+                        $query->where('id', $personalAccountId);
+                    });
+                });
+            }
+            else if($request->user()->active_account_type == 1){
+                $companyAccountId = CompanyAccount::find($request->user()->active_account)->id;
+
+                $operations->where(function($query) use ($companyAccountId) {
+                    $query->whereHas('bank_account_send.company_account', function ($query) use ($companyAccountId) {
+                        $query->where('id', $companyAccountId);
+                    });
+                });
+            }
+        }
+
+        $operations->orderBy('id', 'desc')->take(10);
+        return $this->returnSuccess(200, $operations->get());
+
+    }
     public function changeStatus(Request $request, $operationId)
     {
         if (!$operationId) {

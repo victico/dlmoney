@@ -8,7 +8,7 @@
 .swiper-container {
   // card bg color
   &.swiper-card-advance-bg {
-    background-color: rgba-to-hex(rgba($primary, 0.9), $rgba-to-hex-bg-inverted);
+    background-color: $primary;
     border-radius: $border-radius;
     box-shadow: $card-box-shadow;
   }
@@ -16,6 +16,7 @@
     .swiper-slide {
       padding: 1.5rem;
       white-space: nowrap;
+      box-sizing: border-box;
       .website-analytics-text-bg {
         background-color: rgba-to-hex(rgba($primary, 0.85), $rgba-to-hex-bg-inverted);
         padding: 0.25rem 0.65rem;

@@ -64,8 +64,15 @@ class UserController extends Controller
         if (!$result) {
             return $this->returnFail(404, "Usuario no encontrado.");
         }
+        $user = User::with('roles')->find($request->user()->id);
+        if($request->user()->active_account_type == 0){
+            $user->setAttribute('active_account', PersonalAccount::find($request->user()->active_account));
+        }
+        else if($request->user()->active_account_type == 1){
+            $user->setAttribute('active_account', CompanyAccount::find($request->user()->active_account));
+        }
 
-        return $this->returnSuccess(200, ['message' => 'Cuenta activa cambiada correctamente.']);
+        return $this->returnSuccess(200, ['message' => 'Cuenta activa cambiada correctamente.', 'user' => $user]);
     }
 
     public function setActiveAccount($userId, $activeAccountType, $activeAccount)

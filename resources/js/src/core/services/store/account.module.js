@@ -21,6 +21,14 @@ export const ACCOUNTS_COMPANY_UPDATE = 'accounts_company_update';
 export const ACCOUNTS_COMPANY_SET_PREFERENTIAL = 'accounts_company_set_preferential';
 export const ACCOUNTS_COMPANY_DELETE_PREFERENTIAL = 'accounts_company_delete_preferential';
 
+let state = {
+    account: [],
+  };
+const getters = {
+    currentAccount(state) {
+      return state.account;
+    },
+};
 const actions = {
     [ACCOUNTS_GET_ALL](_) {
         return new Promise((resolve, reject) => {
@@ -28,6 +36,21 @@ const actions = {
                 ApiService.setHeader();
                 ApiService.get("api/user/get-all-accounts")
                 .then(( { data } ) => {
+                    
+                    if(data.data.activeAccountType == 0){
+                        data.data.personalAccounts.map((account)=>{
+                            if(account.id == data.data.activeAccountId){
+                                state.account = account;
+                            }
+                        })
+                    }else {
+                        data.data.companyAccounts.map((account)=>{
+                            if(account.id == data.data.activeAccountId){
+                                state.account = account;
+                            }
+                        })
+                    }
+                    state.account.type = data.data.activeAccountType;
                     resolve(data);
                 })
                 .catch(() => {
@@ -43,6 +66,7 @@ const actions = {
                 ApiService.post("api/user/active/change", body)
                 .then(( { data } ) => {
                     resolve(data);
+                    
                 })
                 .catch(() => {
                     switch (response.status) {
@@ -393,5 +417,7 @@ const actions = {
 };
 
 export default {
-    actions
+    actions,
+    getters,
+    state
 };

@@ -18,11 +18,9 @@
           <!-- begin:: Content -->
           <div id="kt_content" class="content-wrapper">
             <div class="container-xxl flex-grow-1 container-p-y" :style="{ backgroundImage: `url('media/backgrounds/bg-blanco.jpg')` }">
-              <div :class="{'container-fluid': contentFluid, container: !contentFluid}">
                 <transition name="fade-in-up">
                   <router-view />
                 </transition>
-              </div>
             </div>
           </div>
           <!-- end:: Content -->

@@ -5,6 +5,7 @@ import JwtService from "@/core/services/jwt.service";
 export const OPERATIONS_GET_PAGINATED = "operations_get_all";
 export const OPERATIONS_CHANGE_STATUS = "operations_change_status";
 export const OPERATIONS_STORE = "operations_store";
+export const OPERATIONS_GET_LAST_FIVE = "operations_get_last_five"
 
 const actions = {
     [OPERATIONS_GET_PAGINATED](_, query = '') {
@@ -12,6 +13,20 @@ const actions = {
             if (JwtService.getToken()) {
                 ApiService.setHeader();
                 ApiService.get("api/operations", query)
+                .then(( { data } ) => {
+                    resolve(data);
+                })
+                .catch(() => {
+                    reject('Ocurrió un error desconocido al intentar mostrar las operaciones.');
+                });
+            }
+        });
+    },
+    [OPERATIONS_GET_LAST_FIVE](_, query = '') {
+        return new Promise((resolve, reject) => {
+            if (JwtService.getToken()) {
+                ApiService.setHeader();
+                ApiService.get("api/operations/last", query)
                 .then(( { data } ) => {
                     resolve(data);
                 })

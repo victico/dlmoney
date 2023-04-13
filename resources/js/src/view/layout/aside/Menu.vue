@@ -18,10 +18,19 @@
         </a>
       </li>
     </router-link>
+    <router-link v-if="isAdmin" to="/banks" v-slot="{ href, navigate, isActive, isExactActive }">
+      <li class="menu-item" aria-haspopup="true" data-menu-toggle="hover" :class="[isActive && 'active', isExactActive && 'active']" >
+        <a  :href="href" class="menu-link" @click="navigate">
+          <i class="fa-solid fa-building-columns"></i>
+          <div>&nbsp; &nbsp;Bancos</div>
+        </a>
+      </li>
+    </router-link>
+    
     <router-link v-if="isAdmin" to="/all-operations" v-slot="{ href, navigate, isActive, isExactActive }" >
       <li class="menu-item" aria-haspopup="true" data-menu-toggle="hover" :class="[isActive && 'active', isExactActive && 'active']" >
         <a  :href="href" class="menu-link" @click="navigate">
-          <i class="fa-solid fa-file-lines"></i>
+          <i class="fa-solid fa-receipt"></i>
           <div>&nbsp; &nbsp;Todas la operaciones</div>
         </a>
       </li>
@@ -37,7 +46,7 @@
     <router-link to="/bank/accounts" v-slot="{ href, navigate, isActive, isExactActive }">
       <li  class="menu-item" aria-haspopup="true" data-menu-toggle="hover" :class="[isActive && 'active', isExactActive && 'active']" >
         <a :href="href" class="menu-link" @click="navigate">
-          <i class="fa-solid fa-building-columns"></i>
+          <i class="fa-solid fa-wallet "></i>
           <div>&nbsp; &nbsp;Mis cuentas</div>
         </a>  
       </li>
@@ -58,6 +67,14 @@
           </router-link>
         </ul>
     </li>
+    <router-link v-if="!isAdmin" to="/profiles" v-slot="{ href, navigate, isActive, isExactActive }" >
+      <li class="menu-item" aria-haspopup="true" data-menu-toggle="hover" :class="[isActive && 'active', isExactActive && 'active']" >
+        <a :href="href" class="menu-link" @click="navigate">
+          <i class="fa-solid fa-users"></i>
+          <div>&nbsp; &nbsp;Mis Perfiles</div>
+        </a> 
+      </li>
+    </router-link>
     <!-- Misc -->
     <li class="menu-header small text-uppercase">
       <span class="menu-header-text">&nbsp; &nbsp;Ayuda</span>
@@ -84,8 +101,14 @@ export default {
     activeChildren(){
       setTimeout(()=>{
         const child = document.querySelector('.menu-item.active');
-        const father = child.closest('.menu-father');
-        father.classList.add("open","active");
+        
+        try{
+          const father = child.closest('.menu-father');
+          father.classList.add("open","active");
+        } catch {
+          
+        }
+        
       }, 200)
     },
     hasActiveChildren(match) {

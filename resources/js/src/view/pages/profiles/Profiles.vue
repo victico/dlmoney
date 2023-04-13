@@ -11,12 +11,7 @@
                 </div>
 
                 <div class="card-body">
-                    <div class="row" v-if="mainAlert">
-                        <div class="col-lg-12 col-md-12 col-sm-12">
-                            <b-alert :show="mainAlert" dismissible fade :variant="mainAlertVariant" @dismissed="mainAlert=false">{{ mainAlertMessage }}{{ redirectMessage == '' ? '' : redirectMessage + redirectMessageSeconds + ' segundos.' }}</b-alert>
-                        </div>
-                        <hr>
-                    </div>
+                    
 
                     <h5>Perfiles Personales</h5>
                     <div class="d-flex flex-row m-2 mt-4">

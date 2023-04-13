@@ -27,7 +27,7 @@
     new Swiper(swiperWithPagination, {
       loop: true,
       autoplay: {
-        delay: 2500,
+        delay: 2500100,
         disableOnInteraction: false
       },
       pagination: {

@@ -116,6 +116,11 @@ $authentication-1-inner-max-width: 400px !default;
   }
 }
 
+@include light.media-breakpoint-down(xs) {
+  .w-xs-px-350{
+    width: 350px!important;
+  }
+}
 // Two Steps Verification
 // ? Used for validation specific style as we have validated hidden field
 #twoStepsForm {
